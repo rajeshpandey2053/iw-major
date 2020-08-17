@@ -7,12 +7,14 @@ import {BrowserRouter} from "react-router-dom";
 
 function App() {
     return (
-        <div>
+        <div className='body'>
             <BrowserRouter>
                 <NavBar/>
-                <main>
-                    <Routes/>
-                </main>
+                <div className='main-wrapper'>
+                    <main className='container'>
+                        <Routes/>
+                    </main>
+                </div>
                 <Footer/>
             </BrowserRouter>
         </div>
