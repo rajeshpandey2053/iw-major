@@ -1,31 +1,32 @@
-nav {
+nav.nav-main-wrapper {
   background: #fdfdfd;
   padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid #d7d7d7;
+  box-shadow: 0 0 5px #d7d7d7 ;
 
-  .navbar-wrapper {
+  .navbar-container {
     display: flex;
     align-items: center;
-    width: 1024px;
     justify-content: space-between;
 
     .nav-bar-links {
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-bottom: 0;
 
       li.link {
         display: block;
 
         & * {
+          display: block;
           text-decoration: none;
           font-size: 16px;
           color: #6600fc;
           padding: 10px;
-          padding-left: 16px;
 
           &:hover {
             color: #4f03bf;
