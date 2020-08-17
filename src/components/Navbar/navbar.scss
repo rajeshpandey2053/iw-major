@@ -1,3 +1,39 @@
 nav {
-  background: #f1f1f1;
+  background: #fdfdfd;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #d7d7d7;
+
+  .navbar-wrapper {
+    display: flex;
+    align-items: center;
+    width: 1024px;
+    justify-content: space-between;
+
+    .nav-bar-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      li.link {
+        display: block;
+
+        & * {
+          text-decoration: none;
+          font-size: 16px;
+          color: #6600fc;
+          padding: 10px;
+          padding-left: 16px;
+
+          &:hover {
+            color: #4f03bf;
+            text-decoration: underline;
+          }
+        }
+
+      }
+    }
+  }
 }
