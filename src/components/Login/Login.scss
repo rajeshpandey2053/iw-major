@@ -13,7 +13,7 @@ $color_code_hover: #4e2092;
     min-height: 100vh;
     overflow: hidden;
 
-    .login-register {
+    .login {
         position: absolute;
         top: 50%;
         left: 75%;
@@ -21,6 +21,7 @@ $color_code_hover: #4e2092;
         width: 50%;
         display: grid;
         grid-template-columns: 1fr;
+        z-index: 6;
 
     form {
         display: flex;

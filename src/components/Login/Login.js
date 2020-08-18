@@ -2,14 +2,14 @@ import React from 'react';
 import './Login.scss';
 import {Link} from 'react-router-dom';
 import { Lock, AccountCircle, Facebook, GitHub } from '@material-ui/icons';
-import { ReactComponent as LoginImg } from './img/log.svg';
+import login from '../../images/Login.svg';
 
 
 const Login = () => {
     return (
         <div className="div-container">
             <div className='form-container'>
-                <div className="login-register">
+                <div className="login">
                     <form action="" className="login-form">
                         <h2 className="login-form__title">Sign In</h2>
                         <div className="login-form__input-field">
@@ -37,7 +37,7 @@ const Login = () => {
                         <p>Difficult in Finding related Notes, Books...</p>
                         <Link to="/register"><button className="btn transparent" id="register-button">Sign Up</button></Link>
                     </div>
-                    <LoginImg className="image" />
+                    <img src={login} className="image" alt=""/>
                 </div>
             </div>
         </div>
