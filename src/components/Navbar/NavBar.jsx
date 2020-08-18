@@ -1,7 +1,7 @@
 import React from "react";
-import './navbar.scss'
-import logo from '../../images/Logo143x32.svg'
-import {Link} from "react-router-dom";
+import './navbar.scss';
+import {Link} from 'react-router-dom';
+import logo from '../../images/Logo143x32.svg';
 
 
 const NavBar = () => {
@@ -17,8 +17,8 @@ const NavBar = () => {
                 <ul className="nav-bar-links">
                     <li className="link"><Link to="/dashboard">Home</Link></li>
                     <li className="link"><Link to="/">Blog</Link></li>
-                    <li className="link"><Link to="/">Log In</Link></li>
-                    <li className="link"><Link to="/">Sign Up</Link></li>
+                    <li className="link"><Link to="/login">Log In</Link></li>
+                    <li className="link"><Link to="/register">Sign Up</Link></li>
                 </ul>
             </div>
         </nav>

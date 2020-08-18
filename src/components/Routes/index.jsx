@@ -3,6 +3,8 @@ import {Switch, Route} from 'react-router-dom';
 
 import Home from "../Home/Home";
 import Dashboard from "../Dashboard/Dashboard";
+import Login from '../Login/Login';
+import Register from '../Register/Register';
 
 const Routes = () => {
     return (
