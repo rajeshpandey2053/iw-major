@@ -1,0 +1,22 @@
+.test-scroll {
+  padding: 5rem 0;
+}
+.feed-wrapper {
+  //height: 100%;
+  overflow: auto;
+
+}
+::-webkit-scrollbar {
+  width: 5px;
+  background: none;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track {
+  background: none;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb {
+  background: #6d6d6d;
+  border-radius: 50px;
+}
+

@@ -1,3 +1,20 @@
-.dashboard {
-  display: flex;
+div.dashboard-wrapper {
+  height: 100vh;
+  padding: 61px 0 0 10px;
+
+  .dashboard-content-wrapper {
+    display: flex;
+    height: 100%;
+
+    #sidebar {
+      border-right: 1px solid #808080;
+      padding: 0 0 0 10px;
+    }
+    #feed {
+      border-right: 1px solid #808080;
+      padding: 0 0 0 10px;
+      height: 100%;
+      overflow: auto;
+    }
+  }
 }

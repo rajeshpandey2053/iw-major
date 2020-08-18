@@ -6,6 +6,11 @@ nav.nav-main-wrapper {
   justify-content: center;
   border-bottom: 1px solid #d7d7d7;
   box-shadow: 0 0 5px #d7d7d7 ;
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  z-index: 999;
 
   .navbar-container {
     display: flex;
