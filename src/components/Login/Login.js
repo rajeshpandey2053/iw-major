@@ -23,8 +23,8 @@ const Login = () => {
                         <input type="submit" value="Login" className="btn solid" />
                         <p className="social-text">or Login with social platforms</p>
                         <div className="login-form__social-media-icons">
-                            <a href="#" className="social-icon"><Facebook /></a>
-                            <a href="#" className="social-icon"><GitHub /></a>
+                            <a href="/" className="social-icon"><Facebook /></a>
+                            <a href="/" className="social-icon"><GitHub /></a>
                         </div>
                     </form>
 

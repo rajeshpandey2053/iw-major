@@ -5,19 +5,19 @@
   box-sizing: border-box;
 }
 
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  monospace;
+}
+
 div.body {
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: auto;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
-.main-wrapper {
-  position: relative;
-  padding-bottom: 128px;
-}
+/*.main-wrapper {*/
+/*  padding: 61px 0 0 0;*/
+/*}*/
