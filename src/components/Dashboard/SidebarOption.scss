@@ -1,0 +1,26 @@
+$color_code: #4f00c7;
+$color_code_hover: #4e2092;
+
+.sidebarOption {
+  display: flex;
+  padding: 10px;
+  //   align-items: center;
+  cursor: pointer;
+
+  :hover {
+    border-radius: 30px;
+    color: $color_code_hover;
+    transition: color 100ms ease-out;
+  }
+
+  h2 {
+    font-weight: 800;
+    font-size: 20px;
+    margin-right: 20px;
+    padding-left: 20px;
+  }
+}
+
+.sidebarOption--active {
+  color: $color_code_hover;
+}
