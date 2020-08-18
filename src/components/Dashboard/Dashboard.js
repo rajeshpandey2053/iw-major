@@ -6,7 +6,7 @@ import Sidebar from "./Sidebar";
 const Dashboard = () => {
   return (
     <div className="dashbaord">
-      <h1>This is a Dashboard</h1>
+      {/* <h1>This is a Dashboard</h1> */}
 
       {/* Sidebar */}
       <Sidebar />
