@@ -13,7 +13,6 @@ const Dashboard = () => {
           <div id="sidebar" className='col-md-3 col-3'>
               <Sidebar />
           </div>
-
           {/* Feed */}
           <div id="feed" className="col-md-6 col-6">
               <Feed />
