@@ -12,9 +12,11 @@ div.dashboard-wrapper {
     }
     #feed {
       border-right: 1px solid #808080;
-      padding: 0 0 0 10px;
+      padding: 0 0 0 0;
       height: 100%;
       overflow: auto;
+      background: #fdfdfd;
+      //background: #ff006f;
     }
   }
 }
