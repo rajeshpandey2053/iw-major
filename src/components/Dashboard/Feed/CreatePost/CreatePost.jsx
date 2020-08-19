@@ -12,9 +12,7 @@ const CreatePost = () => {
                     <img src={blankAvatarImage} height={100} alt="Avatar"/>
                 </div>
                 <div className='input-section'>
-                    <textarea name="caption" id="caption" cols={30} rows={2}>
-                        Want to share something?
-                    </textarea>
+                    <textarea name="caption" id="caption" cols={30} rows={2} placeholder='Want to share something?' />
                 </div>
             </div>
 
