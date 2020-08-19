@@ -21,7 +21,7 @@ function Register() {
                     <form action="" className="register-form">
                         <h2 className="register-form__title">Register</h2>
                         <div className="row">
-                            <div className="col-md-6">
+                            <div className="col-md-6 col-sm-6">
                                 <div className="register-form__input-field">
                                     <Person />
                                     <input type="text" placeholder="First Name" className="first-name" required/>
