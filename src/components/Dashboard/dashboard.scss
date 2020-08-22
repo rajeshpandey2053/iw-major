@@ -18,5 +18,9 @@ div.dashboard-wrapper {
       background: #fdfdfd;
       //background: #ff006f;
     }
+    #widgets {
+      height: 100%;
+      overflow: scroll;
+    }
   }
 }

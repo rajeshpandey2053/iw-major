@@ -1,0 +1,30 @@
+.blog-card {
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  margin-right: 5px;
+  box-shadow: 0 0 5px rgba(182, 179, 179, 0.4);
+  transition: all 0.1s;
+
+  &:hover {
+    box-shadow: 0 0 7px rgba(182, 179, 179, 0.8);
+  }
+
+  &__blog-title {
+    border-bottom: #d7d7d7 1px solid;
+    h1 {
+      font-size: 1.25rem;
+    }
+  }
+  &__blog-description {
+    border-bottom: #d7d7d7 1px solid;
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  &__read-more {
+  float: right;
+  }
+
+}
