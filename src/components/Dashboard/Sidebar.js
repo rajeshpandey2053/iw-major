@@ -11,21 +11,28 @@ import {Link} from "react-router-dom";
 function Sidebar() {
     return (
         <div className="sidebar">
-            <Link to="/dashboard">
-                <SidebarOption active Icon={HomeIcon} text="Home"/>
-            </Link>
+            <div className="sidebar-links">
+                <Link to="/dashboard">
+                    <SidebarOption active Icon={HomeIcon} text="Home"/>
+                </Link>
 
-            <Link to="/dashboard">
-                <SidebarOption Icon={SearchIcon} text="Explore"/>
-            </Link>
+                <Link to="/dashboard">
+                    <SidebarOption Icon={SearchIcon} text="Explore"/>
+                </Link>
 
-            <Link to="/dashboard">
-                <SidebarOption Icon={NotificationsIcon} text="Notifications"/>
-            </Link>
+                <Link to="/dashboard">
+                    <SidebarOption Icon={NotificationsIcon} text="Notifications"/>
+                </Link>
 
-            <Link to="/dashboard">
-                <SidebarOption Icon={PersonIcon} text="Profile"/>
-            </Link>
+                <Link to="/dashboard">
+                    <SidebarOption Icon={PersonIcon} text="Profile"/>
+                </Link>
+            </div>
+            <div className="sidebar-footer">
+                <p>
+                    <a href="/">HamroNote</a> &copy; 2020
+                </p>
+            </div>
         </div>
     );
 }

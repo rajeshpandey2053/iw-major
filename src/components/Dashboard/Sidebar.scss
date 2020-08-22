@@ -1,4 +1,20 @@
 $color_code: #000000;
-.sidebar-wrapper {
-  flex-basis: 100%;
+.sidebar {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  .sidebar-links {
+    margin-top: 10px;
+    a {
+      color: #6600fc;
+    }
+  }
+
+  .sidebar-footer {
+    color: gray;
+    p a {
+      color: gray;
+    }
+  }
 }
