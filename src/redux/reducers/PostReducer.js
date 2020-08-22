@@ -4,6 +4,9 @@ import {
   FETCH_POST_REQUEST,
   FETCH_POST_SUCCESS,
   FETCH_POST_FAILURE,
+  CREATE_POST_REQUEST,
+  CREATE_POST_SUCCESS,
+  CREATE_POST_FAILURE,
 } from "../actions/ActionTypes";
 
 // export default function PostReducer(state = [], action) {
@@ -35,6 +38,23 @@ const reducer = (state = initialState, action) => {
         errors: "",
       };
     case FETCH_POST_FAILURE:
+      return {
+        loading: false,
+        posts: [],
+        error: action.error,
+      };
+    case CREATE_POST_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case CREATE_POST_SUCCESS:
+      return {
+        loading: false,
+        posts: action.posts,
+        errors: "",
+      };
+    case CREATE_POST_FAILURE:
       return {
         loading: false,
         posts: [],

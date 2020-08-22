@@ -24,7 +24,6 @@ function PostComponent({ postData, fetchPosts }) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     postData: state.post,
   };
