@@ -1,134 +1,100 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import './Register.scss';
-import { Person, Lock, Email, AccountCircle, Phone, Home, School } from '@material-ui/icons';
-import login from '../../images/Login.svg';
+import RegisterView from './common/Register';
+import axios from 'axios';
 
 
+const url = 'http://127.0.0.1:8000/api/accounts/v1/register'
 
+class Register extends React.Component {
 
-function Register() {
+    constructor(props){
+        super(props);
+        this.state = {
+            'first_name': '',
+            'last_name': '',
+            'email': '',
+            'username': '',
+            'contact_number':'',
+            'address':'',
+            'semester':'',
+            'year':'',
+            'faculty': '',
+            'college':'',
+            'university':'',
+            'password':'',
+            'confirm_password':''
+        }
 
-    const handleRegister = (e) => {
-        e.preventDefault();
-        console.log(e.target.parentElement)
     }
 
-    return (
-        <div className="content-wrapper">
-            <div className='register-form-container'>
-                <div className="register">
-                    <form action="" className="register-form">
-                        <h2 className="register-form__title">Register</h2>
-                        <div className="row">
-                            <div className="col-md-6 col-sm-6">
-                                <div className="register-form__input-field">
-                                    <Person />
-                                    <input type="text" placeholder="First Name" className="first-name" required/>
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="register-form__input-field">
-                                    <Person />
-                                    <input type="text" placeholder="Last Name" required/>
-                                </div>
-                            </div>
-                            
-                            <div className="col-md-12">
-                                <div className="register-form__input-field">
-                                    <Email />
-                                    <input type="email" placeholder="Email" required/>
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="register-form__input-field">
-                                    <AccountCircle />
-                                    <input type="text" placeholder="Username" required/>
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="register-form__input-field">
-                                    <Phone />
-                                    <input type="number" placeholder="Contact Number" required/>
-                                </div>
-                            </div>
-                            <div className="col-md-12">
-                                <div className="register-form__input-field">
-                                    <Home />
-                                    <input type="email" placeholder="Address" required/>
-                                </div>
-                            </div>
-                            <div className="col-md-4">
-                                <label htmlFor="">Semester</label>
-                                <div className="register-form__input-field">
-                                    <select name="" id="" required>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="col-md-4">
-                                <label>Year</label>
-                                <div className="register-form__input-field">
-                                    <select name="" id="" required>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="col-md-4">
-                                <label>Faculty</label>
-                                <div className="register-form__input-field">
-                                    <select name="" id="" required>
-                                        <option value="1">BBS</option>
-                                        <option value="2">BBA</option>
-                                        <option value="3">Bsc.CSIT</option>
-                                        <option value="4">BCA</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="col-md-12">
-                                <div className="register-form__input-field">
-                                    <School />
-                                    <input type="text" placeholder="College" required/>
-                                </div>
-                            </div>
-                            <div className="col-md-12">
-                                <div className="register-form__input-field">
-                                    <School />
-                                    <input type="text" placeholder="University" required/>
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="register-form__input-field">
-                                    <Lock />
-                                    <input type="password" placeholder="Password" required/>
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="register-form__input-field">
-                                    <Lock />
-                                    <input type="password" placeholder="Confirm Password" required/>
-                                </div>
-                            </div>
-                            <input type="submit" value="Register" className="btn solid" onClick={handleRegister} />
-                        </div>
-                    </form>
+    handleChange = (e) => {
+        e.preventDefault();
+        if (e.target.name === 'first_name'){
+            this.setState({first_name: e.target.value});
+        } else if (e.target.name === 'last_name'){
+            this.setState({last_name: e.target.value});
+        } else if (e.target.name === 'email'){
+            this.setState({email: e.target.value})
+        } else if (e.target.name === 'username'){
+            this.setState({username: e.target.value});
+        } else if (e.target.name === 'phone'){
+            this.setState({contact_number: e.target.value});
+        } else if (e.target.name === 'address'){
+            this.setState({address: e.target.value});
+        } else if (e.target.name === 'semester'){
+            this.setState({semester: parseInt(e.target.value)});
+        } else if (e.target.name === 'year'){
+            this.setState({year: parseInt(e.target.value)});
+        } else if (e.target.name === 'faculty'){
+            this.setState({faculty: parseInt(e.target.value)});
+        } else if (e.target.name === 'college'){
+            this.setState({college: parseInt(e.target.value)});
+        } else if (e.target.name === 'university'){
+            this.setState({university: parseInt(e.target.value)});
+        } else if (e.target.name === 'password'){
+            this.setState({password: e.target.value});
+        } else if (e.target.name === 'confirm_password'){
+            this.setState({confirm_password: e.target.value});
+        }
+    }
 
-                </div>
-            </div>
-            <div className="panel-container">
-                <div className="panel left-panel">
-                    <div className="content">
-                        <h3>HamroNotes</h3>
-                        <p>Already become a Member?</p>
-                        <Link to="/login"><button className="btn transparent" id="register-button">Log In</button></Link>
-                    </div>
-                    <img src={login} className="image" alt=""/>
-                </div>
-            </div>
-        </div>
-    )
+    handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post(url, {
+                username: this.state.username, 
+                first_name: this.state.first_name, 
+                last_name: this.state.last_name,
+                email: this.state.email, 
+                password: this.state.password,
+                confirm_password: this.state.confirm_password, profile:{
+                    contact_number: this.state.contact_number,
+                    address: this.state.address,
+                    education: {
+                        semester: this.state.semester,
+                        year: this.state.year,
+                        college: this.state.college,
+                        faculty: this.state.faculty,
+                        university: this.state.university
+                    }
+                }}).then(
+                    res => {
+                        console.log(res.data);
+                        console.log(res.data);
+                    }
+                );
+            console.log(response);
+        } catch(e){
+            console.log(e.response)
+        }
+    }
+
+    render(){
+        console.log(this.state)
+        return (
+            <RegisterView handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
+        )
+    }
 }
 
 export default Register;
