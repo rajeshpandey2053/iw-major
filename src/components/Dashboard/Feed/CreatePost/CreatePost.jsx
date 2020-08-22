@@ -6,7 +6,7 @@ import AttachmentRoundedIcon from "@material-ui/icons/AttachmentRounded";
 import { createPosts } from "../../../../redux/actions/PostAction";
 import { connect } from "react-redux";
 
-const CreatePost = ({ fetchPosts }) => {
+const CreatePost = (props) => {
   const [caption, setCaption] = useState("");
   const [file, setFile] = useState(null);
 
@@ -22,7 +22,7 @@ const CreatePost = ({ fetchPosts }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    createPosts({ caption, file });
+    props.createPosts({ caption, file });
   };
 
   return (
@@ -74,8 +74,8 @@ const CreatePost = ({ fetchPosts }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createPosts: () => dispatch(createPosts()),
+    createPosts: (posts) => dispatch(createPosts(posts)),
   };
 };
 
-export default connect(mapDispatchToProps)(CreatePost);
+export default connect(null, mapDispatchToProps)(CreatePost);

@@ -17,7 +17,7 @@ function PostComponent({ postData, fetchPosts }) {
       <div>
         {postData &&
           postData.posts &&
-          postData.posts.map((post) => <p>{post.caption}</p>)}
+          postData.posts.map((post, index) => <p key={index} >{post.caption}</p>)}
       </div>
     </div>
   );
