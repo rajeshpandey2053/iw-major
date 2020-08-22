@@ -75,19 +75,20 @@ export const fetchPosts = () => {
 };
 
 export const createPosts = (posts) => {
-  console.log("hello from createposts");
+  console.log({posts});
   return (dispatch) => {
-    console.log("hello1");
+    // console.log({posts});
     dispatch(createPostRequest);
     Axios.post("http://127.0.0.1:8000/api/posts/v1/post/create/", {
       user: 1,
-      post_slug: "re",
-      caption: "Hero_boy",
-      file: null,
+      post_slug: "post-slug",
+      caption: posts.caption,
+      file: posts.file,
     })
       .then((response) => {
         console.log(response);
         const savedposts = response.data;
+        // console.log(savedposts);
         dispatch(createPostSuccess(savedposts));
       })
       .catch((error) => {
