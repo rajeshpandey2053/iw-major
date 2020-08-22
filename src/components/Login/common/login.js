@@ -7,7 +7,6 @@ import login from '../../../images/Login.svg';
 
 const LoginView = (props) => {
     const {handleChange, handleLogin} = props;
-    console.log(props);
     return (
         <div className="div-container">
             <div className='form-container'>

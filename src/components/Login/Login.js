@@ -30,7 +30,12 @@ class Login extends React.Component {
     handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const {data : {token}} = await axios.post(url, {email: this.state.email, password: this.state.password});
+            const {data : {token}} = await axios.post(url, {email: this.state.email, password: this.state.password}).then(
+                res => {
+                    console.log(res);
+                    console.log(res.data);
+                }
+            );
             console.log(token);
         } catch(e){
 
@@ -43,17 +48,17 @@ class Login extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
-    console.log(state)
-    return {
-        token: state.token
-    }
-}
+// const mapStateToProps = state => {
+//     console.log(state)
+//     return {
+//         token: state.token
+//     }
+// }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        loginSuccess: () => dispatch(loginSuccess())
-    }
-}
+// const mapDispatchToProps = dispatch => {
+//     return {
+//         loginSuccess: () => dispatch(loginSuccess())
+//     }
+// }
 
-export default connect(mapStateToProps)(Login);
+export default Login;
