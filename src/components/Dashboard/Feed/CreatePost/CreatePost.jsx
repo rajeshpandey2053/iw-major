@@ -21,6 +21,7 @@ const CreatePost = (props) => {
   };
 
   const handleSubmit = (event) => {
+    console.log("hello2");
     event.preventDefault();
     props.createPosts({ caption, file });
   };

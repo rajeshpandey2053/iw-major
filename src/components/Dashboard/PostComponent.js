@@ -7,6 +7,7 @@ function PostComponent({ postData, fetchPosts }) {
   useEffect(() => {
     fetchPosts();
   }, []);
+  console.log(postData);
   return postData.loading ? (
     <h2>Loading</h2>
   ) : postData.error ? (
@@ -17,7 +18,9 @@ function PostComponent({ postData, fetchPosts }) {
       <div>
         {postData &&
           postData.posts &&
-          postData.posts.map((post, index) => <p key={index} >{post.caption}</p>)}
+          postData.posts.map((post, index) => (
+            <p key={index}>{post.caption}</p>
+          ))}
       </div>
     </div>
   );

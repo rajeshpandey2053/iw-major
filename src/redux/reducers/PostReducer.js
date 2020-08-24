@@ -50,8 +50,8 @@ const reducer = (state = initialState, action) => {
       };
     case CREATE_POST_SUCCESS:
       return {
+        ...state,
         loading: false,
-        posts: action.posts,
         errors: "",
       };
     case CREATE_POST_FAILURE:

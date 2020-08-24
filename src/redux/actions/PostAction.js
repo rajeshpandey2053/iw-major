@@ -37,22 +37,22 @@ export const fetchPostFailure = (error) => {
 };
 
 export const createPostRequest = () => {
-  console.log("hello2");
+  // console.log("hello2");
   return {
     type: CREATE_POST_REQUEST,
   };
 };
 
-export const createPostSuccess = (savedposts) => {
+export const createPostSuccess = () => {
   console.log("Hello from success");
   return {
     type: CREATE_POST_SUCCESS,
-    posts: savedposts,
   };
 };
 
 export const createPostFailure = (error) => {
   console.log("Hello from Failuare");
+  // console.log(error);
   return {
     type: CREATE_POST_FAILURE,
     error: error,
@@ -69,13 +69,14 @@ export const fetchPosts = () => {
       })
       .catch((error) => {
         const errorMsg = error.message;
+        console.log(error);
         dispatch(fetchPostFailure(errorMsg));
       });
   };
 };
 
 export const createPosts = (posts) => {
-  console.log({posts});
+  // console.log({ posts });
   return (dispatch) => {
     // console.log({posts});
     dispatch(createPostRequest);
@@ -86,14 +87,10 @@ export const createPosts = (posts) => {
       file: posts.file,
     })
       .then((response) => {
-        console.log(response);
-        const savedposts = response.data;
-        // console.log(savedposts);
-        dispatch(createPostSuccess(savedposts));
+        dispatch(createPostSuccess());
       })
       .catch((error) => {
         const errorMsg = error.message;
-        console.log(error);
         dispatch(createPostFailure(errorMsg));
       });
   };
