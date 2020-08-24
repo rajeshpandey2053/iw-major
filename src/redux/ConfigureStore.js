@@ -6,7 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 export default function ConfigureStore(initialState) {
   const composeEnhancers =
-    window.__REDUX_DEVTOOLS_EXTENSIONS_COMPOSE__ || compose; //add support for redux devtools
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;//add support for redux devtools
   return createStore(
     rootReducer,
     initialState,
