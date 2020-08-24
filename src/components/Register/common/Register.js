@@ -2,12 +2,22 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Register.scss';
 import { Person, Lock, Email, AccountCircle, Phone, Home, School } from '@material-ui/icons';
+import { CircularProgress } from '@material-ui/core';
 import login from '../../../images/Login.svg';
 
 
 
 function RegisterView(props) {
-
+    const {errorMessage, successMessage, isLoading, universityList, facultyUrl} = props;
+    const renderObject = () => {
+        return Object.keys(errorMessage).map((key, value)=> {
+            return (
+                <div key={key} className="col-md-12">
+                    <p className="text-danger">{errorMessage[key][0]}</p>
+                </div>
+            )
+        })
+    }
     return (
         <div className="content-wrapper">
             <div className='register-form-container'>
@@ -15,6 +25,8 @@ function RegisterView(props) {
                     <form action="" className="register-form" onSubmit={props.handleSubmit} method="POST">
                         <h2 className="register-form__title">Register</h2>
                         <div className="row">
+                            <p className="text-success">{successMessage}</p>
+                            {renderObject()}
                             <div className="col-md-6 col-sm-6">
                                 <div className="register-form__input-field">
                                     <Person />
@@ -49,38 +61,31 @@ function RegisterView(props) {
                             <div className="col-md-12">
                                 <div className="register-form__input-field">
                                     <Home />
-                                    <input type="address" placeholder="Address" name="address" onChange={props.handleChange} required/>
+                                    <input type="text" placeholder="Address" name="address" onChange={props.handleChange} required/>
                                 </div>
                             </div>
                             <div className="col-md-4">
                                 <label htmlFor="">Semester</label>
                                 <div className="register-form__input-field">
-                                    <select id="" name="semester" onChange={props.handleChange} required>
-                                        <option value="">-----</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                    </select>
+                                    
+                                    <input type="number" name="semester" placeholder="Sem" onChange={props.handleChange} className="small-input"/>
                                 </div>
                             </div>
                             <div className="col-md-4">
                                 <label>Year</label>
                                 <div className="register-form__input-field">
-                                    <select id="" name="year" onChange={props.handleChange} required>
-                                        <option value="">-----</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                    </select>
+                                    <input type="number" name="year" placeholder="Year" onChange={props.handleChange} className="small-input"/>
                                 </div>
                             </div>
                             <div className="col-md-4">
                                 <label>Faculty</label>
                                 <div className="register-form__input-field">
                                     <select name="faculty" onChange={props.handleChange} id="" required>
-                                        <option value="">-----</option>
-                                        <option value="1">BBS</option>
-                                        <option value="2">BBA</option>
-                                        <option value="3">Bsc.CSIT</option>
-                                        <option value="4">BCA</option>
+                                    <option value="">Select Faculty</option>
+                                    {facultyUrl?.map((res, key) => {
+                                        return <option key={key} value={res.id}>{`${res.faculty_name}(${res.fac_short_form})` }</option>
+
+                                    })}
                                     </select>
                                 </div>
                             </div>
@@ -92,8 +97,14 @@ function RegisterView(props) {
                             </div>
                             <div className="col-md-12">
                                 <div className="register-form__input-field">
-                                    <School />
-                                    <input type="text" placeholder="University" name="university" onChange={props.handleChange} required/>
+                                <select name="university" onChange={props.handleChange} id="university-select" required>
+                                    <option value="">Select University</option>
+                                    {universityList?.map((res, key) => {
+                                        return <option key={key} value={res.id}>{`${res.university_name}(${res.uni_short_form})` }</option>
+
+                                    })}
+                                        
+                                    </select>
                                 </div>
                             </div>
                             <div className="col-md-6">
@@ -108,7 +119,7 @@ function RegisterView(props) {
                                     <input type="password" placeholder="Confirm Password" name="confirm_password" onChange={props.handleChange} required/>
                                 </div>
                             </div>
-                            <input type="submit" value="Register" className="btn solid"/>
+                            <button className="btn btn-primary">{ isLoading ? <CircularProgress color="inherit" /> : 'Register' }</button>
                         </div>
                     </form>
 
@@ -119,7 +130,9 @@ function RegisterView(props) {
                     <div className="content">
                         <h3>HamroNotes</h3>
                         <p>Already become a Member?</p>
-                        <Link to="/login"><button className="btn transparent" id="register-button">Log In</button></Link>
+                        <Link to="/login"><button className="btn transparent" id="register-button">
+                            Log In
+                            </button></Link>
                     </div>
                     <img src={login} className="image" alt=""/>
                 </div>

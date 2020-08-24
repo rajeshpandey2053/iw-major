@@ -4,6 +4,7 @@ import axios from 'axios';
 import {loginSuccess} from '../../redux/loginReducer/loginAction';
 import {connect} from 'react-redux';
 
+
 const url = 'http://127.0.0.1:8000/api/accounts/v1/login';
 
 class Login extends React.Component {
@@ -13,7 +14,8 @@ class Login extends React.Component {
             email:'',
             password:'',
             errorMessage:'',
-            loading: false,
+            isloading: false,
+            successMessage:'',
         }
 
     }
@@ -29,36 +31,34 @@ class Login extends React.Component {
 
     handleLogin = async (e) => {
         e.preventDefault();
+        this.setState({isloading: true});
         try {
             const {data : {token}} = await axios.post(url, {email: this.state.email, password: this.state.password}).then(
                 res => {
-                    console.log(res);
-                    console.log(res.data);
-                }
-            );
-            console.log(token);
+                    this.setState({successMessage: "Login Success"});
+                    this.props.loginSuccess(token);
+                })
         } catch(e){
-
+            console.log(e);
+            this.setState({errorMessage: e.response?.data?.non_field_errors});
         }
     }
 
     render(){
-        console.log(this.props);
         return <LoginView props={this.state} handleChange={this.handleOnChange} handleLogin={this.handleLogin}/>
     }
 }
 
-// const mapStateToProps = state => {
-//     console.log(state)
-//     return {
-//         token: state.token
-//     }
-// }
+const mapStateToProps = state => {
+    return {
+        token: state.token
+    }
+}
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         loginSuccess: () => dispatch(loginSuccess())
-//     }
-// }
+const mapDispatchToProps = dispatch => {
+    return {
+        loginSuccess: token => dispatch(loginSuccess(token))
+    }
+}
 
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

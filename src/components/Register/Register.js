@@ -4,6 +4,8 @@ import axios from 'axios';
 
 
 const url = 'http://127.0.0.1:8000/api/accounts/v1/register'
+const uniUrl = 'http://127.0.0.1:8000/api/accounts/v1/university'
+const facultyUrl = 'http://127.0.0.1:8000/api/accounts/v1/faculty'
 
 class Register extends React.Component {
 
@@ -22,10 +24,33 @@ class Register extends React.Component {
             'college':'',
             'university':'',
             'password':'',
-            'confirm_password':''
+            'confirm_password':'',
+            'emailErrorMessage':'',
+            'errorMessage':{},
+            'successMessage':'',
+            'isLoading': false,
+            'universityList': [],
+            'facultyUrl': [],
         }
-
     }
+
+    componentDidMount() {
+        axios.get(uniUrl)
+          .then(res => {
+            const universityList = res.data;
+            this.setState({ universityList });
+          })
+        
+        axios.get(facultyUrl)
+          .then(res => {
+            const facultyUrl = res.data;
+            this.setState({ facultyUrl });
+          })
+        
+        
+    }
+      
+    
 
     handleChange = (e) => {
         e.preventDefault();
@@ -60,6 +85,7 @@ class Register extends React.Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
+        this.setState({isLoading: true});
         try {
             const response = await axios.post(url, {
                 username: this.state.username, 
@@ -79,20 +105,32 @@ class Register extends React.Component {
                     }
                 }}).then(
                     res => {
-                        console.log(res.data);
-                        console.log(res.data);
+                        this.setState({isLoading: false});
+                        this.setState({errorMessage:{}});
+                        this.setState({successMessage: res.data.message})
                     }
                 );
-            console.log(response);
         } catch(e){
-            console.log(e.response)
+                console.log(e.response.data)
+                this.setState({isLoading: false});
+                this.setState({errorMessage:e.response.data});
+
         }
     }
 
     render(){
-        console.log(this.state)
         return (
-            <RegisterView handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
+            <div>
+                <RegisterView 
+                handleChange={this.handleChange} 
+                handleSubmit={this.handleSubmit} 
+                successMessage={this.state.successMessage} 
+                errorMessage={this.state.errorMessage}
+                isLoading={this.state.isLoading}
+                universityList={this.state.universityList}
+                facultyUrl={this.state.facultyUrl}
+                />
+            </div>
         )
     }
 }

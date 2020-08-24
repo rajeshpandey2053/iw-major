@@ -3,16 +3,22 @@ import './Login.scss';
 import {Link} from 'react-router-dom';
 import { Lock, AccountCircle, Facebook, GitHub } from '@material-ui/icons';
 import login from '../../../images/Login.svg';
+import { CircularProgress } from '@material-ui/core';
+
 
 
 const LoginView = (props) => {
-    const {handleChange, handleLogin} = props;
+    const {handleChange, handleLogin, props:{ errorMessage, successMessage, isLoading }} = props;
+    console.log(errorMessage);
     return (
         <div className="div-container">
             <div className='form-container'>
                 <div className="login">
                     <form action="" className="login-form" onSubmit={handleLogin}>
                         <h2 className="login-form__title">Sign In</h2>
+                        <p className="text-success">{successMessage}</p>
+                        <p className="text-danger">{errorMessage}</p>
+
                         <div className="login-form__input-field">
                             <AccountCircle />
                             <input type="email" name="email" placeholder="Email" onChange={handleChange}/>
@@ -21,7 +27,7 @@ const LoginView = (props) => {
                             <Lock />
                             <input type="password" name="password" placeholder="Password" onChange={handleChange}/>
                         </div>
-                        <input type="submit" value="Login" className="btn solid" />
+                        <button className="btn btn-primary">{ isLoading ? <CircularProgress color="inherit" /> : 'Login' }</button>
                         <p className="social-text">or Login with social platforms</p>
                         <div className="login-form__social-media-icons">
                             <a href="/" className="social-icon"><Facebook /></a>
