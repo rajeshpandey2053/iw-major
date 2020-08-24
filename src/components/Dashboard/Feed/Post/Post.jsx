@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {useRouteMatch, Link} from 'react-router-dom';
 import './post.scss';
 import blankProfileImg from '../../../../images/blank-profile-picture-973460_1280.webp';
 import FavoriteBorderSharpIcon from '@material-ui/icons/FavoriteBorderSharp';
@@ -6,6 +7,7 @@ import FavoriteSharpIcon from '@material-ui/icons/FavoriteSharp';
 import InsertCommentRoundedIcon from '@material-ui/icons/InsertCommentRounded';
 
 const Post = (props) => {
+    const {path} = useRouteMatch()
 
     const [isLiked, setIsLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(0)
@@ -66,6 +68,9 @@ const Post = (props) => {
                 </div>
                 <div className='like-comment-btn'>
                     <InsertCommentRoundedIcon/> Comment
+                </div>
+                <div className='like-comment-btn'>
+                    <Link to={`${path}/post`}>Details</Link>
                 </div>
             </div>
         </div>
