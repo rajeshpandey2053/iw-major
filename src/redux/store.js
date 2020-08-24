@@ -4,6 +4,5 @@ import reducer from './loginReducer/loginReducer';
 import ReduxThunk from 'redux-thunk';
 
 const  store = createStore(reducer);
-
-console.log(store)
+console.log(store.getState());
 export default store;
