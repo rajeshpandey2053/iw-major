@@ -7,6 +7,10 @@ input {
 $color_code: #4f00c7;
 $color_code_hover: #4e2092;
 
+.container-fluid {
+    padding-left: 0px !important;
+}
+
 .div-container {
     position: relative;
     width: 100%;
@@ -168,3 +172,34 @@ $color_code_hover: #4e2092;
     }
 }
 
+@media (max-width: 570px) {
+    .div-container {
+      padding: 1.5rem;
+
+      .login {
+        left: 0;
+        transform: translate(10%, -5%);
+        form {
+            padding: 0 0.5rem;
+            input::-webkit-input-placeholder{
+                padding-left:10px;
+            }
+        }
+      }
+      .panel {
+        .content{
+            padding: 0.5rem 1rem;
+            margin-bottom: 220%;
+        }
+        .image {
+            display: none;
+          }
+      }
+    }
+  
+    .div-container:before {
+        top: -70%;
+        right: -50%;
+
+    }
+}

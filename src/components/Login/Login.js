@@ -1,47 +1,64 @@
-import React from 'react';
-import './Login.scss';
-import {Link} from 'react-router-dom';
-import { Lock, AccountCircle, Facebook, GitHub } from '@material-ui/icons';
-import login from '../../images/Login.svg';
+import React, {useState, useEffect} from 'react';
+import LoginView from './common/login';
+import axios from 'axios';
+import {loginSuccess} from '../../redux/loginReducer/loginAction';
+import {connect} from 'react-redux';
 
 
-const Login = () => {
-    return (
-        <div className="div-container">
-            <div className='form-container'>
-                <div className="login">
-                    <form action="" className="login-form">
-                        <h2 className="login-form__title">Sign In</h2>
-                        <div className="login-form__input-field">
-                            <AccountCircle />
-                            <input type="email" placeholder="Email" />
-                        </div>
-                        <div className="login-form__input-field">
-                            <Lock />
-                            <input type="password" placeholder="Password" />
-                        </div>
-                        <input type="submit" value="Login" className="btn solid" />
-                        <p className="social-text">or Login with social platforms</p>
-                        <div className="login-form__social-media-icons">
-                            <a href="/" className="social-icon"><Facebook /></a>
-                            <a href="/" className="social-icon"><GitHub /></a>
-                        </div>
-                    </form>
+const url = 'http://127.0.0.1:8000/api/accounts/v1/login';
 
-                </div>
-            </div>
-            <div className="panel-container">
-                <div className="panel left-panel">
-                    <div className="content">
-                        <h3>HamroNotes</h3>
-                        <p>Difficult in Finding related Notes, Books...</p>
-                        <Link to="/register"><button className="btn transparent" id="register-button">Sign Up</button></Link>
-                    </div>
-                    <img src={login} className="image" alt=""/>
-                </div>
-            </div>
-        </div>
-    )
+class Login extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            email:'',
+            password:'',
+            errorMessage:'',
+            isloading: false,
+            successMessage:'',
+        }
+
+    }
+    
+    handleOnChange = (e) => {
+        e.preventDefault();
+        if (e.target.name === "email"){
+            this.setState({email: e.target.value});
+        } else {
+            this.setState({password: e.target.value});
+        }
+    }
+
+    handleLogin = async (e) => {
+        e.preventDefault();
+        this.setState({isloading: true});
+        try {
+            const {data : {token}} = await axios.post(url, {email: this.state.email, password: this.state.password}).then(
+                res => {
+                    this.setState({successMessage: "Login Success"});
+                    this.props.loginSuccess(token);
+                })
+        } catch(e){
+            console.log(e);
+            this.setState({errorMessage: e.response?.data?.non_field_errors});
+        }
+    }
+
+    render(){
+        return <LoginView props={this.state} handleChange={this.handleOnChange} handleLogin={this.handleLogin}/>
+    }
 }
 
-export default Login;
+const mapStateToProps = state => {
+    return {
+        token: state.token
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        loginSuccess: token => dispatch(loginSuccess(token))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
