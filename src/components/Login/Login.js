@@ -32,14 +32,14 @@ class Login extends React.Component {
     handleLogin = async (e) => {
         e.preventDefault();
         this.setState({isloading: true});
+        console.log(this.props)
         try {
-            const {data : {token}} = await axios.post(url, {email: this.state.email, password: this.state.password}).then(
-                res => {
+            const {data : {token}} = await axios.post(url, {email: this.state.email, password: this.state.password}).then(res => {
                     this.setState({successMessage: "Login Success"});
-                    this.props.loginSuccess(token);
+                    localStorage.setItem('token', res.data.token);
+                    this.props.loginSuccess(localStorage.getItem('token'));
                 })
         } catch(e){
-            console.log(e);
             this.setState({errorMessage: e.response?.data?.non_field_errors});
         }
     }

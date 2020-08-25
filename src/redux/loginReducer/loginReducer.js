@@ -2,7 +2,7 @@ import { REQUEST_LOGIN, LOGIN_SUCCESS, LOGIN_FAIL } from './loginType';
 
 const initialState = {
     loading: false,
-    token: '',
+    token: localStorage.getItem('token'),
     errorMessage: '',
 }
 
