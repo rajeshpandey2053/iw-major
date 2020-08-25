@@ -73,7 +73,7 @@ class Register extends React.Component {
         } else if (e.target.name === 'faculty'){
             this.setState({faculty: parseInt(e.target.value)});
         } else if (e.target.name === 'college'){
-            this.setState({college: parseInt(e.target.value)});
+            this.setState({college: e.target.value});
         } else if (e.target.name === 'university'){
             this.setState({university: parseInt(e.target.value)});
         } else if (e.target.name === 'password'){
