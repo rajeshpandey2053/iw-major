@@ -2,9 +2,11 @@ import React from "react";
 import './navbar.scss';
 import {Link} from 'react-router-dom';
 import logo from '../../images/Logo143x32.svg';
+import {connect} from 'react-redux';
 
 
-const NavBar = () => {
+const NavBar = (props) => {
+    console.log(props);
     return (
         <nav className='nav-main-wrapper'>
             <div className='navbar-container container'>
@@ -25,4 +27,10 @@ const NavBar = () => {
     );
 }
 
-export default NavBar;
+const mapStateToProps = state => {
+    return {
+        token: state.token
+    }
+}
+
+export default connect(mapStateToProps)(NavBar);
