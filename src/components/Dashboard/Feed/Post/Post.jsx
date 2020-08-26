@@ -13,6 +13,11 @@ const Post = (props) => {
     const {path} = useRouteMatch();
     const [isLiked, setIsLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(post?.stars_count || 0);
+    let fileName;
+    if (post?.file) {
+        const fileNameArr = post.file.split('/');
+        fileName = fileNameArr[fileNameArr.length - 1]
+    }
 
     return (
         <div className="post-wrapper">
@@ -41,6 +46,9 @@ const Post = (props) => {
 
             <div className="post-caption-wrapper">
                 <p>{post.caption}</p>
+                {console.log(post?.file)}
+                {post?.file? <p><a href={post.file}>{fileName}</a></p> : null }
+
                 <div className="like-counter">
                     <p>
                         {likesCount} {likesCount === 1 ? "Like" : "Likes"}
