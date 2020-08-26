@@ -19,6 +19,8 @@ const Feed = ({ postData, fetchPosts }) => {
           key={post.post_slug}
           caption={post.caption}
           username={post.user_name}
+          slug={post.post_slug}
+          created_at={post.created_at}
         />
       ))}
     </div>
