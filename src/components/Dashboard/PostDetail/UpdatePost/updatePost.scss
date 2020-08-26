@@ -6,6 +6,11 @@ form.post-update-form-wrapper {
   margin: 0 10px;
   box-shadow: 0 0 5px rgba(182, 179, 179, 0.4);
 
+  div.update-form-title {
+    border-bottom: 1px solid #d7d7d7;
+    margin-bottom: 10px;
+  }
+
   div.field-wrapper {
     display: flex;
     label {
@@ -20,6 +25,32 @@ form.post-update-form-wrapper {
       border-color: #d7d7d7;
       &:focus {
         outline: none;
+      }
+    }
+  }
+  div.action-update-btns {
+    display: flex;
+    padding-top: 15px;
+    align-items: center;
+    justify-content: flex-end;
+    input[type='submit'], button {
+      padding: 10px;
+      border: none;
+      color: white;
+      background: #6600fc;
+      border-radius: 7px;
+      margin: 0 5px;
+      &:hover {
+        background: #40009c;
+      }
+      &:focus {
+        outline: none;
+      }
+      &#cancel {
+        background: orangered;
+        &:hover {
+          background: #bf3503;
+        }
       }
     }
   }

@@ -16,6 +16,8 @@ const PostDetail = (props) => {
     const [likesCount, setLikesCount] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
     const [commentText, setCommentText] = useState('');
+    const [isUpdateSelected, setIsUpdateSelected] = useState(false)
+
     const history = useHistory();
 
     const handleChange = event => {
@@ -28,6 +30,8 @@ const PostDetail = (props) => {
         console.log(commentText);
     }
 
+    const updatePostToggle = () => setIsUpdateSelected(!isUpdateSelected)
+
     return (
         <React.Fragment>
             <div className='post-detail'>
@@ -39,6 +43,14 @@ const PostDetail = (props) => {
                         >
                             <ArrowBackIcon/>
                         </button>
+                        <div className="post-action-btns">
+                            <button
+                                id='update'
+                                onClick={() => updatePostToggle()}>
+                                Update
+                            </button>
+                            <button id='delete'>Delete</button>
+                        </div>
                     </div>
                 </div>
                 <div className="detail-wrapper">
@@ -100,7 +112,7 @@ const PostDetail = (props) => {
             </div>
 
             <div className="update-post-section">
-                <UpdatePost />
+                {isUpdateSelected ? <UpdatePost updatePostToggle={updatePostToggle}/> : null}
             </div>
 
             <div className="comment-section">
@@ -123,7 +135,7 @@ const PostDetail = (props) => {
                                    placeholder='Like the post? Tell here...'
                             />
                         </div>
-                        <button type="submit"><SendSharpIcon /></button>
+                        <button type="submit"><SendSharpIcon/></button>
                     </div>
                 </form>
             </div>
