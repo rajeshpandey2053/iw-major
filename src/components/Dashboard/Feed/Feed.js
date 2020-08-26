@@ -7,18 +7,18 @@ import CreatePost from "./CreatePost/CreatePost";
 import { fetchPosts } from "../../../redux/actions/PostAction";
 
 const Feed = ({ postData, fetchPosts }) => {
-  console.log("hello1");
+  // console.log("hello1");
   useEffect(() => {
     fetchPosts();
   }, []);
   return (
     <div className="feed-wrapper">
+      {console.log({postData})}
       <CreatePost />
       {postData.posts.map((post) => (
         <Post
           key={post.post_slug}
-          caption={post.caption}
-          username={post.user_name}
+          post={post}
         />
       ))}
     </div>

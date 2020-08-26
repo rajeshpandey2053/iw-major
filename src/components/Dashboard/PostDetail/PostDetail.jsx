@@ -10,6 +10,7 @@ import SendSharpIcon from '@material-ui/icons/SendSharp';
 import './postDetail.scss';
 import blankProfileImage from '../../../images/blank-profile-picture-973460_1280.webp';
 import Comment from "./Comment/Comment";
+import UpdatePost from "./UpdatePost/UpdatePost";
 
 const PostDetail = (props) => {
     const [likesCount, setLikesCount] = useState(0);
@@ -96,6 +97,10 @@ const PostDetail = (props) => {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div className="update-post-section">
+                <UpdatePost />
             </div>
 
             <div className="comment-section">

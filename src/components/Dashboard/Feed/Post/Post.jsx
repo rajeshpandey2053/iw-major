@@ -8,9 +8,11 @@ import FavoriteSharpIcon from "@material-ui/icons/FavoriteSharp";
 import InsertCommentRoundedIcon from "@material-ui/icons/InsertCommentRounded";
 
 const Post = (props) => {
+    const {post} = props;
+    console.log({post})
     const {path} = useRouteMatch();
     const [isLiked, setIsLiked] = useState(false);
-    const [likesCount, setLikesCount] = useState(0);
+    const [likesCount, setLikesCount] = useState(post?.stars_count || 0);
 
     return (
         <div className="post-wrapper">
@@ -22,9 +24,9 @@ const Post = (props) => {
 
                     <div className="title-wrapper">
                         <h6>
-                            <a href="/">{props.username}</a> shared a post.
+                            <a href="/">{post.user}</a> shared a post.
                         </h6>
-                        <p>12:00, Aug 13</p>
+                        <p>{Date(post?.modified_at)}</p>
                     </div>
                 </div>
 
@@ -38,7 +40,7 @@ const Post = (props) => {
             </div>
 
             <div className="post-caption-wrapper">
-                <p>{props.caption}</p>
+                <p>{post.caption}</p>
                 <div className="like-counter">
                     <p>
                         {likesCount} {likesCount === 1 ? "Like" : "Likes"}
@@ -65,7 +67,7 @@ const Post = (props) => {
                     <InsertCommentRoundedIcon/> Comment
                 </div>
                 <div className='like-comment-btn'>
-                    <Link to={`${path}/post`}>Details</Link>
+                    <Link to={`${path}/${post.post_slug}`}>Details</Link>
                 </div>
             </div>
         </div>
