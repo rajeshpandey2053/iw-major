@@ -51,7 +51,7 @@ class Login extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        token: state.token
+        token: state.login.token
     }
 }
 
