@@ -1,0 +1,56 @@
+.profile {
+    overflow: hidden;
+    margin: 10px;
+}
+.profile-image-section
+{
+    overflow-y: hidden;
+    .cover {
+        width: 100%;
+        img {
+            width: 100%;
+        }
+
+        .profile-img {
+            width: 15%;
+            height: 30%;
+            background-color: red;
+            position: absolute;
+            left: 10%;
+            top: 250px;
+        }
+
+    }
+
+    .user-info {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+}
+
+.profile-about-section {
+    margin-top: 20px;
+
+    .about-header {
+        background-color: #fff;
+        font-weight: bolder;
+    }
+
+    .follow {
+        margin-top: -12px;
+    }
+    .followers {
+        border-right: 1px solid rgb(121, 114, 114);
+        height: 50px;
+        line-height: 15px;
+    }
+    .following {
+        border-left: 1px solid rgb(121, 114, 114);
+        height: 50px;
+        line-height: 15px;
+
+
+    }
+}
