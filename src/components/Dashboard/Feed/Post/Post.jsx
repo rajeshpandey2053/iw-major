@@ -10,7 +10,7 @@ import InsertCommentRoundedIcon from "@material-ui/icons/InsertCommentRounded";
 const Post = (props) => {
   const { path } = useRouteMatch();
   const [isLiked, setIsLiked] = useState(false);
-  const [likesCount, setLikesCount] = useState(0);
+  const [likesCount, setLikesCount] = useState(props.stars_count);
 
   return (
     <div className="post-wrapper">

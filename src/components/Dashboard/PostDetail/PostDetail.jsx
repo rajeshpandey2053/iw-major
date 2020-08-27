@@ -46,8 +46,8 @@ const PostDetail = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     Axios.post("http://127.0.0.1:8000/api/posts/v1/comment/create/", {
-      user: 1, // left to correct
-      post: comments[0].post, // left to correct
+      user: post_data[0]?.user, // left to correct
+      post: post_data[0]?.id, // left to correct
       comment_description: commentText,
     })
       .then((response) => {
@@ -56,6 +56,7 @@ const PostDetail = (props) => {
       .catch((error) => {
         console.log(error);
       });
+    window.location.reload();
   };
 
   return (
