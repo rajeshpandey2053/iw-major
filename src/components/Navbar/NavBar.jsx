@@ -6,7 +6,6 @@ import {connect} from 'react-redux';
 
 
 const NavBar = (props) => {
-    console.log(props);
     return (
         <nav className='nav-main-wrapper'>
             <div className='navbar-container container'>
@@ -19,8 +18,14 @@ const NavBar = (props) => {
                 <ul className="nav-bar-links">
                     <li className="link"><Link to="/dashboard">Home</Link></li>
                     <li className="link"><Link to="/">Blog</Link></li>
-                    <li className="link"><Link to="/login">Log In</Link></li>
-                    <li className="link"><Link to="/register">Sign Up</Link></li>
+                    {
+                    props?.token ? <li className="link"><Link to="/login">Log Out</Link></li> :
+                    <div>
+                        <li className="link"><Link to="/login">Log In</Link></li>
+                        <li className="link"><Link to="/register">Sign Up</Link></li>
+                    </div>
+                    }
+                    
                 </ul>
             </div>
         </nav>
@@ -29,7 +34,7 @@ const NavBar = (props) => {
 
 const mapStateToProps = state => {
     return {
-        token: state.token
+        token: state.login.token
     }
 }
 
