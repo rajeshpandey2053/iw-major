@@ -25,7 +25,7 @@ const PostDetail = (props) => {
     const [likesCount, setLikesCount] = useState(post_data[0]?.stars_count || 0);
     const [isLiked, setIsLiked] = useState(false);
     const [commentText, setCommentText] = useState("");
-    const [isUpdateSelected, setIsUpdateSelected] = useState(false)
+    const [isUpdateSelected, setIsUpdateSelected] = useState(true)
 
     const [comments, setComments] = useState([]);
     const history = useHistory();
@@ -76,6 +76,14 @@ const PostDetail = (props) => {
                         >
                             <ArrowBackIcon/>
                         </button>
+                        <div className="post-action-btns">
+                            <button
+                                id='update'
+                                onClick={() => updatePostToggle()}>
+                                Update
+                            </button>
+                            <button id='delete'>Delete</button>
+                        </div>
                     </div>
                 </div>
                 <div className="detail-wrapper">
