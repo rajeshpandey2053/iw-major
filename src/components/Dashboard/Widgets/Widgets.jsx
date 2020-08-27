@@ -16,8 +16,8 @@ const Widgets = ({ profileData, fetchProfiles }) => {
     <div className="widget-wrapper">
       <div className="info">
         <img className="info__avatar" src={blankProfileImage} alt="Avatar" />
-        <h6 className="info__full-name">{profile.username}</h6>
-        <h6 className="info__username">{profile.email}</h6>
+        <h6 className="info__full-name">{profile?.username}</h6>
+        <h6 className="info__username">{profile?.email}</h6>
         <p className="info__bio">Keep Coding...</p>
       </div>
       <div className="widget-wrapper__blog-section">

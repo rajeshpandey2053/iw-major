@@ -12,7 +12,11 @@ div.post-detail {
     background: #ffffff;
 
     &__title {
+      width: 100%;
       display: flex;
+      //background: red;
+      align-items: center;
+      justify-content: space-between;
 
       &__back-btn {
         background: #fff;
@@ -32,10 +36,26 @@ div.post-detail {
         }
       }
 
-      h4 {
-        padding-left: 1.5rem;
-        text-align: center;
+      .post-action-btns {
+        button {
+          padding: 5px;
+          border: none;
+          margin-right: 10px;
+          color: #ffffff;
+          border-radius: 5px;
+          &#update {
+            background-color: #6600fc;
+          }
+          &#delete {
+            background-color: orangered;
+          }
+
+          &:focus {
+            outline: none;
+          }
+        }
       }
+
     }
   }
 
