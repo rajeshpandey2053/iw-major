@@ -27,6 +27,8 @@ nav.nav-main-wrapper {
       justify-content: center;
       margin-bottom: 0;
 
+      
+
       li.link {
         display: block;
 
@@ -46,4 +48,8 @@ nav.nav-main-wrapper {
       }
     }
   }
+}
+
+.login-register {
+  display: flex;
 }
