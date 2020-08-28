@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './Profile.scss';
 import cover from '../../../images/image-cover.jpg';
 
 
-function ProfileView() {
+function ProfileView(props) {
+    const {userProfile} = props;
+    console.log(userProfile)
     return (
         <div className="profile">
             <div className="profile-image-section">
@@ -16,8 +18,8 @@ function ProfileView() {
                             </div>
                         </div>
                         <div className="user-info">
-                            <h4>Rajesh Pudasaini</h4>
-                            <a href="#">Madan Bhandari 3rd Sem</a>
+                            <h4>{userProfile?.user?.first_name} {userProfile?.user?.last_name}</h4>
+                            <a href="#">{userProfile?.user?.profile?.education?.college} 3rd Sem</a>
                         </div>
                     </div>
                 </div>
@@ -30,21 +32,21 @@ function ProfileView() {
                                 About
                         </div>
                             <div className="card-body about-body">
-                                <p>Semester: 3</p>
-                                <p>Faculty: BBS</p>
-                                <p>University: TU</p>
+                                <p>Semester: {userProfile?.user?.profile?.education?.semester} Sem</p>
+                                <p>Faculty: {userProfile?.user?.profile?.education?.faculty}</p>
+                                <p>University: {userProfile?.user?.profile?.education?.university}</p>
                                 <p>Books Posts: 12</p>
                                 <p>Notes Posts: 12</p>
                                 <hr/>
                                 <div className="row follow">
                                     <div className="col-md-6 followers">
                                         
-                                        <p>500</p>
+                                        <p>{userProfile?.followers}</p>
                                         <p>Followers</p>
                                        
                                     </div>
                                     <div className="col-md-6 following">
-                                        <p>500</p>
+                                        <p>{userProfile?.following}</p>
                                         <p>Following</p>
                                     </div>
                                 </div>
