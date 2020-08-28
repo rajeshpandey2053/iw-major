@@ -1,5 +1,3 @@
-// import * as types from "../actions/ActionTypes";
-
 import {
   FETCH_POST_REQUEST,
   FETCH_POST_SUCCESS,
@@ -9,18 +7,10 @@ import {
   CREATE_POST_FAILURE,
 } from "../actions/ActionTypes";
 
-// export default function PostReducer(state = [], action) {
-//   switch (action.type) {
-//     case types.CREATE_POST:
-//       return [...state, { ...action.post }];
-//     default:
-//       return state;
-//   }
-// }
-
 const initialState = {
   loading: false,
   posts: [],
+  nextPageLink: "http://127.0.0.1:8000/api/posts/v1/post/list/",
   error: "",
 };
 
@@ -34,7 +24,8 @@ const reducer = (state = initialState, action) => {
     case FETCH_POST_SUCCESS:
       return {
         loading: false,
-        posts: action.posts,
+        posts: state.posts.concat(action.posts),
+        nextPageLink: action.nextPageLink,
         errors: "",
       };
     case FETCH_POST_FAILURE:

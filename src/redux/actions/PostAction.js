@@ -1,3 +1,4 @@
+import Axios from "axios";
 import {
   FETCH_POST_REQUEST,
   FETCH_POST_SUCCESS,
@@ -6,15 +7,8 @@ import {
   CREATE_POST_SUCCESS,
   CREATE_POST_FAILURE,
 } from "./ActionTypes";
-import Axios from "axios";
-// import * as types from "./ActionTypes";
 
-// export function createPost(post) {
-//   return {
-//     type: types.CREATE_POST,
-//     post: post,
-//   };
-// }
+const createPostURL = "http://127.0.0.1:8000/api/posts/v1/post/create/";
 
 export const fetchPostRequest = () => {
   return {
@@ -22,10 +16,11 @@ export const fetchPostRequest = () => {
   };
 };
 
-export const fetchPostSuccess = (posts) => {
+export const fetchPostSuccess = (posts, pageLink) => {
   return {
     type: FETCH_POST_SUCCESS,
     posts: posts,
+    nextPageLink: pageLink,
   };
 };
 
@@ -59,13 +54,14 @@ export const createPostFailure = (error) => {
   };
 };
 
-export const fetchPosts = () => {
+export const fetchPosts = (PageLink) => {
   return (dispatch) => {
     dispatch(fetchPostRequest);
-    Axios.get("http://127.0.0.1:8000/api/posts/v1/post/list/")
+    Axios.get(PageLink)
       .then((response) => {
         const posts = response.data.results;
-        dispatch(fetchPostSuccess(posts));
+        const nextPageLink = response.data.next;
+        dispatch(fetchPostSuccess(posts, nextPageLink));
       })
       .catch((error) => {
         const errorMsg = error.message;
@@ -80,7 +76,7 @@ export const createPosts = (posts) => {
   return (dispatch) => {
     // console.log({posts});
     dispatch(createPostRequest);
-    Axios.post("http://127.0.0.1:8000/api/posts/v1/post/create/", {
+    Axios.post(createPostURL, {
       user: 1,
       post_slug: "post-slug",
       caption: posts.caption,

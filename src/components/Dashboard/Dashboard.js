@@ -14,7 +14,7 @@ import { fetchProfiles } from "../../redux/actions/ProfileAction";
 const Dashboard = ({ fetchPosts, fetchProfiles }) => {
   const { postSlug } = useParams();
   useEffect(() => {
-    fetchPosts();
+    fetchPosts("http://127.0.0.1:8000/api/posts/v1/post/list/");
     fetchProfiles();
   }, []);
   return (
@@ -39,7 +39,7 @@ const Dashboard = ({ fetchPosts, fetchProfiles }) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchPosts: () => dispatch(fetchPosts()),
+    fetchPosts: (pageLink) => dispatch(fetchPosts(pageLink)),
     fetchProfiles: () => dispatch(fetchProfiles()),
   };
 };
