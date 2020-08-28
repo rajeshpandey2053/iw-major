@@ -4,10 +4,12 @@ import Axios from "axios";
 import "./comment.scss";
 
 import blankProfileImg from "../../../../images/blank-profile-picture-973460_1280.webp";
+import UpdateComment from "./UpdateComment/UpdateComment";
 
 const Comment = (props) => {
   const [likesCount, setLikesCount] = useState(props.stars_count);
   const [isLiked, setIsLiked] = useState(false);
+  const [isUpdateSelected, setIsUpdateSelected] = useState(true);
   const handlelikeButton = (event) => {
     setIsLiked(!isLiked);
     if (!isLiked) {
@@ -46,6 +48,7 @@ const Comment = (props) => {
             <Link to="/dashboard">{props.username}</Link>
           </h6>
           <p className="comment-description">{props.comment_description}</p>
+          {isUpdateSelected ? <UpdateComment /> : null}
           <div className="actions">
             <p>
               <button className="comment-like" onClick={handlelikeButton}>
