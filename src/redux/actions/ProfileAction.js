@@ -3,7 +3,7 @@ import {
     FETCH_PROFILE_SUCCESS,
     FETCH_PROFILE_FAILURE,
   } from "./ActionTypes";
-  import Axios from "axios";
+  import axios from "axios";
 
   const main_url = "http://127.0.0.1:8000/api/accounts/v1/user/profile"
   
@@ -30,7 +30,7 @@ import {
   export const fetchProfiles = (token) => {
     return (dispatch) => {
       dispatch(fetchProfileRequest);
-      Axios.get(main_url, {
+      axios.get(main_url, {
         headers: {
           Authorization: `Token ${token}`,
         },
@@ -41,7 +41,6 @@ import {
         })
         .catch((error) => {
           const errorMsg = error.message;
-          console.log(error);
           dispatch(fetchProfileFailure(errorMsg));
         });
     };
