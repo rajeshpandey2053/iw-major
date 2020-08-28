@@ -3,6 +3,10 @@ import LoginView from './common/login';
 import axios from 'axios';
 import {loginSuccess} from '../../redux/loginReducer/loginAction';
 import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
+
+import {fetchProfiles} from '../../redux/actions/ProfileAction';
+
 
 
 const url = 'http://127.0.0.1:8000/api/accounts/v1/login';
@@ -38,6 +42,7 @@ class Login extends React.Component {
                     this.setState({successMessage: "Login Success"});
                     localStorage.setItem('token', res.data.token);
                     this.props.loginSuccess(localStorage.getItem('token'));
+                    this.props.fetchProfiles(this.props.token);
                 })
         } catch(e){
             this.setState({errorMessage: e.response?.data?.non_field_errors});
@@ -45,7 +50,12 @@ class Login extends React.Component {
     }
 
     render(){
-        return <LoginView props={this.state} handleChange={this.handleOnChange} handleLogin={this.handleLogin}/>
+        return (
+            <div>
+            { this.props?.token ? <Redirect to='/dashboard' />:
+            <LoginView props={this.state} handleChange={this.handleOnChange} handleLogin={this.handleLogin}/> }
+            </div>
+        )
     }
 }
 
@@ -57,7 +67,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        loginSuccess: token => dispatch(loginSuccess(token))
+        loginSuccess: token => dispatch(loginSuccess(token)),
+        fetchProfiles: (token) => dispatch(fetchProfiles(token)),
     }
 }
 
