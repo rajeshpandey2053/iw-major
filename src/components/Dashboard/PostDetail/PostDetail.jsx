@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from "react";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import {useHistory, Link, useParams} from "react-router-dom";
+import {connect} from "react-redux";
+import Axios from "axios";
 
 import FavoriteBorderSharpIcon from "@material-ui/icons/FavoriteBorderSharp";
 import FavoriteSharpIcon from "@material-ui/icons/FavoriteSharp";
@@ -12,8 +14,6 @@ import blankProfileImage from "../../../images/blank-profile-picture-973460_1280
 import Comment from "./Comment/Comment";
 import UpdatePost from "./UpdatePost/UpdatePost";
 
-import {connect} from "react-redux";
-import Axios from "axios";
 
 const PostDetail = (props) => {
 
@@ -25,7 +25,7 @@ const PostDetail = (props) => {
     const [likesCount, setLikesCount] = useState(post_data[0]?.stars_count || 0);
     const [isLiked, setIsLiked] = useState(false);
     const [commentText, setCommentText] = useState("");
-    const [isUpdateSelected, setIsUpdateSelected] = useState(true)
+    const [isUpdateSelected, setIsUpdateSelected] = useState(false)
 
     const [comments, setComments] = useState([]);
     const history = useHistory();
@@ -50,11 +50,39 @@ const PostDetail = (props) => {
 
     const updatePostToggle = () => setIsUpdateSelected(!isUpdateSelected)
 
+    const handlelikeButton = (event) => {
+        if (!isLiked) {
+            setLikesCount(likesCount + 1);
+            Axios.post(
+                `http://127.0.0.1:8000/api/posts/v1/post/${params.postSlug}/like/`
+            )
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.log(error.message);
+                });
+        } else {
+            setLikesCount(likesCount - 1);
+            Axios.post(
+                `http://127.0.0.1:8000/api/posts/v1/post/${params.postSlug}/unlike/`
+            )
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.log(error.message);
+                });
+        }
+        setIsLiked(!isLiked);
+    };
+
+
     const handleSubmit = (event) => {
         event.preventDefault();
         Axios.post("http://127.0.0.1:8000/api/posts/v1/comment/create/", {
-            user: 1, // left to correct
-            post: comments[0].post, // left to correct
+            user: post_data[0]?.user, // left to correct
+            post: post_data[0]?.id, // left to correct
             comment_description: commentText,
         })
             .then((response) => {
@@ -63,6 +91,7 @@ const PostDetail = (props) => {
             .catch((error) => {
                 console.log(error);
             });
+        window.location.reload();
     };
 
     return (
@@ -111,30 +140,7 @@ const PostDetail = (props) => {
                             className="like-comment-btn"
                             style={isLiked ? {color: "#6600fc"} : null}
                             onClick={() => {
-                                setIsLiked(!isLiked);
-                                if (!isLiked) {
-                                    setLikesCount(likesCount + 1);
-                                    Axios.post(
-                                        `http://127.0.0.1:8000/api/posts/v1/post/${params.postSlug}/like/`
-                                    )
-                                        .then((response) => {
-                                            console.log(response);
-                                        })
-                                        .catch((error) => {
-                                            console.log(error.message);
-                                        });
-                                } else {
-                                    setLikesCount(likesCount - 1);
-                                    Axios.post(
-                                        `http://127.0.0.1:8000/api/posts/v1/post/${params.postSlug}/unlike/`
-                                    )
-                                        .then((response) => {
-                                            console.log(response);
-                                        })
-                                        .catch((error) => {
-                                            console.log(error.message);
-                                        });
-                                }
+                                handlelikeButton()
                             }}
                         >
                             {!isLiked ? (
@@ -152,11 +158,13 @@ const PostDetail = (props) => {
                             <label htmlFor="new-comment">
                                 <InsertCommentRoundedIcon/> Comment
                             </label>
-                            <div className="update-post-section">
-                                {isUpdateSelected ? <UpdatePost updatePostToggle={updatePostToggle}/> : null}
-                            </div>
+
                         </div>
                     </div>
+                </div>
+
+                <div className="update-post-section">
+                    {isUpdateSelected ? <UpdatePost updatePostToggle={updatePostToggle}/> : null}
                 </div>
 
                 <div className="comment-section">
@@ -171,6 +179,8 @@ const PostDetail = (props) => {
                                 username={comm.user_name}
                                 post_id={comm.post}
                                 created_at={comm.commented_at}
+                                comment_id={comm.id}
+                                stars_count={comm.stars_count}
                             />
                         ))}
                     </div>
@@ -190,6 +200,7 @@ const PostDetail = (props) => {
                         </div>
                     </form>
                 </div>
+
             </div>
         </React.Fragment>
     );

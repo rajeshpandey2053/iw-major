@@ -5,6 +5,8 @@ import {
 } from "./ActionTypes";
 import Axios from "axios";
 
+const fetchProfileURL = "http://127.0.0.1:8000/api/accounts/v1/user/profile";
+
 export const fetchProfileRequest = () => {
   return {
     type: FETCH_PROFILE_REQUEST,
@@ -28,8 +30,7 @@ export const fetchProfileFailure = (error) => {
 export const fetchProfiles = () => {
   return (dispatch) => {
     dispatch(fetchProfileRequest);
-    // let token = "93ae98ced6493d4d9d27e049538f60715a71478b";
-    Axios.get("http://127.0.0.1:8000/api/accounts/v1/user/profile", {
+    Axios.get(fetchProfileURL, {
       headers: {
         Authorization: "Token 93ae98ced6493d4d9d27e049538f60715a71478b",
       },

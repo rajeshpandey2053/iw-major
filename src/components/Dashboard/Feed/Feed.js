@@ -1,26 +1,37 @@
-import React from "react";
-import {useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {connect} from "react-redux";
 import "./feed.scss";
 import Post from "./Post/Post";
 import CreatePost from "./CreatePost/CreatePost";
 import {fetchPosts} from "../../../redux/actions/PostAction";
 
+
 const Feed = ({postData, fetchPosts}) => {
-    // console.log("hello1");
-    useEffect(() => {
-        fetchPosts();
-    }, []);
+    const [readMore, setReadMore] = useState(false);
+    // const [nextPageLink, setnextPageLink] = useState();
     return (
         <div className="feed-wrapper">
-            {console.log({postData})}
             <CreatePost/>
-            {postData.posts.map((post) => (
+            {postData.posts &&
+            postData.posts.map((post) => (
                 <Post
                     key={post.post_slug}
                     post={post}
                 />
             ))}
+            {postData.nextPageLink ? (
+                <button
+                    className="read-more-link"
+                    onClick={() => {
+                        setReadMore(!readMore);
+                        fetchPosts(postData?.nextPageLink);
+                    }}
+                >
+                    <h2>Show More</h2>
+                </button>
+            ) : (
+                <p>Thats all da feed you got</p>
+            )}
         </div>
     );
 };
@@ -33,7 +44,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchPosts: () => dispatch(fetchPosts()),
+        fetchPosts: (pageLink) => dispatch(fetchPosts(pageLink)),
     };
 };
 

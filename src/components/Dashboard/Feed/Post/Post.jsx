@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import "./post.scss";
+
 import {Link, useRouteMatch} from "react-router-dom";
+import Axios from "axios";
 
 import blankProfileImg from "../../../../images/blank-profile-picture-973460_1280.webp";
 import FavoriteBorderSharpIcon from "@material-ui/icons/FavoriteBorderSharp";
@@ -20,8 +22,40 @@ const Post = (props) => {
         fileName = fileNameArr[fileNameArr.length - 1]
     }
 
+    const handlelikeButton = (event) => {
+        setIsLiked(!isLiked);
+        if (!isLiked) {
+            setLikesCount(likesCount + 1);
+            Axios.post(`http://127.0.0.1:8000/api/posts/v1/post/${post.post_slug}/like/`)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.log(error.message);
+                });
+        } else {
+            setLikesCount(likesCount - 1);
+            Axios.post(
+                `http://127.0.0.1:8000/api/posts/v1/post/${post.post_slug}/unlike/`
+            )
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.log(error.message);
+                });
+        }
+    };
+
+    const getDate= () => {
+        const myDate = new Date(post?.modified_at)
+        return myDate.toLocaleString()
+    }
+
+
     return (
         <div className="post-wrapper">
+            {post.slug}
             <div className="post-title-wrapper">
                 <div className="title-outer-wrapper">
                     <div className="image-wrapper">
@@ -33,9 +67,10 @@ const Post = (props) => {
                         <h6>
                             <a href="/">{post.user}</a> shared a post.
                         </h6>
-                        <p>{Date(post?.modified_at)}</p>
+                        <p>{getDate()}</p>
                     </div>
                 </div>
+
 
                 <div className="actions">
                     <div className="action-menu">
@@ -61,23 +96,24 @@ const Post = (props) => {
 
             <div className="post-footer-wrapper">
                 <div
-                    className='like-comment-btn'
-                    style={isLiked ? {color: '#6600fc'} : null}
-                    onClick={() => {
-                        setIsLiked(!isLiked);
-                        isLiked ? setLikesCount(likesCount - 1) : setLikesCount(likesCount + 1);
-                    }}>
-                    {!isLiked
-                        ? (<>
+                    className="like-comment-btn"
+                    style={isLiked ? {color: "#6600fc"} : null}
+                    onClick={handlelikeButton}
+                >
+                    {!isLiked ? (
+                        <>
                             <FavoriteBorderSharpIcon/> Like
-                        </>)
-                        : (<><FavoriteSharpIcon/> Unlike</>)
-                    }
+                        </>
+                    ) : (
+                        <>
+                            <FavoriteSharpIcon/> Unlike
+                        </>
+                    )}
                 </div>
-                <div className='like-comment-btn'>
+                <div className="like-comment-btn">
                     <InsertCommentRoundedIcon/> Comment
                 </div>
-                <div className='like-comment-btn'>
+                <div className="like-comment-btn">
                     <Link to={`${path}/${post.post_slug}`}>Details</Link>
                 </div>
             </div>

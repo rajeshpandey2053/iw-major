@@ -2,16 +2,11 @@ import React from "react";
 import "./widget.scss";
 import blankProfileImage from "../../../images/blank-profile-picture-973460_1280.webp";
 import WidgetBlog from "./WidgetBlog/WidgetBlog";
-import { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchProfiles } from "../../../redux/actions/ProfileAction";
 
-const Widgets = ({ profileData, fetchProfiles }) => {
+const Widgets = ({ profileData }) => {
   console.log(profileData);
   let profile = profileData.profiles.user;
-  useEffect(() => {
-    fetchProfiles();
-  }, []);
   return (
     <div className="widget-wrapper">
       <div className="info">
@@ -36,10 +31,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchProfiles: () => dispatch(fetchProfiles()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Widgets);
+export default connect(mapStateToProps)(Widgets);
