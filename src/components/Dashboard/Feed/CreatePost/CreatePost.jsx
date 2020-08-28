@@ -64,7 +64,8 @@ const CreatePost = (props) => {
                 </div>
                 <div className='education-input-fields'>
                     <div>
-                        <select title='University' value={education.university} name='university' onChange={handleChange}>
+                        <select title='University' value={education.university} name='university'
+                                onChange={handleChange}>
                             <option value="TU">Tribhuwan University</option>
                             <option value="PU">Purbanchal University</option>
                             <option value="PoU">Pokhara University</option>
