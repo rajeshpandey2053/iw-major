@@ -7,10 +7,12 @@ import {
   CREATE_POST_FAILURE,
 } from "../actions/ActionTypes";
 
+const defaultnextPageLink = "http://127.0.0.1:8000/api/posts/v1/post/list/";
+
 const initialState = {
   loading: false,
   posts: [],
-  nextPageLink: "http://127.0.0.1:8000/api/posts/v1/post/list/",
+  nextPageLink: defaultnextPageLink,
   error: "",
 };
 

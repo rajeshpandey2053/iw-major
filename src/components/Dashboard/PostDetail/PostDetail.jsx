@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { useHistory, Link, useParams } from "react-router-dom";
+import { connect } from "react-redux";
+import Axios from "axios";
 
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import FavoriteBorderSharpIcon from "@material-ui/icons/FavoriteBorderSharp";
 import FavoriteSharpIcon from "@material-ui/icons/FavoriteSharp";
 import InsertCommentRoundedIcon from "@material-ui/icons/InsertCommentRounded";
@@ -10,9 +12,6 @@ import SendSharpIcon from "@material-ui/icons/SendSharp";
 import "./postDetail.scss";
 import blankProfileImage from "../../../images/blank-profile-picture-973460_1280.webp";
 import Comment from "./Comment/Comment";
-
-import { connect } from "react-redux";
-import Axios from "axios";
 
 const PostDetail = (props) => {
   let params = useParams();
@@ -41,6 +40,33 @@ const PostDetail = (props) => {
   }, []);
   const handleChange = (event) => {
     setCommentText(event.target.value);
+  };
+
+  const handlelikeButton = (event) => {
+    setIsLiked(!isLiked);
+    if (!isLiked) {
+      setLikesCount(likesCount + 1);
+      Axios.post(
+        `http://127.0.0.1:8000/api/posts/v1/post/${params.postSlug}/like/`
+      )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    } else {
+      setLikesCount(likesCount - 1);
+      Axios.post(
+        `http://127.0.0.1:8000/api/posts/v1/post/${params.postSlug}/unlike/`
+      )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    }
   };
 
   const handleSubmit = (event) => {
@@ -82,7 +108,7 @@ const PostDetail = (props) => {
                 <Link to="/dashboard">{post_data[0]?.user_name}</Link> shared a
                 post.
               </p>
-              <p className="info-timestamp">Aug 23, 13: 46</p>
+              <p className="info-timestamp">{post_data[0]?.posted_at}</p>
             </div>
           </div>
 
@@ -96,32 +122,7 @@ const PostDetail = (props) => {
             <div
               className="like-comment-btn"
               style={isLiked ? { color: "#6600fc" } : null}
-              onClick={() => {
-                setIsLiked(!isLiked);
-                if (!isLiked) {
-                  setLikesCount(likesCount + 1);
-                  Axios.post(
-                    `http://127.0.0.1:8000/api/posts/v1/post/${params.postSlug}/like/`
-                  )
-                    .then((response) => {
-                      console.log(response);
-                    })
-                    .catch((error) => {
-                      console.log(error.message);
-                    });
-                } else {
-                  setLikesCount(likesCount - 1);
-                  Axios.post(
-                    `http://127.0.0.1:8000/api/posts/v1/post/${params.postSlug}/unlike/`
-                  )
-                    .then((response) => {
-                      console.log(response);
-                    })
-                    .catch((error) => {
-                      console.log(error.message);
-                    });
-                }
-              }}
+              onClick={handlelikeButton}
             >
               {!isLiked ? (
                 <>
@@ -155,6 +156,8 @@ const PostDetail = (props) => {
               username={comm.user_name}
               post_id={comm.post}
               created_at={comm.commented_at}
+              comment_id={comm.id}
+              stars_count={comm.stars_count}
             />
           ))}
         </div>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./post.scss";
 import { Link, useRouteMatch } from "react-router-dom";
+import Axios from "axios";
 
 import blankProfileImg from "../../../../images/blank-profile-picture-973460_1280.webp";
 import FavoriteBorderSharpIcon from "@material-ui/icons/FavoriteBorderSharp";
@@ -11,7 +12,30 @@ const Post = (props) => {
   const { path } = useRouteMatch();
   const [isLiked, setIsLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(props.stars_count);
-
+  const handlelikeButton = (event) => {
+    setIsLiked(!isLiked);
+    if (!isLiked) {
+      setLikesCount(likesCount + 1);
+      Axios.post(`http://127.0.0.1:8000/api/posts/v1/post/${props.slug}/like/`)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    } else {
+      setLikesCount(likesCount - 1);
+      Axios.post(
+        `http://127.0.0.1:8000/api/posts/v1/post/${props.slug}/unlike/`
+      )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    }
+  };
   return (
     <div className="post-wrapper">
       <div className="post-title-wrapper">
@@ -50,12 +74,7 @@ const Post = (props) => {
         <div
           className="like-comment-btn"
           style={isLiked ? { color: "#6600fc" } : null}
-          onClick={() => {
-            setIsLiked(!isLiked);
-            isLiked
-              ? setLikesCount(likesCount - 1)
-              : setLikesCount(likesCount + 1);
-          }}
+          onClick={handlelikeButton}
         >
           {!isLiked ? (
             <>
