@@ -19,8 +19,8 @@ const NavBar = (props) => {
                     <li className="link"><Link to="/dashboard">Home</Link></li>
                     <li className="link"><Link to="/">Blog</Link></li>
                     {
-                    props?.token ? <li className="link"><Link to="/login">Log Out</Link></li> :
-                    <div>
+                    props?.token ? <li className="link"><Link to="/logout">Log Out</Link></li> :
+                    <div className='login-register'>
                         <li className="link"><Link to="/login">Log In</Link></li>
                         <li className="link"><Link to="/register">Sign Up</Link></li>
                     </div>
