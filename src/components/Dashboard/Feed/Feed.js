@@ -30,7 +30,7 @@ const Feed = ({postData, fetchPosts}) => {
                     <h2>Show More</h2>
                 </button>
             ) : (
-                <p>Thats all da feed you got</p>
+                <p className='text-center'>That's all the feed you got.</p>
             )}
         </div>
     );
