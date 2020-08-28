@@ -1,4 +1,4 @@
-import { REQUEST_LOGIN, LOGIN_SUCCESS, LOGIN_FAIL} from './loginType.js';
+import { REQUEST_LOGIN, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT} from './loginType.js';
 
 export function requestLogin(){
     return {
@@ -17,5 +17,11 @@ export const loginFail = errorMessage => {
     return {
         type: LOGIN_FAIL,
         payload: errorMessage 
+    }
+}
+
+export const logout = () => {
+    return {
+        type: LOGOUT,
     }
 }

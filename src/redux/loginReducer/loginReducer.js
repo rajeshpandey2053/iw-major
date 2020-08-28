@@ -1,4 +1,4 @@
-import { REQUEST_LOGIN, LOGIN_SUCCESS, LOGIN_FAIL } from './loginType';
+import { REQUEST_LOGIN, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from './loginType';
 
 const initialState = {
     loading: false,
@@ -26,6 +26,11 @@ const reducer = (state=initialState, action) => {
                 loading: false,
                 token: '',
                 errorMessage: action.payload,
+            }
+        case LOGOUT:
+            return {
+                ...state,
+                token: localStorage.getItem('token')
             }
         default: return state;
     }
