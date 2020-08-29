@@ -57,7 +57,11 @@ export const createPostFailure = (error) => {
 export const fetchPosts = (PageLink) => {
   return (dispatch) => {
     dispatch(fetchPostRequest);
-    Axios.get(PageLink)
+    Axios.get(PageLink, {
+      headers: {
+        Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
+      },
+    })
       .then((response) => {
         const posts = response.data.results;
         const nextPageLink = response.data.next;
@@ -72,15 +76,29 @@ export const fetchPosts = (PageLink) => {
 };
 
 export const createPosts = (posts) => {
-  // console.log({ posts });
+  const formData = new FormData();
+  formData.append("user", 1);
+  formData.append("file", posts.file);
+  formData.append("post_slug", "post_slug");
+  formData.append("caption", posts.caption);
+  formData.append("education", {
+    semester: 1,
+    year: 1,
+    college: "erc",
+    faculty: "civil",
+    university: "tu",
+  });
+  console.log(posts);
   return (dispatch) => {
     // console.log({posts});
     dispatch(createPostRequest);
-    Axios.post(createPostURL, {
-      user: 1,
-      post_slug: "post-slug",
-      caption: posts.caption,
-      file: posts.file,
+    Axios({
+      url: createPostURL,
+      method: "POST",
+      data: formData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     })
       .then((response) => {
         dispatch(createPostSuccess());

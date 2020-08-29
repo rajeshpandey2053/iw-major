@@ -24,7 +24,7 @@ const CreatePost = (props) => {
     console.log("hello2");
     event.preventDefault();
     props.createPosts({ caption, file });
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (

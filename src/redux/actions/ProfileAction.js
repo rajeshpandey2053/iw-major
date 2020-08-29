@@ -32,7 +32,7 @@ export const fetchProfiles = () => {
     dispatch(fetchProfileRequest);
     Axios.get(fetchProfileURL, {
       headers: {
-        Authorization: "Token 93ae98ced6493d4d9d27e049538f60715a71478b",
+        Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
       },
     })
       .then((response) => {
