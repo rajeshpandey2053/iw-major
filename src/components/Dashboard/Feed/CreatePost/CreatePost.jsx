@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import "./createPost.scss";
 import blankAvatarImage from "../../../../images/blank-profile-picture-973460_1280.webp";
-// import ImageRoundedIcon from '@material-ui/icons/ImageRounded';
 import AttachmentRoundedIcon from "@material-ui/icons/AttachmentRounded";
 import { createPosts } from "../../../../redux/actions/PostAction";
 import { connect } from "react-redux";
 
 const CreatePost = (props) => {
   const [caption, setCaption] = useState("");
+  const [education, setEducation] = useState({
+    university: "TU",
+    faculty: "BE",
+    semester: 1,
+  });
   const [file, setFile] = useState(null);
 
   const handleFileChange = (event) => {
     event.preventDefault();
-    // console.log('file', event.target.files[0]);
     setFile(event.target.files[0]);
   };
 
@@ -20,10 +23,23 @@ const CreatePost = (props) => {
     setCaption(event.target.value);
   };
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setEducation({
+      ...education,
+      [name]: value,
+    });
+  };
+
   const handleSubmit = (event) => {
-    console.log("hello2");
+    console.log({ education });
     event.preventDefault();
     props.createPosts({ caption, file });
+    setEducation({
+      university: "TU",
+      faculty: "BE",
+      semester: 1,
+    });
     // window.location.reload();
   };
 
@@ -46,11 +62,54 @@ const CreatePost = (props) => {
             />
           </div>
         </div>
+        <div className="education-input-fields">
+          <div>
+            <select
+              title="University"
+              value={education.university}
+              name="university"
+              onChange={handleChange}
+            >
+              <option value="TU">Tribhuwan University</option>
+              <option value="PU">Purbanchal University</option>
+              <option value="PoU">Pokhara University</option>
+            </select>
+          </div>
+          <div>
+            <select
+              title="Faculty"
+              value={education.faculty}
+              name="faculty"
+              onChange={handleChange}
+            >
+              <option value="BE">Bachelor in engineering</option>
+              <option value="CA">Chartered Accountancy</option>
+              <option value="BBA">Bachelor in Business Administration</option>
+            </select>
+          </div>
+          <div>
+            <select
+              title="Semester"
+              value={education.semester}
+              name="semester"
+              onChange={handleChange}
+            >
+              <option value="1">I</option>
+              <option value="2">II</option>
+              <option value="3">III</option>
+              <option value="4">IV</option>
+              <option value="5">V</option>
+              <option value="6">VI</option>
+              <option value="7">VII</option>
+              <option value="8">VIII</option>
+            </select>
+          </div>
+        </div>
 
         <div className="create-post-action-bar">
           <div>
             <div className="input-element">
-              <label htmlFor="image">
+              <label htmlFor="image" title="Attach File">
                 <AttachmentRoundedIcon />
               </label>
               <input
