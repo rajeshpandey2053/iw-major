@@ -44,6 +44,7 @@ const reducer = (state = initialState, action) => {
     case CREATE_POST_SUCCESS:
       return {
         ...state,
+        posts: [action.newPost, ...state.posts],
         loading: false,
         errors: "",
       };

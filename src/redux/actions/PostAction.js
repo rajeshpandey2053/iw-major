@@ -38,10 +38,11 @@ export const createPostRequest = () => {
   };
 };
 
-export const createPostSuccess = () => {
+export const createPostSuccess = (newPost) => {
   console.log("Hello from success");
   return {
     type: CREATE_POST_SUCCESS,
+    newPost: newPost,
   };
 };
 
@@ -81,14 +82,10 @@ export const createPosts = (posts) => {
   formData.append("file", posts.file);
   formData.append("post_slug", "post_slug");
   formData.append("caption", posts.caption);
-  formData.append("education", {
-    semester: 1,
-    year: 1,
-    college: "erc",
-    faculty: "civil",
-    university: "tu",
-  });
-  console.log(posts);
+  formData.append("education.semester", "1");
+  formData.append("education.faculty", 1);
+  formData.append("education.university", 1);
+
   return (dispatch) => {
     // console.log({posts});
     dispatch(createPostRequest);
@@ -97,11 +94,14 @@ export const createPosts = (posts) => {
       method: "POST",
       data: formData,
       headers: {
+        Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
         "Content-Type": "multipart/form-data",
       },
     })
       .then((response) => {
-        dispatch(createPostSuccess());
+        console.log(response.data);
+        const newPost = response.data;
+        dispatch(createPostSuccess(newPost));
       })
       .catch((error) => {
         const errorMsg = error.message;

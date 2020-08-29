@@ -95,12 +95,17 @@ const PostDetail = (props) => {
       }
     )
       .then((response) => {
-        console.log(response);
+        // console.log(response);
+        const newcomment = response.data;
+        console.log(`new comment ${newcomment}`);
+        console.log(`old comments ${comments}`);
+        setComments([newcomment, ...comments]);
+        console.log(comments);
       })
       .catch((error) => {
         console.log(error);
       });
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (
@@ -182,7 +187,7 @@ const PostDetail = (props) => {
           <div className="comment">
             {comments.map((comm) => (
               <Comment
-                key={comm.commented_at}
+                key={comm.id}
                 comment_description={comm.comment_description}
                 username={comm.user_name}
                 post_id={comm.post}
