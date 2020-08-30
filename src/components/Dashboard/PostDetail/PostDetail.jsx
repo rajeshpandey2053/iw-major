@@ -13,6 +13,7 @@ import "./postDetail.scss";
 import blankProfileImage from "../../../images/blank-profile-picture-973460_1280.webp";
 import Comment from "./Comment/Comment";
 import UpdatePost from "./UpdatePost/UpdatePost";
+import { deletePost } from "../../../redux/actions/PostAction";
 
 const PostDetail = (props) => {
   let params = useParams();
@@ -108,6 +109,12 @@ const PostDetail = (props) => {
     // window.location.reload();
   };
 
+  const handleDeleteCLick = (event) => {
+    props.deletePost(params.postSlug);
+    //api pass post slug to delete
+    //go back
+  };
+
   return (
     <React.Fragment>
       <div className="post-detail">
@@ -123,7 +130,9 @@ const PostDetail = (props) => {
               <button id="update" onClick={() => updatePostToggle()}>
                 Update
               </button>
-              <button id="delete">Delete</button>
+              <button id="delete" onClick={handleDeleteCLick}>
+                Delete
+              </button>
             </div>
           </div>
         </div>
@@ -227,5 +236,9 @@ const mapStateToProps = (state) => {
     postData: state.post,
   };
 };
-
-export default connect(mapStateToProps)(PostDetail);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deletePost: (slug) => dispatch(deletePost(slug)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(PostDetail);

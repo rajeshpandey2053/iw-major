@@ -6,10 +6,12 @@ import {
   CREATE_POST_REQUEST,
   CREATE_POST_SUCCESS,
   CREATE_POST_FAILURE,
+  DELETE_POST_REQUEST,
+  DELETE_POST_FAILURE,
+  DELETE_POST_SUCCESS,
 } from "./ActionTypes";
-
-const createPostURL = "http://127.0.0.1:8000/api/posts/v1/post/create/";
-
+const BASE_URL = "http://127.0.0.1:8000/";
+const createPostURL = `${BASE_URL}api/posts/v1/post/create/`;
 export const fetchPostRequest = () => {
   return {
     type: FETCH_POST_REQUEST,
@@ -51,6 +53,25 @@ export const createPostFailure = (error) => {
   // console.log(error);
   return {
     type: CREATE_POST_FAILURE,
+    error: error,
+  };
+};
+
+export const deletePostRequest = () => {
+  return {
+    type: DELETE_POST_REQUEST,
+  };
+};
+export const deletePostSuccess = (post_slug) => {
+  return {
+    type: DELETE_POST_SUCCESS,
+    post_slug: post_slug,
+  };
+};
+
+export const deletePostFailure = (error) => {
+  return {
+    type: DELETE_POST_FAILURE,
     error: error,
   };
 };
@@ -106,6 +127,24 @@ export const createPosts = (posts) => {
       .catch((error) => {
         const errorMsg = error.message;
         dispatch(createPostFailure(errorMsg));
+      });
+  };
+};
+
+export const deletePost = (post_slug) => {
+  return (dispatch) => {
+    dispatch(deletePostRequest);
+    Axios.delete(`${BASE_URL}api/posts/v1/post/${post_slug}/`, {
+      headers: {
+        Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
+      },
+    })
+      .then((response) => {
+        dispatch(deletePostSuccess(post_slug));
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+        dispatch(deletePostFailure(errorMsg));
       });
   };
 };
