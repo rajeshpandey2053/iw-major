@@ -27,6 +27,7 @@ const LoginView = (props) => {
                             <Lock />
                             <input type="password" name="password" placeholder="Password" onChange={handleChange}/>
                         </div>
+                        <Link to="/forget-password">Forget Password?</Link>
                         <button className="btn btn-primary">{ isLoading ? <CircularProgress color="inherit" /> : 'Login' }</button>
                         <p className="social-text">or Login with social platforms</p>
                         <div className="login-form__social-media-icons">
