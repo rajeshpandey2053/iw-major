@@ -19,6 +19,11 @@ div.body {
   overflow: auto;
 }
 
+@media screen and (max-width: 756px) {
+  body {
+    background: #f8f8f8;
+  }
+}
 /*.main-wrapper {*/
 /*  padding: 61px 0 0 0;*/
 /*}*/

@@ -5,7 +5,7 @@ import WidgetBlog from "./WidgetBlog/WidgetBlog";
 import { connect } from "react-redux";
 
 const Widgets = ({ profileData }) => {
-  console.log(profileData);
+  // console.log(profileData);
   let profile = profileData.profiles.user;
   return (
     <div className="widget-wrapper">

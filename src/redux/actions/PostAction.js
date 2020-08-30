@@ -103,7 +103,7 @@ export const createPosts = (posts) => {
   formData.append("file", posts.file);
   formData.append("post_slug", "post_slug");
   formData.append("caption", posts.caption);
-  formData.append("education.semester", "1");
+  formData.append("education.semester", "III");
   formData.append("education.faculty", 1);
   formData.append("education.university", 1);
 

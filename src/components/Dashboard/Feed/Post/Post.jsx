@@ -52,7 +52,6 @@ const Post = (props) => {
     const myDate = new Date(post?.modified_at);
     return myDate.toLocaleString();
   };
-  console.log(post);
   return (
     <div className="post-wrapper">
           <div className="post-title-wrapper">

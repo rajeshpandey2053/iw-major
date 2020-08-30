@@ -21,16 +21,17 @@ const Dashboard = ({ fetchPosts, fetchProfiles }) => {
     <div className="container dashboard-wrapper">
       <div className="row dashboard-content-wrapper">
         {/* Sidebar */}
-        <div id="sidebar" className="col-md-3 col-3">
+        <div id="sidebar" className="col-xl-3 col-md-3 col-md-3 d-none d-md-block">
           <Sidebar />
         </div>
         {/* Feed */}
-        <div id="feed" className="col-md-6 col-6">
+        <div id="feed" className="col-xl-6 col-lg-9 col-md-9">
           {postSlug ? <PostDetail /> : <Feed />}
         </div>
 
         {/* Widgets */}
-        <div id="widgets" className="col-md-3 col-3">
+        {/*<div id="widgets" className="col-md-3 col-3 col=">*/}
+        <div id="widgets" className="col-md-3 d-none d-xl-block">
           <Widgets />
         </div>
       </div>

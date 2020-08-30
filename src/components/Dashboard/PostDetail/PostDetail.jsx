@@ -26,7 +26,7 @@ const PostDetail = (props) => {
   const [isUpdateSelected, setIsUpdateSelected] = useState(false);
 
   const [comments, setComments] = useState([]);
-  console.log();
+
   const p_slug = params.postSlug
   const history = useHistory();
   const BASE_URL = "http://127.0.0.1:8000/";
@@ -84,7 +84,7 @@ const PostDetail = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     Axios.post(
-      `${BASE_URL}api/posts/v1/comment/create/`,
+      `${BASE_URL}api/posts/v1/comment/${params.postSlug}/create/`,
       {
         user: post_data[0]?.user,
         post: post_data[0]?.id,

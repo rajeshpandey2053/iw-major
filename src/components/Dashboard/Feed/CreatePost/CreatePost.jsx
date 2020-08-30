@@ -8,9 +8,9 @@ import { connect } from "react-redux";
 const CreatePost = (props) => {
   const [caption, setCaption] = useState("");
   const [education, setEducation] = useState({
-    university: "TU",
-    faculty: "BE",
-    semester: 1,
+    university: 2,
+    faculty: 2,
+    semester: 'III',
   });
   const [file, setFile] = useState(null);
 
@@ -70,9 +70,9 @@ const CreatePost = (props) => {
               name="university"
               onChange={handleChange}
             >
-              <option value="TU">Tribhuwan University</option>
-              <option value="PU">Purbanchal University</option>
-              <option value="PoU">Pokhara University</option>
+              <option value={1}>Tribhuwan University</option>
+              <option value={2}>Purbanchal University</option>
+              <option value={3}>Pokhara University</option>
             </select>
           </div>
           <div>
@@ -82,9 +82,9 @@ const CreatePost = (props) => {
               name="faculty"
               onChange={handleChange}
             >
-              <option value="BE">Bachelor in engineering</option>
-              <option value="CA">Chartered Accountancy</option>
-              <option value="BBA">Bachelor in Business Administration</option>
+              <option value={1}>Bachelor in engineering</option>
+              <option value={2}>Chartered Accountancy</option>
+              <option value={3}>Bachelor in Business Administration</option>
             </select>
           </div>
           <div>
@@ -94,14 +94,14 @@ const CreatePost = (props) => {
               name="semester"
               onChange={handleChange}
             >
-              <option value="1">I</option>
-              <option value="2">II</option>
-              <option value="3">III</option>
-              <option value="4">IV</option>
-              <option value="5">V</option>
-              <option value="6">VI</option>
-              <option value="7">VII</option>
-              <option value="8">VIII</option>
+              <option value="I">I</option>
+              <option value="II">II</option>
+              <option value="III">III</option>
+              <option value="IV">IV</option>
+              <option value="V">V</option>
+              <option value="VI">VI</option>
+              <option value="VII">VII</option>
+              <option value="VIII">VIII</option>
             </select>
           </div>
         </div>
