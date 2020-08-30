@@ -85,7 +85,7 @@ const PostDetail = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     Axios.post(
-      `${BASE_URL}api/posts/v1/comment/create/`,
+      `${BASE_URL}api/posts/v1/comment/${params.postSlug}/create/`,
       {
         user: post_data[0]?.user,
         post: post_data[0]?.id,
