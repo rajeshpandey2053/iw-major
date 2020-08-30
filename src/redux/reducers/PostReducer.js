@@ -5,6 +5,9 @@ import {
   CREATE_POST_REQUEST,
   CREATE_POST_SUCCESS,
   CREATE_POST_FAILURE,
+  UPDATE_POST_REQUEST,
+  UPDATE_POST_SUCCESS,
+  UPDATE_POST_FAILURE,
   DELETE_POST_REQUEST,
   DELETE_POST_FAILURE,
   DELETE_POST_SUCCESS,
@@ -35,6 +38,7 @@ const reducer = (state = initialState, action) => {
       };
     case FETCH_POST_FAILURE:
       return {
+        ...state,
         loading: false,
         posts: [],
         error: action.error,
@@ -53,8 +57,28 @@ const reducer = (state = initialState, action) => {
       };
     case CREATE_POST_FAILURE:
       return {
+        ...state,
         loading: false,
-        posts: [],
+        error: action.error,
+      };
+    case UPDATE_POST_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_POST_SUCCESS:
+      return {
+        ...state,
+        posts: state.posts.filter((post) =>
+          post.post_slug === action.post_slug ? action.updatedPost : post
+        ),
+        loading: false,
+        errors: "",
+      };
+    case UPDATE_POST_FAILURE:
+      return {
+        ...state,
+        loading: false,
         error: action.error,
       };
     case DELETE_POST_REQUEST:
@@ -64,6 +88,7 @@ const reducer = (state = initialState, action) => {
       };
     case DELETE_POST_SUCCESS:
       return {
+        ...state,
         posts: state.posts.filter(
           (post) => post.post_slug !== action.post_slug
         ),

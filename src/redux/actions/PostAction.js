@@ -9,7 +9,11 @@ import {
   DELETE_POST_REQUEST,
   DELETE_POST_FAILURE,
   DELETE_POST_SUCCESS,
+  UPDATE_POST_REQUEST,
+  UPDATE_POST_SUCCESS,
+  UPDATE_POST_FAILURE,
 } from "./ActionTypes";
+
 const BASE_URL = "http://127.0.0.1:8000/";
 const createPostURL = `${BASE_URL}api/posts/v1/post/create/`;
 export const fetchPostRequest = () => {
@@ -57,6 +61,28 @@ export const createPostFailure = (error) => {
   };
 };
 
+export const updatePostRequest = () => {
+  // console.log("hello2");
+  return {
+    type: UPDATE_POST_REQUEST,
+  };
+};
+
+export const updatePostSuccess = (updatedPost) => {
+  console.log("Hello from success");
+  return {
+    type: UPDATE_POST_SUCCESS,
+    updatedPost: updatedPost,
+  };
+};
+
+export const updatePostFailure = (error) => {
+  return {
+    type: UPDATE_POST_FAILURE,
+    error: error,
+  };
+};
+
 export const deletePostRequest = () => {
   return {
     type: DELETE_POST_REQUEST,
@@ -81,7 +107,7 @@ export const fetchPosts = (PageLink) => {
     dispatch(fetchPostRequest);
     Axios.get(PageLink, {
       headers: {
-        Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
+        Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
       },
     })
       .then((response) => {
@@ -97,37 +123,59 @@ export const fetchPosts = (PageLink) => {
   };
 };
 
-export const createPosts = (posts) => {
+export const createPosts = (post, post_slug = "") => {
   const formData = new FormData();
   formData.append("user", 1);
-  formData.append("file", posts.file);
+  formData.append("file", post.file);
   formData.append("post_slug", "post_slug");
-  formData.append("caption", posts.caption);
+  formData.append("caption", post.caption);
   formData.append("education.semester", "1");
   formData.append("education.faculty", 1);
   formData.append("education.university", 1);
 
   return (dispatch) => {
     // console.log({posts});
-    dispatch(createPostRequest);
-    Axios({
-      url: createPostURL,
-      method: "POST",
-      data: formData,
-      headers: {
-        Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
-        "Content-Type": "multipart/form-data",
-      },
-    })
-      .then((response) => {
-        console.log(response.data);
-        const newPost = response.data;
-        dispatch(createPostSuccess(newPost));
+    if (post_slug === "") {
+      dispatch(createPostRequest);
+      Axios({
+        url: createPostURL,
+        method: "POST",
+        data: formData,
+        headers: {
+          Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
+          "Content-Type": "multipart/form-data",
+        },
       })
-      .catch((error) => {
-        const errorMsg = error.message;
-        dispatch(createPostFailure(errorMsg));
-      });
+        .then((response) => {
+          console.log(response.data);
+          const newPost = response.data;
+          dispatch(createPostSuccess(newPost));
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+          dispatch(createPostFailure(errorMsg));
+        });
+    } else {
+      dispatch(updatePostRequest);
+      Axios({
+        url: `${BASE_URL}api/posts/v1/post/${post_slug}/update/`,
+        method: "PUT",
+        data: formData,
+        headers: {
+          Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
+          "Content-Type": "multipart/form-data",
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          const updatedPost = response.data;
+          dispatch(updatePostSuccess(updatedPost));
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+          dispatch(updatePostFailure(errorMsg));
+        });
+    }
   };
 };
 

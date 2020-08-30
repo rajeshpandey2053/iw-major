@@ -6,6 +6,7 @@ import "./comment.scss";
 import blankProfileImg from "../../../../images/blank-profile-picture-973460_1280.webp";
 
 const Comment = (props) => {
+  console.log(props);
   const [likesCount, setLikesCount] = useState(props.stars_count);
   const [isLiked, setIsLiked] = useState(false);
   const BASE_URL = "http://127.0.0.1:8000/";
