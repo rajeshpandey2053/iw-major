@@ -10,13 +10,16 @@ const Comment = (props) => {
   const [likesCount, setLikesCount] = useState(props.stars_count);
   const [isLiked, setIsLiked] = useState(false);
   const [isUpdateSelected, setIsUpdateSelected] = useState(true);
-  const handlelikeButton = (event) => {
+  const BASE_URL = "http://127.0.0.1:8000/";
+  const handleLikeButton = (event) => {
     setIsLiked(!isLiked);
     if (!isLiked) {
       setLikesCount(likesCount + 1);
-      Axios.post(
-        `http://127.0.0.1:8000/api/posts/v1/comment/${props.comment_id}/like/`
-      )
+      Axios.post(`${BASE_URL}api/posts/v1/comment/${props.comment_id}/like/`, {
+        headers: {
+          Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
+        },
+      })
         .then((response) => {
           console.log(response);
         })
@@ -25,9 +28,11 @@ const Comment = (props) => {
         });
     } else {
       setLikesCount(likesCount - 1);
-      Axios.post(
-        `http://127.0.0.1:8000/api/posts/v1/post/${props.comment_id}/unlike/`
-      )
+      Axios.post(`${BASE_URL}api/posts/v1/post/${props.comment_id}/unlike/`, {
+        headers: {
+          Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
+        },
+      })
         .then((response) => {
           console.log(response);
         })
@@ -51,7 +56,7 @@ const Comment = (props) => {
           {isUpdateSelected ? <UpdateComment /> : null}
           <div className="actions">
             <p>
-              <button className="comment-like" onClick={handlelikeButton}>
+              <button className="comment-like" onClick={handleLikeButton}>
                 {isLiked ? "Unlike" : "Like"}
               </button>{" "}
               {likesCount} {likesCount === 1 ? "Like" : "Likes"}
