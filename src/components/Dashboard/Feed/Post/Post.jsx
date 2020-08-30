@@ -52,7 +52,7 @@ const Post = (props) => {
     const myDate = new Date(post?.modified_at);
     return myDate.toLocaleString();
   };
-
+  console.log(post);
   return (
     <div className="post-wrapper">
           <div className="post-title-wrapper">
@@ -63,7 +63,7 @@ const Post = (props) => {
 
               <div className="title-wrapper">
                 <h6>
-                  <a href="/">{post.user}</a> shared a post.
+                  <a href="/">{post.user_name}</a> shared a post.
                 </h6>
                 <p>{getDate()}</p>
               </div>
