@@ -87,7 +87,7 @@ const Post = (props) => {
                 <p>{post.caption}</p>
                 {post?.file ? (
                     <p>
-                        <a href={post.file}>{fileName}</a>
+                        <a href={post.file} download target='_blank' rel="noopener noreferrer">{fileName}</a>
                     </p>
                 ) : null}
 
