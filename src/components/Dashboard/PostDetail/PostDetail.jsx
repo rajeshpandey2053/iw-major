@@ -39,12 +39,11 @@ const PostDetail = (props) => {
       .then((response) => {
         const fetched_comments = response.data.results;
         setComments(fetched_comments);
-        console.log(comments);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [p_slug]);
   const handleChange = (event) => {
     setCommentText(event.target.value);
   };
