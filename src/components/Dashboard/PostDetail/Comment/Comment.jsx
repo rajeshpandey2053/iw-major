@@ -9,7 +9,7 @@ const Comment = (props) => {
   const [likesCount, setLikesCount] = useState(props.stars_count);
   const [isLiked, setIsLiked] = useState(false);
   const BASE_URL = "http://127.0.0.1:8000/";
-  const handlelikeButton = (event) => {
+  const handleLikeButton = (event) => {
     setIsLiked(!isLiked);
     if (!isLiked) {
       setLikesCount(likesCount + 1);
@@ -53,7 +53,7 @@ const Comment = (props) => {
           <p className="comment-description">{props.comment_description}</p>
           <div className="actions">
             <p>
-              <button className="comment-like" onClick={handlelikeButton}>
+              <button className="comment-like" onClick={handleLikeButton}>
                 {isLiked ? "Unlike" : "Like"}
               </button>{" "}
               {likesCount} {likesCount === 1 ? "Like" : "Likes"}
