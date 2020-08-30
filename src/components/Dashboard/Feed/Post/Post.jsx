@@ -55,23 +55,6 @@ const Post = (props) => {
 
   return (
     <div className="post-wrapper">
-      {post.slug}
-      <div className="post-title-wrapper">
-        <div className="title-outer-wrapper">
-          <div className="image-wrapper">
-            <img height={35} src={blankProfileImg} alt="Avatar" />
-          </div>
-
-          <div className="title-wrapper">
-            <h6>
-              <a href="/">{post.username}</a> shared a post.
-            </h6>
-            <p>{getDate()}</p>
-          </div>
-        </div>
-
-        <div className="post-wrapper">
-          {post.slug}
           <div className="post-title-wrapper">
             <div className="title-outer-wrapper">
               <div className="image-wrapper">
@@ -134,8 +117,6 @@ const Post = (props) => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 };
 export default Post;

@@ -81,7 +81,7 @@ export const fetchPosts = (PageLink) => {
     dispatch(fetchPostRequest);
     Axios.get(PageLink, {
       headers: {
-        Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
+        Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
       },
     })
       .then((response) => {
