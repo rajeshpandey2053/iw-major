@@ -65,8 +65,14 @@ div.post-wrapper {
     }
   }
 
+  div.tags-wrapper {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
   div.post-caption-wrapper {
-    padding-top: 10px;
+    padding-top: 0;
     border-bottom: 1px solid rgba(182, 179, 179, 0.4);
 
     p {
