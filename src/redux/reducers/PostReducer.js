@@ -5,6 +5,9 @@ import {
   CREATE_POST_REQUEST,
   CREATE_POST_SUCCESS,
   CREATE_POST_FAILURE,
+  DELETE_POST_REQUEST,
+  DELETE_POST_FAILURE,
+  DELETE_POST_SUCCESS,
 } from "../actions/ActionTypes";
 
 const defaultnextPageLink = "http://127.0.0.1:8000/api/posts/v1/post/list/";
@@ -52,6 +55,25 @@ const reducer = (state = initialState, action) => {
       return {
         loading: false,
         posts: [],
+        error: action.error,
+      };
+    case DELETE_POST_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_POST_SUCCESS:
+      return {
+        posts: state.posts.filter(
+          (post) => post.post_slug !== action.post_slug
+        ),
+        loading: false,
+        errors: "",
+      };
+    case DELETE_POST_FAILURE:
+      return {
+        ...state,
+        loading: false,
         error: action.error,
       };
     default:
