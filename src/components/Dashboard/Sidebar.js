@@ -1,5 +1,7 @@
 import React from "react";
 import "./Sidebar.scss";
+
+
 import SidebarOption from "./SidebarOption";
 import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from "@material-ui/icons/Search";
@@ -24,7 +26,7 @@ function Sidebar() {
                     <SidebarOption Icon={NotificationsIcon} text="Notifications"/>
                 </Link>
 
-                <Link to="/dashboard">
+                <Link to="/profile">
                     <SidebarOption Icon={PersonIcon} text="Profile"/>
                 </Link>
             </div>
