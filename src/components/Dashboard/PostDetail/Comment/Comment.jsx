@@ -7,9 +7,10 @@ import blankProfileImg from "../../../../images/blank-profile-picture-973460_128
 import UpdateComment from "./UpdateComment/UpdateComment";
 
 const Comment = (props) => {
+    console.log(props);
     const [likesCount, setLikesCount] = useState(props.stars_count);
-    const [isLiked, setIsLiked] = useState(false);
     const [isUpdateSelected, setIsUpdateSelected] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
     const BASE_URL = "http://127.0.0.1:8000/";
     const handleLikeButton = (event) => {
         setIsLiked(!isLiked);

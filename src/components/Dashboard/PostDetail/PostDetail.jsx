@@ -27,13 +27,14 @@ const PostDetail = (props) => {
 
   const [comments, setComments] = useState([]);
 
+
   const p_slug = params.postSlug
   const history = useHistory();
   const BASE_URL = "http://127.0.0.1:8000/";
   useEffect(() => {
     Axios.get(`${BASE_URL}api/posts/v1/comment/${p_slug}/list/`, {
       headers: {
-        Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
+        Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
       },
     })
       .then((response) => {
@@ -92,17 +93,13 @@ const PostDetail = (props) => {
       },
       {
         headers: {
-          Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
+          Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
         },
       }
     )
       .then((response) => {
-        console.log(response);
         const newcomment = response.data;
-        console.log(`new comment ${newcomment}`);
-        console.log(`old comments ${comments}`);
         setComments([newcomment, ...comments]);
-        console.log(comments);
       })
       .catch((error) => {
         console.log(error);
@@ -114,6 +111,7 @@ const PostDetail = (props) => {
     props.deletePost(params.postSlug);
     //api pass post slug to delete
     //go back
+    history.goBack();
   };
 
   return (

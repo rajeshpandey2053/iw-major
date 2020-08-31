@@ -34,7 +34,8 @@ const CreatePost = (props) => {
   const handleSubmit = (event) => {
     console.log({ education });
     event.preventDefault();
-    props.createPosts({ caption, file });
+    const post = { caption, file };
+    props.createPosts(post);
     setEducation({
       university: "TU",
       faculty: "BE",
@@ -135,7 +136,7 @@ const CreatePost = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createPosts: (posts) => dispatch(createPosts(posts)),
+    createPosts: (post) => dispatch(createPosts(post)),
   };
 };
 

@@ -1,20 +1,33 @@
 import React, {useState} from "react";
-import './updatePost.scss';
+import "./updatePost.scss";
+
+import {useParams} from "react-router-dom";
+import {connect} from "react-redux";
+import {createPosts} from "../../../../redux/actions/PostAction";
+
 
 const UpdatePost = (props) => {
+    let params = useParams();
+    const post_data = props.postData.posts.filter(
+        (post) => post.post_slug === params.postSlug
+    );
+    const [caption, setCaption] = useState(post_data[0]?.caption || "");
     const [newPost, setNewPost] = useState({
-        caption: props?.post?.caption || '',
-        university: props?.post?.education?.university || '',
-        semester: props?.post?.education?.semester || '',
-        faculty: props?.post?.education?.faculty || '',
+        caption: post_data[0]?.caption || '',
+        university: post_data[0]?.education?.university || '',
+        semester: post_data[0]?.education?.semester || '',
+        faculty: post_data[0]?.education?.faculty || '',
     })
 
-    const handleSubmit = event => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-        console.log({newPost});
+        console.log({caption});
+        const file = post_data[0]?.file;
+        const post = {caption, file};
+        props.createPosts(post, params.postSlug);
         props.updatePostToggle();
-        setNewPost()
-    }
+        setCaption("");
+    };
 
     const handleChange = event => {
         const {name, value} = event.target
@@ -23,6 +36,7 @@ const UpdatePost = (props) => {
             [name]: value
         })
     }
+
     return (
         <form onSubmit={handleSubmit} className='post-update-form-wrapper'>
             <div className="update-form-title">
@@ -91,9 +105,17 @@ const UpdatePost = (props) => {
                     Cancel
                 </button>
             </div>
-
         </form>
-    )
-}
-
-export default UpdatePost;
+    );
+};
+const mapStateToProps = (state) => {
+    return {
+        postData: state.post,
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createPosts: (post, slug) => dispatch(createPosts(post, slug)),
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(UpdatePost);

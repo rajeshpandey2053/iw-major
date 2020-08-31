@@ -41,6 +41,10 @@ div.create-post-wrapper {
 
   div.education-input-fields {
     display: flex;
+    //flex-wrap: wrap;
+    @media screen and (max-width: 756px){
+      flex-direction: column;
+    }
     align-items: center;
     justify-content: space-evenly;
     padding-bottom: 10px;
