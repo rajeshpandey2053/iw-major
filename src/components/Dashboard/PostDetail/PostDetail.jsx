@@ -26,8 +26,9 @@ const PostDetail = (props) => {
   const [isUpdateSelected, setIsUpdateSelected] = useState(false);
 
   const [comments, setComments] = useState([]);
-  console.log();
-  const p_slug = params.postSlug;
+
+
+  const p_slug = params.postSlug
   const history = useHistory();
   const BASE_URL = "http://127.0.0.1:8000/";
   useEffect(() => {
@@ -39,12 +40,11 @@ const PostDetail = (props) => {
       .then((response) => {
         const fetched_comments = response.data.results;
         setComments(fetched_comments);
-        console.log(comments);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [p_slug]);
   const handleChange = (event) => {
     setCommentText(event.target.value);
   };
@@ -85,7 +85,7 @@ const PostDetail = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     Axios.post(
-      `${BASE_URL}api/posts/v1/comment/create/`,
+      `${BASE_URL}api/posts/v1/comment/${params.postSlug}/create/`,
       {
         user: post_data[0]?.user,
         post: post_data[0]?.id,
