@@ -107,7 +107,7 @@ export const fetchPosts = (PageLink) => {
     dispatch(fetchPostRequest);
     Axios.get(PageLink, {
       headers: {
-        Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
+        Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
       },
     })
       .then((response) => {
@@ -124,6 +124,8 @@ export const fetchPosts = (PageLink) => {
 };
 
 export const createPosts = (post, post_slug = "") => {
+  console.log(post);
+  console.log(post.caption);
   const formData = new FormData();
   formData.append("user", 1);
   formData.append("file", post.file);
@@ -142,7 +144,7 @@ export const createPosts = (post, post_slug = "") => {
         method: "POST",
         data: formData,
         headers: {
-          Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
+          Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
           "Content-Type": "multipart/form-data",
         },
       })
@@ -162,7 +164,7 @@ export const createPosts = (post, post_slug = "") => {
         method: "PUT",
         data: formData,
         headers: {
-          Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
+          Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
           "Content-Type": "multipart/form-data",
         },
       })
@@ -184,7 +186,7 @@ export const deletePost = (post_slug) => {
     dispatch(deletePostRequest);
     Axios.delete(`${BASE_URL}api/posts/v1/post/${post_slug}/`, {
       headers: {
-        Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
+        Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
       },
     })
       .then((response) => {
