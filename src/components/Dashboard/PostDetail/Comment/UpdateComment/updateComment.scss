@@ -1,0 +1,42 @@
+.update-comment-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  //max-width: 80%;
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid grey;
+
+  .update-comment-field-wrapper {
+    display: flex;
+    @media screen and (max-width: 1000px) {
+      flex-direction: column;
+    }
+    flex-wrap: wrap;
+    input {
+      border: 1px solid #d7d7d7;
+      padding: 5px 1rem;
+      border-radius: 10rem;
+      font-size: 0.8rem;
+      &[type='text'] {
+        color: grey;
+        margin-right: 5px;
+
+        @media screen and (max-width: 1000px) {
+          max-width: 80%;
+        }
+      }
+      &[type='submit'] {
+        color: white;
+        width: fit-content;
+        background: #6600fc;
+        &:hover {
+          background: #4901b3;
+        }
+      }
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}

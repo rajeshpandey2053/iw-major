@@ -4,7 +4,6 @@
 .feed-wrapper {
   //height: 100%;
   overflow: auto;
-
 }
 ::-webkit-scrollbar {
   width: 5px;
@@ -20,3 +19,9 @@
   border-radius: 50px;
 }
 
+.read-more-link {
+  color: blueviolet;
+  text-decoration: underline;
+  letter-spacing: 1px;
+  cursor: pointer;
+}

@@ -11,12 +11,16 @@ div.dashboard-wrapper {
       padding: 0 0 0 10px;
     }
     #feed {
-      border-right: 1px solid #808080;
       padding: 0 0 0 0;
       height: 100%;
       overflow: auto;
-      background: #fdfdfd;
-      //background: #ff006f;
+      background: #f8f8f8;
+      position: relative;
+    }
+    #widgets {
+      border-left: 1px solid #808080;
+      height: 100%;
+      overflow: scroll;
     }
   }
 }
