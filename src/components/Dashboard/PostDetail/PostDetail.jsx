@@ -27,10 +27,10 @@ const PostDetail = (props) => {
 
   const [comments, setComments] = useState([]);
 
-
-  const p_slug = params.postSlug
+  const p_slug = params.postSlug;
   const history = useHistory();
   const BASE_URL = "http://127.0.0.1:8000/";
+
   useEffect(() => {
     Axios.get(`${BASE_URL}api/posts/v1/comment/${p_slug}/list/`, {
       headers: {
@@ -85,7 +85,7 @@ const PostDetail = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     Axios.post(
-      `${BASE_URL}api/posts/v1/comment/${params.postSlug}/create/`,
+      `${BASE_URL}api/posts/v1/comment/create/`,
       {
         user: post_data[0]?.user,
         post: post_data[0]?.id,
