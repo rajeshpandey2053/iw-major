@@ -194,15 +194,7 @@ const PostDetail = (props) => {
           </div>
           <div className="comment">
             {comments.map((comm) => (
-              <Comment
-                key={comm.id}
-                comment_description={comm.comment_description}
-                username={comm.user_name}
-                post_id={comm.post}
-                created_at={comm.commented_at}
-                comment_id={comm.id}
-                stars_count={comm.stars_count}
-              />
+              <Comment key={comm.id} comment={comm} />
             ))}
           </div>
         </div>
