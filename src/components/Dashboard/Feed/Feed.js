@@ -19,19 +19,21 @@ const Feed = ({postData, fetchPosts}) => {
                     post={post}
                 />
             ))}
-            {postData.nextPageLink ? (
-                <button
-                    className="read-more-link"
-                    onClick={() => {
-                        setReadMore(!readMore);
-                        fetchPosts(postData?.nextPageLink);
-                    }}
-                >
-                    <h2>Show More</h2>
-                </button>
-            ) : (
-                <p className='text-center'>That's all the feed you got.</p>
-            )}
+            <div className='read-more-wrapper'>
+                {postData.nextPageLink ? (
+                    <button
+                        className="read-more-link"
+                        onClick={() => {
+                            setReadMore(!readMore);
+                            fetchPosts(postData?.nextPageLink);
+                        }}
+                    >
+                        Show More
+                    </button>
+                ) : (
+                    <p className='text-center'>That's all the feed you got.</p>
+                )}
+            </div>
         </div>
     );
 };
