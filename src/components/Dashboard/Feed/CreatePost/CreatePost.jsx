@@ -10,7 +10,7 @@ const CreatePost = (props) => {
   const [education, setEducation] = useState({
     university: 2,
     faculty: 2,
-    semester: 'III',
+    semester: "III",
   });
   const [file, setFile] = useState(null);
 
@@ -34,13 +34,15 @@ const CreatePost = (props) => {
   const handleSubmit = (event) => {
     console.log({ education });
     event.preventDefault();
-    const post = { caption, file };
+    const post = { caption, education, file };
     props.createPosts(post);
     setEducation({
       university: "TU",
       faculty: "BE",
       semester: 1,
     });
+    setCaption("");
+    setFile(null);
     // window.location.reload();
   };
 
