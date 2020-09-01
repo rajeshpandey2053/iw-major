@@ -1,16 +1,15 @@
-import axios from 'axios';
+import axios from "axios";
 
-const baseURL = '';
+const baseURL = "";
 const headers = {};
 
-if (localStorage.getItem('token')) {
-    headers['Authentication'] = `Bearer ${localStorage.getItem('token')}`
+if (localStorage.getItem("token")) {
+  headers["Authentication"] = `Bearer ${localStorage.getItem("token")}`;
 }
 
-
 const axiosInstance = axios.create({
-    baseURL,
-    headers,
+  baseURL,
+  headers,
 });
 
 export default axiosInstance;
