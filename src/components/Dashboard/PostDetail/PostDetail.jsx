@@ -127,14 +127,16 @@ const PostDetail = (props) => {
             >
               <ArrowBackIcon />
             </button>
-            <div className="post-action-btns">
-              <button id="update" onClick={() => updatePostToggle()}>
-                Update
-              </button>
-              <button id="delete" onClick={handleDeleteCLick}>
-                Delete
-              </button>
-            </div>
+            {props.profie.profiles.user.id === post_data[0]?.user ? (
+              <div className="post-action-btns">
+                <button id="update" onClick={() => updatePostToggle()}>
+                  Update
+                </button>
+                <button id="delete" onClick={handleDeleteCLick}>
+                  Delete
+                </button>
+              </div>
+            ) : null}
           </div>
         </div>
         <div className="detail-wrapper">
@@ -227,6 +229,7 @@ const PostDetail = (props) => {
 const mapStateToProps = (state) => {
   return {
     postData: state.post,
+    profie: state.profie,
   };
 };
 const mapDispatchToProps = (dispatch) => {
