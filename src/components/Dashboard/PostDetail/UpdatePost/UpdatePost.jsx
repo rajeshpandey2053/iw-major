@@ -54,6 +54,11 @@ const UpdatePost = (props) => {
         />
       </div>
 
+      <div className='file-field-wrapper'>
+        <label htmlFor="file">Change file ? </label>
+        <input type="file" name='file' onChange={handleChange} />
+      </div>
+
       <div className="update-education-input-fields">
         <div>
           <select
