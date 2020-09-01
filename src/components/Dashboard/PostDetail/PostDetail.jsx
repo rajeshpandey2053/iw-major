@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { useHistory, Link, useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import Axios from "axios";
+import Axios from "../../../utils/axios";
 
 import FavoriteBorderSharpIcon from "@material-ui/icons/FavoriteBorderSharp";
 import FavoriteSharpIcon from "@material-ui/icons/FavoriteSharp";
@@ -31,14 +31,9 @@ const PostDetail = (props) => {
 
   const p_slug = params.postSlug;
   const history = useHistory();
-  const BASE_URL = "http://127.0.0.1:8000/";
 
   useEffect(() => {
-    Axios.get(`${BASE_URL}api/posts/v1/comment/${p_slug}/list/`, {
-      headers: {
-        Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
-      },
-    })
+    Axios.get(`/api/posts/v1/comment/${p_slug}/list/`)
       .then((response) => {
         const fetched_comments = response.data.results;
         setComments(fetched_comments);
@@ -56,11 +51,7 @@ const PostDetail = (props) => {
   const handlelikeButton = (event) => {
     if (!isLiked) {
       setLikesCount(likesCount + 1);
-      Axios.post(`${BASE_URL}api/posts/v1/post/${params.postSlug}/like/`, {
-        headers: {
-          Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
-        },
-      })
+      Axios.post(`/api/posts/v1/post/${params.postSlug}/like/`)
         .then((response) => {
           console.log(response);
         })
@@ -69,11 +60,7 @@ const PostDetail = (props) => {
         });
     } else {
       setLikesCount(likesCount - 1);
-      Axios.post(`${BASE_URL}api/posts/v1/post/${params.postSlug}/unlike/`, {
-        headers: {
-          Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
-        },
-      })
+      Axios.post(`/api/posts/v1/post/${params.postSlug}/unlike/`)
         .then((response) => {
           console.log(response);
         })
@@ -88,19 +75,11 @@ const PostDetail = (props) => {
     event.preventDefault();
     console.log({ post_data });
     console.log({ commentText });
-    Axios.post(
-      `${BASE_URL}api/posts/v1/comment/create/`,
-      {
-        user: post_data[0]?.user,
-        post: post_data[0]?.id,
-        comment_description: commentText,
-      },
-      {
-        headers: {
-          Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
-        },
-      }
-    )
+    Axios.post("/api/posts/v1/comment/create/", {
+      user: post_data[0]?.user,
+      post: post_data[0]?.id,
+      comment_description: commentText,
+    })
       .then((response) => {
         const newcomment = response.data;
         setComments([newcomment, ...comments]);
@@ -129,7 +108,8 @@ const PostDetail = (props) => {
             >
               <ArrowBackIcon />
             </button>
-            {props.profie.profiles.user.id === post_data[0]?.user ? (
+            {props.profile?.profiles?.user?.username ===
+            post_data[0]?.user_name ? (
               <div className="post-action-btns">
                 <button id="update" onClick={() => updatePostToggle()}>
                   Update
@@ -156,9 +136,19 @@ const PostDetail = (props) => {
           </div>
 
           <div className="tags-wrapper">
-            <Tag text={post_data[0]?.education.university_name || 'Tribhuwan University'} />
-            <Tag text={post_data[0]?.education.faculty_name || 'Bachelor in Computer Engineering'} />
-            <Tag text={post_data[0]?.education.semester || 'III'} />
+            <Tag
+              text={
+                post_data[0]?.education.university_name ||
+                "Tribhuwan University"
+              }
+            />
+            <Tag
+              text={
+                post_data[0]?.education.faculty_name ||
+                "Bachelor in Computer Engineering"
+              }
+            />
+            <Tag text={post_data[0]?.education.semester || "III"} />
           </div>
 
           <div className="detail-info-wrapper">
@@ -237,7 +227,7 @@ const PostDetail = (props) => {
 const mapStateToProps = (state) => {
   return {
     postData: state.post,
-    profie: state.profie,
+    profile: state.profile,
   };
 };
 const mapDispatchToProps = (dispatch) => {

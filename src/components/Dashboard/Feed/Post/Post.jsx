@@ -30,15 +30,7 @@ const Post = (props) => {
     setIsLiked(!isLiked);
     if (!isLiked) {
       setLikesCount(likesCount + 1);
-      Axios.post(
-        `http://127.0.0.1:8000/api/posts/v1/post/${post.post_slug}/like/`,
-        {},
-        {
-          headers: {
-            Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
-          },
-        }
-      )
+      Axios.post(`/api/posts/v1/post/${post.post_slug}/like/`, {})
         .then((response) => {
           console.log(response);
         })
@@ -47,15 +39,7 @@ const Post = (props) => {
         });
     } else {
       setLikesCount(likesCount - 1);
-      Axios.post(
-        `http://127.0.0.1:8000/api/posts/v1/post/${post.post_slug}/unlike/`,
-        {},
-        {
-          headers: {
-            Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
-          },
-        }
-      )
+      Axios.post(`/api/posts/v1/post/${post.post_slug}/unlike/`, {})
         .then((response) => {
           console.log(response);
         })

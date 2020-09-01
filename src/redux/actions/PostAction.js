@@ -1,4 +1,4 @@
-import Axios from "axios";
+import Axios from "../../utils/axios";
 import {
   FETCH_POST_REQUEST,
   FETCH_POST_SUCCESS,
@@ -148,7 +148,7 @@ export const createPosts = (post, post_slug = "") => {
     } else {
       dispatch(updatePostRequest);
       Axios.defaults.headers.put["Content-Type"] = "multipart/form-data";
-      Axios(`/api/posts/v1/post/${post_slug}/update/`, formData)
+      Axios.put(`/api/posts/v1/post/${post_slug}/update/`, formData)
         .then((response) => {
           console.log(response.data);
           const updatedPost = response.data;

@@ -14,14 +14,17 @@ import { fetchProfiles } from "../../redux/actions/ProfileAction";
 const Dashboard = ({ fetchPosts, fetchProfiles }) => {
   const { postSlug } = useParams();
   useEffect(() => {
-    fetchPosts("http://127.0.0.1:8000/api/posts/v1/post/list/");
+    fetchPosts("/api/posts/v1/post/list/");
     fetchProfiles();
   }, []);
   return (
     <div className="container dashboard-wrapper">
       <div className="row dashboard-content-wrapper">
         {/* Sidebar */}
-        <div id="sidebar" className="col-xl-3 col-md-3 col-md-3 d-none d-md-block">
+        <div
+          id="sidebar"
+          className="col-xl-3 col-md-3 col-md-3 d-none d-md-block"
+        >
           <Sidebar />
         </div>
         {/* Feed */}

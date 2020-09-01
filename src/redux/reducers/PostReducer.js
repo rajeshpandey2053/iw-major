@@ -13,7 +13,7 @@ import {
   DELETE_POST_SUCCESS,
 } from "../actions/ActionTypes";
 
-const defaultnextPageLink = "http://127.0.0.1:8000/api/posts/v1/post/list/";
+const defaultnextPageLink = "/api/posts/v1/post/list/";
 
 const initialState = {
   loading: false,

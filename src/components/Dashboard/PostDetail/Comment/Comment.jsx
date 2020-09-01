@@ -1,25 +1,21 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Axios from "axios";
+import Axios from "../../../../utils/axios";
 import "./comment.scss";
 
 import blankProfileImg from "../../../../images/blank-profile-picture-973460_1280.webp";
 import UpdateComment from "./UpdateComment/UpdateComment";
 
 const Comment = ({ comment }) => {
+  console.log(comment);
   const [likesCount, setLikesCount] = useState(comment.stars_count);
   const [isUpdateSelected, setIsUpdateSelected] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
-  const BASE_URL = "http://127.0.0.1:8000/";
   const handleLikeButton = (event) => {
     setIsLiked(!isLiked);
     if (!isLiked) {
       setLikesCount(likesCount + 1);
-      Axios.post(`${BASE_URL}api/posts/v1/comment/${comment.id}/like/`, {
-        headers: {
-          Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
-        },
-      })
+      Axios.post(`/api/posts/v1/comment/${comment.id}/like/`)
         .then((response) => {
           console.log(response);
         })
@@ -28,11 +24,7 @@ const Comment = ({ comment }) => {
         });
     } else {
       setLikesCount(likesCount - 1);
-      Axios.post(`${BASE_URL}api/posts/v1/post/${comment.id}/unlike/`, {
-        headers: {
-          Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
-        },
-      })
+      Axios.post(`/api/posts/v1/post/${comment.id}/unlike/`)
         .then((response) => {
           console.log(response);
         })
@@ -42,9 +34,9 @@ const Comment = ({ comment }) => {
     }
   };
 
-  const handleDeleteButton = event => {
-    console.log('Deleted!')
-  }
+  const handleDeleteButton = (event) => {
+    console.log("Deleted!");
+  };
 
   return (
     <div className="comment-wrapper">
@@ -54,7 +46,7 @@ const Comment = ({ comment }) => {
         </div>
         <div className="commenter-details">
           <h6>
-            <Link to="/dashboard">{comment.username}</Link>
+            <Link to="/dashboard">{comment.user_name}</Link>
           </h6>
           <p className="comment-description">{comment.comment_description}</p>
           {isUpdateSelected ? <UpdateComment /> : null}
@@ -66,9 +58,7 @@ const Comment = ({ comment }) => {
               <button onClick={() => setIsUpdateSelected(!isUpdateSelected)}>
                 {!isUpdateSelected ? "Update" : "Cancel"}
               </button>
-              <button onClick={handleDeleteButton}>
-                Delete
-              </button>
+              <button onClick={handleDeleteButton}>Delete</button>
             </div>
             <p>
               {likesCount} {likesCount === 1 ? "Like" : "Likes"}

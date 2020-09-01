@@ -12,10 +12,12 @@ const UpdatePost = (props) => {
   );
   const [newPost, setNewPost] = useState({
     caption: post_data[0]?.caption || "",
-    university: post_data[0]?.education?.university || "",
-    semester: post_data[0]?.education?.semester || "",
-    faculty: post_data[0]?.education?.faculty || "",
     file: post_data[0]?.file || null,
+    education: {
+      university: post_data[0]?.education?.university || "",
+      semester: post_data[0]?.education?.semester || "",
+      faculty: post_data[0]?.education?.faculty || "",
+    },
   });
 
   const handleSubmit = (event) => {
