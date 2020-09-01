@@ -35,7 +35,7 @@ const Post = (props) => {
         {},
         {
           headers: {
-            Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
+            Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
           },
         }
       )
@@ -52,7 +52,7 @@ const Post = (props) => {
         {},
         {
           headers: {
-            Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
+            Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
           },
         }
       )
@@ -95,9 +95,9 @@ const Post = (props) => {
       </div>
 
       <div className="tags-wrapper">
-        <Tag text="Tribhuwan University" />
-        <Tag text="Bachelor In engineering" />
-        <Tag text="III" />
+        <Tag text={post.education.university_name} />
+        <Tag text={post.education.faculty_name} />
+        <Tag text={<post className="education semester"></post>} />
       </div>
 
       <div className="post-caption-wrapper">

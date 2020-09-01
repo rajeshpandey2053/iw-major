@@ -58,6 +58,12 @@ div.post-detail {
 
     }
   }
+  div.tags-wrapper {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    //justify-content: center;
+  }
 
   .detail-wrapper {
     padding: 10px;
