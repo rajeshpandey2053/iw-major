@@ -124,16 +124,15 @@ export const fetchPosts = (PageLink) => {
 };
 
 export const createPosts = (post, post_slug = "") => {
-  console.log(post);
-  console.log(post.caption);
   const formData = new FormData();
-  formData.append("user", 1);
+  formData.append("user", null);
   formData.append("file", post.file);
   formData.append("post_slug", "post_slug");
   formData.append("caption", post.caption);
-  formData.append("education.semester", "1");
-  formData.append("education.faculty", 1);
-  formData.append("education.university", 1);
+  formData.append("education.semester", post.education.semester);
+  formData.append("education.faculty", post.education.faculty);
+  formData.append("edcation.college", 1);
+  formData.append("education.university", post.education.university);
 
   return (dispatch) => {
     // console.log({posts});

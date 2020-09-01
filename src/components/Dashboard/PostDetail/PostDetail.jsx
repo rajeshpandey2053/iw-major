@@ -84,6 +84,8 @@ const PostDetail = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log({ post_data });
+    console.log({ commentText });
     Axios.post(
       `${BASE_URL}api/posts/v1/comment/create/`,
       {

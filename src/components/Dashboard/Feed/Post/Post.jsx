@@ -95,9 +95,9 @@ const Post = (props) => {
       </div>
 
       <div className="tags-wrapper">
-        <Tag text="Tribhuwan University" />
-        <Tag text="Bachelor In engineering" />
-        <Tag text="III" />
+        <Tag text={post?.education.university_name} />
+        <Tag text={post?.education.faculty_name} />
+        <Tag text={post?.education.semester} />
       </div>
 
       <div className="post-caption-wrapper">

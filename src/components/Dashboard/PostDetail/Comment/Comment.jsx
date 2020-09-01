@@ -15,14 +15,11 @@ const Comment = ({ comment }) => {
     setIsLiked(!isLiked);
     if (!isLiked) {
       setLikesCount(likesCount + 1);
-      Axios.post(
-        `${BASE_URL}api/posts/v1/comment/${comment.comment_id}/like/`,
-        {
-          headers: {
-            Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
-          },
-        }
-      )
+      Axios.post(`${BASE_URL}api/posts/v1/comment/${comment.id}/like/`, {
+        headers: {
+          Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
+        },
+      })
         .then((response) => {
           console.log(response);
         })
@@ -31,7 +28,7 @@ const Comment = ({ comment }) => {
         });
     } else {
       setLikesCount(likesCount - 1);
-      Axios.post(`${BASE_URL}api/posts/v1/post/${comment.comment_id}/unlike/`, {
+      Axios.post(`${BASE_URL}api/posts/v1/post/${comment.id}/unlike/`, {
         headers: {
           Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
         },
