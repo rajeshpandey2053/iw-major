@@ -14,8 +14,8 @@ import {
   UPDATE_POST_FAILURE,
 } from "./ActionTypes";
 
-const BASE_URL = "http://127.0.0.1:8000/";
-const createPostURL = `${BASE_URL}api/posts/v1/post/create/`;
+// const BASE_URL = "http://127.0.0.1:8000/";
+const createPostURL = "/api/posts/v1/post/create/";
 export const fetchPostRequest = () => {
   return {
     type: FETCH_POST_REQUEST,
@@ -105,11 +105,7 @@ export const deletePostFailure = (error) => {
 export const fetchPosts = (PageLink) => {
   return (dispatch) => {
     dispatch(fetchPostRequest);
-    Axios.get(PageLink, {
-      headers: {
-        Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
-      },
-    })
+    Axios.get(PageLink)
       .then((response) => {
         const posts = response.data.results;
         const nextPageLink = response.data.next;
@@ -138,15 +134,8 @@ export const createPosts = (post, post_slug = "") => {
     // console.log({posts});
     if (post_slug === "") {
       dispatch(createPostRequest);
-      Axios({
-        url: createPostURL,
-        method: "POST",
-        data: formData,
-        headers: {
-          Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      Axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
+      Axios.post(createPostURL, formData)
         .then((response) => {
           console.log(response.data);
           const newPost = response.data;
@@ -158,15 +147,8 @@ export const createPosts = (post, post_slug = "") => {
         });
     } else {
       dispatch(updatePostRequest);
-      Axios({
-        url: `${BASE_URL}api/posts/v1/post/${post_slug}/update/`,
-        method: "PUT",
-        data: formData,
-        headers: {
-          Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      Axios.defaults.headers.put["Content-Type"] = "multipart/form-data";
+      Axios(`/api/posts/v1/post/${post_slug}/update/`, formData)
         .then((response) => {
           console.log(response.data);
           const updatedPost = response.data;
@@ -183,11 +165,7 @@ export const createPosts = (post, post_slug = "") => {
 export const deletePost = (post_slug) => {
   return (dispatch) => {
     dispatch(deletePostRequest);
-    Axios.delete(`${BASE_URL}api/posts/v1/post/${post_slug}/`, {
-      headers: {
-        Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
-      },
-    })
+    Axios.delete(`api/posts/v1/post/${post_slug}/`)
       .then((response) => {
         dispatch(deletePostSuccess(post_slug));
       })
