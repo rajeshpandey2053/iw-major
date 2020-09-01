@@ -42,6 +42,10 @@ const Comment = ({ comment }) => {
     }
   };
 
+  const handleDeleteButton = event => {
+    console.log('Deleted!')
+  }
+
   return (
     <div className="comment-wrapper">
       <div className="comment-title">
@@ -61,6 +65,9 @@ const Comment = ({ comment }) => {
               </button>
               <button onClick={() => setIsUpdateSelected(!isUpdateSelected)}>
                 {!isUpdateSelected ? "Update" : "Cancel"}
+              </button>
+              <button onClick={handleDeleteButton}>
+                Delete
               </button>
             </div>
             <p>

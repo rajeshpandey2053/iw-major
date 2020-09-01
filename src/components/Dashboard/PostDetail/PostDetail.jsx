@@ -15,6 +15,8 @@ import Comment from "./Comment/Comment";
 import UpdatePost from "./UpdatePost/UpdatePost";
 import { deletePost } from "../../../redux/actions/PostAction";
 
+import Tag from "../Tag/Tag";
+
 const PostDetail = (props) => {
   let params = useParams();
   const post_data = props.postData.posts.filter(
@@ -34,7 +36,7 @@ const PostDetail = (props) => {
   useEffect(() => {
     Axios.get(`${BASE_URL}api/posts/v1/comment/${p_slug}/list/`, {
       headers: {
-        Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
+        Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
       },
     })
       .then((response) => {
@@ -56,7 +58,7 @@ const PostDetail = (props) => {
       setLikesCount(likesCount + 1);
       Axios.post(`${BASE_URL}api/posts/v1/post/${params.postSlug}/like/`, {
         headers: {
-          Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
+          Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
         },
       })
         .then((response) => {
@@ -69,7 +71,7 @@ const PostDetail = (props) => {
       setLikesCount(likesCount - 1);
       Axios.post(`${BASE_URL}api/posts/v1/post/${params.postSlug}/unlike/`, {
         headers: {
-          Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
+          Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
         },
       })
         .then((response) => {
@@ -95,7 +97,7 @@ const PostDetail = (props) => {
       },
       {
         headers: {
-          Authorization: "Token 4eee293af83be3b61fb44d07282f89c2ec4d4bf1",
+          Authorization: "Token 5fe688b143eb70d8004ba104126de33a4204a667",
         },
       }
     )
@@ -149,6 +151,12 @@ const PostDetail = (props) => {
               </p>
               <p className="info-timestamp">Aug 23, 13: 46</p>
             </div>
+          </div>
+
+          <div className="tags-wrapper">
+            <Tag text={post_data[0]?.education.university_name || 'Tribhuwan University'} />
+            <Tag text={post_data[0]?.education.faculty_name || 'Bachelor in Computer Engineering'} />
+            <Tag text={post_data[0]?.education.semester || 'III'} />
           </div>
 
           <div className="detail-info-wrapper">
