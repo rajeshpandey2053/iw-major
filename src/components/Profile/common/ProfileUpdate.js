@@ -7,7 +7,7 @@ import blankAvatarImage from "../../../images/blank-profile-picture-973460_1280.
 
 
 function ProfileUpdateView(props) {
-    const { userProfile, handleChange, handleUpdate } = props;
+    const { userProfile, handleChange, firstName, handleFirstName , handleUpdate } = props;
     console.log(userProfile)
     
     return (
@@ -69,7 +69,7 @@ function ProfileUpdateView(props) {
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label htmlFor="">First Name </label>
-                                            <input type="text" value={userProfile?.user?.first_name || ''} placeholder="First Name" className="form-control" onChange={handleChange} />
+                                            <input type="text" value={firstName} placeholder="First Name" className="form-control" onChange={handleFirstName} />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
