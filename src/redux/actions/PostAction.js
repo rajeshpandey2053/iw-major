@@ -104,7 +104,7 @@ export const deletePostFailure = (error) => {
 
 export const fetchPosts = (PageLink) => {
   return (dispatch) => {
-    dispatch(fetchPostRequest);
+    dispatch(fetchPostRequest());
     Axios.get(PageLink)
       .then((response) => {
         const posts = response.data.results;
