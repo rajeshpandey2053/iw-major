@@ -73,8 +73,6 @@ const PostDetail = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log({ post_data });
-    console.log({ commentText });
     Axios.post("/api/posts/v1/comment/create/", {
       user: post_data[0]?.user,
       post: post_data[0]?.id,
@@ -90,11 +88,42 @@ const PostDetail = (props) => {
     // window.location.reload();
   };
 
-  const handleDeleteCLick = (event) => {
+  const handleDeletePostCLick = (event) => {
     props.deletePost(params.postSlug);
     //api pass post slug to delete
     //go back
     history.goBack();
+  };
+
+  const handleDeleteCommentButton = (comment_id) => {
+    Axios.delete(`/api/posts/v1/comment/${comment_id}`)
+      .then((response) => {
+        console.log(response.data);
+        setComments(comments.filter((comm) => comm.id !== comment_id));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleUpdateCommentButton = (updatedComment) => {
+    const newcomment = {
+      user: post_data[0]?.user,
+      post: post_data[0]?.id,
+      comment_description: updatedComment.newCommentDescription,
+    };
+    Axios.put(`/api/posts/v1/comment/${updatedComment.id}/update/`, newcomment)
+      .then((response) => {
+        console.log(response.data);
+        setComments(
+          comments.map((comm) =>
+            comm.id === updatedComment.id ? updatedComment : comm
+          )
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -114,7 +143,7 @@ const PostDetail = (props) => {
                 <button id="update" onClick={() => updatePostToggle()}>
                   Update
                 </button>
-                <button id="delete" onClick={handleDeleteCLick}>
+                <button id="delete" onClick={handleDeletePostCLick}>
                   Delete
                 </button>
               </div>
@@ -196,7 +225,12 @@ const PostDetail = (props) => {
           </div>
           <div className="comment">
             {comments.map((comm) => (
-              <Comment key={comm.id} comment={comm} />
+              <Comment
+                key={comm.id}
+                comment={comm}
+                handleDeleteCommentButton={handleDeleteCommentButton}
+                handleUpdateCommentButton={handleUpdateCommentButton}
+              />
             ))}
           </div>
         </div>

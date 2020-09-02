@@ -7,12 +7,13 @@ import { connect } from "react-redux";
 import { Snackbar } from "@material-ui/core";
 
 const CreatePost = ({ posts, createPosts }) => {
-  const [caption, setCaption] = useState("");
-  const [education, setEducation] = useState({
+  const initialEducationState = {
     university: 2,
     faculty: 2,
     semester: "I",
-  });
+  };
+  const [caption, setCaption] = useState("");
+  const [education, setEducation] = useState(initialEducationState);
   const [file, setFile] = useState(null);
   const [open, setOpen] = useState(false);
 
@@ -39,11 +40,7 @@ const CreatePost = ({ posts, createPosts }) => {
     const post = { caption, education, file };
     createPosts(post);
     setOpen(true);
-    setEducation({
-      university: 1,
-      faculty: 1,
-      semester: "I",
-    });
+    setEducation(initialEducationState);
     setCaption("");
     setFile(null);
   };
@@ -52,7 +49,6 @@ const CreatePost = ({ posts, createPosts }) => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
 
