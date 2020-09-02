@@ -1,128 +1,197 @@
-import React, { useEffect, useState } from 'react';
-import './Profile.scss';
-import { Link } from 'react-router-dom';
-import cover from '../../../images/image-cover.jpg';
+import React, { useEffect, useState } from "react";
+import "./Profile.scss";
+import { Link } from "react-router-dom";
+import cover from "../../../images/image-cover.jpg";
 import blankAvatarImage from "../../../images/blank-profile-picture-973460_1280.webp";
 
-
-
 function ProfileUpdateView(props) {
-    const {handleUpdate } = props;
-    const userProfile = props.userProfile;
-    console.log(userProfile.user?.username);
-    const username = userProfile?.user?.username
-    console.log(username)
-    const initialStep = {
-        username: username,
-        first_name: "abc",
-    }
-    const [userUpdate, setUserUpdate] = useState(initialStep);
-    console.log(userUpdate);
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setUserUpdate({
-          ...userUpdate,
-          [name]: value,
-        });
-    };
+  const { handleUpdate } = props;
+  const userProfile = props.userProfile;
+  //   console.log(userProfile.user?.username);
+  const username = userProfile?.user?.username;
+  //   console.log(username);
 
-    return (
-        <div className="profile">
-            <div className="profile-image-section">
-                <div className="card">
-                    <div className="card-body">
-                        <div className="cover">
-                            <img src="https://timelinecovers.pro/facebook-cover/download/photography-city-lights-facebook-cover.jpg" alt="image-cover" />
-                            <div className="profile-img">
-                                <img src={blankAvatarImage} alt=""/>
-                            </div>
-                        </div>
-                        <div className="user-info">
-                            <h4>{userProfile?.user?.first_name} {userProfile?.user?.last_name}</h4>
-                            <a href="#">{userProfile?.user?.profile?.education?.college} 3rd Sem</a>
-                        </div>
-                    </div>
-                </div>
+  // This initialStep (initialState) is currently hard coded for current use
+  // and soon to be replaced with the actual profile data from the props
+  const initialStep = {
+    first_name: "Anjal",
+    last_name: "Bam",
+    username: "anjalbam12",
+    email: "anjalbam9@gmail.com",
+    contact_number: "1234567890",
+    college: "Thapathali Campus",
+  };
+  const [userUpdate, setUserUpdate] = useState(initialStep);
+  //   console.log(userUpdate);
+
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setUserUpdate({
+      ...userUpdate,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    console.log("submitted");
+    handleUpdate(event, userUpdate);
+  };
+
+  return (
+    <div className="profile">
+      <div className="profile-image-section">
+        <div className="card">
+          <div className="card-body">
+            <div className="cover">
+              <img
+                src="https://timelinecovers.pro/facebook-cover/download/photography-city-lights-facebook-cover.jpg"
+                alt="image-cover"
+              />
+              <div className="profile-img">
+                <img src={blankAvatarImage} alt="" />
+              </div>
             </div>
-            <div className="profile-about-section">
-                <div className="row">
-                    <div className="col-md-4">
-                        <div className="card">
-                            <div className="card-header about-header">
-                                About
-                        </div>
-                            <div className="card-body about-body">
-                                <p>Semester: {userProfile?.user?.profile?.education?.semester}</p>
-                                <p>Faculty: {userProfile?.user?.profile?.education?.faculty}</p>
-                                <p>University: {userProfile?.user?.profile?.education?.university}</p>
-                                <p>Books Posts: 12</p>
-                                <p>Notes Posts: 12</p>
-                                <hr />
-                                <div className="row follow">
-                                    <div className="col-md-6 followers">
-
-                                        <p>{userProfile?.followers}</p>
-                                        <p>Followers</p>
-
-                                    </div>
-                                    <div className="col-md-6 following">
-                                        <p>{userProfile?.following}</p>
-                                        <p>Following</p>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-8">
-                        <div className="card">
-                            <div className="card-header">
-                                Update Profile
-                            </div>
-                            <form onSubmit={handleUpdate}>
-                                <div className="card-body">
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <div className="form-group">
-                                            <label htmlFor="">First Name </label>
-                                            <input type="text" value={userUpdate?.first_name} placeholder="First Name" className="form-control" onChange={handleChange} />
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="form-group">
-                                            <label htmlFor="">Last Name</label>
-                                            <input type="text" value={userProfile?.user?.last_name || ''} placeholder="Last Name" className="form-control" onChange={handleChange}  />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="">Username</label>
-                                    <input type="text" value={userProfile?.user?.username || ''} placeholder="Username" className="form-control" onChange={handleChange} />
-
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="">Email</label>
-                                    <input type="text" value={userProfile?.user?.email || ''} placeholder="Email" className="form-control" onChange={handleChange} />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="">Contact Number</label>
-                                    <input type="number" value={userProfile?.user?.profile?.contact_number || ''} placeholder="Contact Number" className="form-control" 
-                                    onChange={handleChange} />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="">College Name</label>
-                                    <input type="text" value={userProfile?.user?.profile?.education?.college || ''} placeholder="College Name" 
-                                    className="form-control" onChange={handleChange} />
-                                </div>
-                                </div>
-                            </form>
-                            <button type="submit" className="btn btn-sm btn-primary float-right">Update</button>
-                        </div>
-                    </div>
-                </div>
+            <div className="user-info">
+              <h4>
+                {userProfile?.user?.first_name || "Anjal"}{" "}
+                {userProfile?.user?.last_name || "Bam"}
+              </h4>
+              <a href="#">
+                {userProfile?.user?.profile?.education?.college ||
+                  "Thapathali Campus"}{" "}
+                3rd Sem
+              </a>
             </div>
+          </div>
         </div>
-    )
+      </div>
+      <div className="profile-about-section">
+        <div className="row">
+          <div className="col-md-4 col-12">
+            <div className="card">
+              <div className="card-header about-header">About</div>
+              <div className="card-body about-body">
+                <p>
+                  Semester:{" "}
+                  {userProfile?.user?.profile?.education?.semester || "2nd"}
+                </p>
+                <p>
+                  Faculty:{" "}
+                  {userProfile?.user?.profile?.education?.faculty ||
+                    "Electronics"}
+                </p>
+                <p>
+                  University:{" "}
+                  {userProfile?.user?.profile?.education?.university ||
+                    "Tribhuwan University"}
+                </p>
+                <p>Books Posts: 12</p>
+                <p>Notes Posts: 12</p>
+                <hr />
+                <div className="row follow">
+                  <div className="col-md-6 followers">
+                    <p>{userProfile?.followers}</p>
+                    <p>Followers</p>
+                  </div>
+                  <div className="col-md-6 following">
+                    <p>{userProfile?.following}</p>
+                    <p>Following</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-8 col-12">
+            <div className="card">
+              <div className="card-header">Update Profile</div>
+              <form onSubmit={handleSubmit}>
+                <div className="card-body">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <label htmlFor="">First Name </label>
+                        <input
+                          type="text"
+                          value={userUpdate.first_name}
+                          name="first_name"
+                          placeholder="First Name"
+                          className="form-control"
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <label htmlFor="">Last Name</label>
+                        <input
+                          type="text"
+                          value={userUpdate.last_name}
+                          placeholder="Last Name"
+                          name="last_name"
+                          className="form-control"
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="">Username</label>
+                    <input
+                      type="text"
+                      value={userUpdate.username}
+                      name="username"
+                      placeholder="Username"
+                      className="form-control"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="">Email</label>
+                    <input
+                      type="text"
+                      value={userUpdate.email}
+                      name="email"
+                      placeholder="Email"
+                      className="form-control"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="">Contact Number</label>
+                    <input
+                      type="number"
+                      value={userUpdate.contact_number}
+                      placeholder="Contact Number"
+                      name="contact_number"
+                      className="form-control"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="">College Name</label>
+                    <input
+                      type="text"
+                      value={userUpdate.college}
+                      name="college"
+                      placeholder="College Name"
+                      className="form-control"
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  className="btn btn-sm btn-primary float-right">
+                  Update
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default ProfileUpdateView;

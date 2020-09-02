@@ -1,56 +1,71 @@
 .profile {
-    overflow: hidden;
-    margin: 10px;
+  overflow: hidden;
+  margin: 10px;
 }
-.profile-image-section
-{
-    overflow-y: hidden;
-    .cover {
-        width: 100%;
-        img {
-            width: 100%;
-        }
-
-        .profile-img {
-            width: 15%;
-            height: 30%;
-            position: absolute;
-            left: 10%;
-            top: 250px;
-            border-radius: 50px;
-        }
-
+.profile-image-section {
+  overflow-y: hidden;
+  position: relative;
+  .cover {
+    width: 100%;
+    img {
+      width: 100%;
     }
 
-    .user-info {
-        padding: 10px;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
+    .profile-img {
+      width: 20%;
+      @media screen and (max-width: 500px) {
+        width: 25%;
+      }
+      @media screen and (max-width: 350px) {
+        top: 25%;
+      }
+      // height: 30%;
+      position: absolute;
+      top: 35%;
+      right: 40%;
+      img {
+        border-radius: 50%;
+      }
+      // left: 10%;
+      // top: 250px;
+      // border-radius: 50px;
     }
+  }
+
+  .user-info {
+    padding: 10px;
+    padding-top: 10%;
+    @media screen and (max-width: 350px) {
+      padding-top: 20%;
+    }
+    @media screen and (max-width: 500px) {
+      padding-top: 15%;
+    }
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
 }
 
 .profile-about-section {
-    margin-top: 20px;
+  margin-top: 20px;
 
-    .about-header {
-        background-color: #fff;
-        font-weight: bolder;
-    }
+  .about-header {
+    background-color: #fff;
+    font-weight: bolder;
+  }
 
-    .follow {
-        margin-top: -12px;
-    }
-    .followers {
-        border-right: 1px solid rgb(121, 114, 114);
-        height: 50px;
-        line-height: 15px;
-    }
-    .following {
-        border-left: 1px solid rgb(121, 114, 114);
-        height: 50px;
-        line-height: 15px;
-
-
-    }
+  .follow {
+    margin-top: -12px;
+  }
+  .followers {
+    border-right: 1px solid rgb(121, 114, 114);
+    height: 50px;
+    line-height: 15px;
+  }
+  .following {
+    border-left: 1px solid rgb(121, 114, 114);
+    height: 50px;
+    line-height: 15px;
+  }
 }
