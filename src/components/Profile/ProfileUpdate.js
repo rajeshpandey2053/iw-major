@@ -12,6 +12,7 @@ const main_url = "http://127.0.0.1:8000/api/accounts/v1/user/profile"
 const ProfileUpdate = (props) => {
     const [userProfile, setUserProfile] = useState({});
     const [userUpdate, setUserUpdate] = useState({});
+    const [firstName, setFirstName] = useState("")
     useEffect(() => {
         axios.get(main_url, {
             headers: {
@@ -27,6 +28,9 @@ const ProfileUpdate = (props) => {
                 console.log(error);
             });
     },[])
+    const handleFirstName = (event) => {
+    setFirstName(event.target.value)}
+    
     const handleUpdate = (e) => {
         console.log(e)
     }
@@ -35,7 +39,7 @@ const ProfileUpdate = (props) => {
         console.log(userUpdate)
         console.log(e.target.name)
         const name = e.target.name;
-        userUpdate.user[`${name}`] = e.target.value;
+        setuserUpdate(...userUpdate, user: );
     }
     return (
         <div className="container dashboard-wrapper">
@@ -46,7 +50,7 @@ const ProfileUpdate = (props) => {
                 </div>
                 {/* Feed */}
                 <div id="feed" className="col-md-9 col-9">
-                    <ProfileUpdateView userProfile={userProfile} handleChange={handleChange} handleUpdate={handleUpdate}/>
+                    <ProfileUpdateView userProfile={userProfile} firstName = {firstName} handleFirstName = {handleFirstName} handleChange={handleChange} handleUpdate={handleUpdate}/>
                 </div>
             </div>
         </div>
