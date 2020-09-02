@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Profile.scss';
 import { Link } from 'react-router-dom';
 import cover from '../../../images/image-cover.jpg';
@@ -7,9 +7,25 @@ import blankAvatarImage from "../../../images/blank-profile-picture-973460_1280.
 
 
 function ProfileUpdateView(props) {
-    const { userProfile, handleChange, firstName, handleFirstName , handleUpdate } = props;
-    console.log(userProfile)
-    
+    const {handleUpdate } = props;
+    const userProfile = props.userProfile;
+    console.log(userProfile.user?.username);
+    const username = userProfile?.user?.username
+    console.log(username)
+    const initialStep = {
+        username: username,
+        first_name: "abc",
+    }
+    const [userUpdate, setUserUpdate] = useState(initialStep);
+    console.log(userUpdate);
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setUserUpdate({
+          ...userUpdate,
+          [name]: value,
+        });
+    };
+
     return (
         <div className="profile">
             <div className="profile-image-section">
@@ -69,7 +85,7 @@ function ProfileUpdateView(props) {
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label htmlFor="">First Name </label>
-                                            <input type="text" value={firstName} placeholder="First Name" className="form-control" onChange={handleFirstName} />
+                                            <input type="text" value={userUpdate?.first_name} placeholder="First Name" className="form-control" onChange={handleChange} />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
