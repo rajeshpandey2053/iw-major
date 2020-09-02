@@ -121,19 +121,19 @@ export const fetchPosts = (PageLink) => {
 
 export const createPosts = (post, post_slug = "") => {
   const formData = new FormData();
-  formData.append("user", null);
+  formData.append("user", 5);
   formData.append("file", post.file);
   formData.append("post_slug", "post_slug");
   formData.append("caption", post.caption);
   formData.append("education.semester", post.education.semester);
   formData.append("education.faculty", post.education.faculty);
-  formData.append("edcation.college", 1);
+  formData.append("education.college", 1);
   formData.append("education.university", post.education.university);
 
   return (dispatch) => {
     // console.log({posts});
     if (post_slug === "") {
-      dispatch(createPostRequest);
+      dispatch(createPostRequest());
       Axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
       Axios.post(createPostURL, formData)
         .then((response) => {
@@ -146,7 +146,7 @@ export const createPosts = (post, post_slug = "") => {
           dispatch(createPostFailure(errorMsg));
         });
     } else {
-      dispatch(updatePostRequest);
+      dispatch(updatePostRequest());
       Axios.defaults.headers.put["Content-Type"] = "multipart/form-data";
       Axios.put(`/api/posts/v1/post/${post_slug}/update/`, formData)
         .then((response) => {
@@ -164,7 +164,7 @@ export const createPosts = (post, post_slug = "") => {
 
 export const deletePost = (post_slug) => {
   return (dispatch) => {
-    dispatch(deletePostRequest);
+    dispatch(deletePostRequest());
     Axios.delete(`api/posts/v1/post/${post_slug}/`)
       .then((response) => {
         dispatch(deletePostSuccess(post_slug));

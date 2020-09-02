@@ -4,15 +4,17 @@ import blankAvatarImage from "../../../../images/blank-profile-picture-973460_12
 import AttachmentRoundedIcon from "@material-ui/icons/AttachmentRounded";
 import { createPosts } from "../../../../redux/actions/PostAction";
 import { connect } from "react-redux";
+import { Snackbar } from "@material-ui/core";
 
-const CreatePost = (props) => {
+const CreatePost = ({ posts, createPosts }) => {
   const [caption, setCaption] = useState("");
   const [education, setEducation] = useState({
     university: 2,
     faculty: 2,
-    semester: "III",
+    semester: "I",
   });
   const [file, setFile] = useState(null);
+  const [open, setOpen] = useState(false);
 
   const handleFileChange = (event) => {
     event.preventDefault();
@@ -35,19 +37,37 @@ const CreatePost = (props) => {
     console.log({ education });
     event.preventDefault();
     const post = { caption, education, file };
-    props.createPosts(post);
+    createPosts(post);
+    setOpen(true);
     setEducation({
-      university: "TU",
-      faculty: "BE",
-      semester: 1,
+      university: 1,
+      faculty: 1,
+      semester: "I",
     });
     setCaption("");
     setFile(null);
-    // window.location.reload();
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        open={open}
+        onClose={handleClose}
+        autoHideDuration={3000}
+        message="Post has been created"
+      />
       <div className="create-post-wrapper">
         <div className="create-post-form">
           <div className="create-post-avatar">
@@ -135,11 +155,15 @@ const CreatePost = (props) => {
     </form>
   );
 };
-
+const mapStateToProps = (state) => {
+  return {
+    postData: state.post,
+  };
+};
 const mapDispatchToProps = (dispatch) => {
   return {
     createPosts: (post) => dispatch(createPosts(post)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(CreatePost);
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePost);

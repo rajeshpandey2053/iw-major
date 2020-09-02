@@ -29,7 +29,7 @@ export const fetchProfileFailure = (error) => {
 
 export const fetchProfiles = () => {
   return (dispatch) => {
-    dispatch(fetchProfileRequest);
+    dispatch(fetchProfileRequest());
     Axios.get(fetchProfileURL)
       .then((response) => {
         const profiles = response.data;
