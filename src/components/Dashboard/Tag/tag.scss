@@ -1,0 +1,15 @@
+.tag-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 0.5rem;
+  border-radius: 10rem;
+  border: 1.5px solid #6600fc;
+  color: #6600fc;
+  margin: 4px 4px 0 4px;
+
+  p {
+    margin: 0;
+    font-size: 0.8rem;
+  }
+}

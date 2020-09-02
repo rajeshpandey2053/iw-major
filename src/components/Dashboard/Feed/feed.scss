@@ -1,22 +1,48 @@
 .test-scroll {
   padding: 5rem 0;
 }
+
 .feed-wrapper {
   //height: 100%;
   overflow: auto;
-
 }
+
 ::-webkit-scrollbar {
   width: 5px;
   background: none;
   border-radius: 50px;
 }
+
 ::-webkit-scrollbar-track {
   background: none;
   border-radius: 50px;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #6d6d6d;
   border-radius: 50px;
 }
 
+.read-more-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .read-more-link {
+    color: #6600fc;
+    border: 2px solid #6600fc;
+    padding: 2px 1rem 5px 1rem;
+    margin-bottom: 5px;
+    text-align: center;
+    align-self: center;
+    border-radius: 10rem ;
+    font-size: 1.25rem;
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      color: white;
+      background: #6600fc;
+    }
+  }
+}
