@@ -11,6 +11,7 @@ import Logout from '../Logout/Logout';
 import PasswordReset from '../PasswordReset/PasswordReset';
 import PasswordResetComplete from '../PasswordReset/PasswordResetComplete';
 import PostComponent from "../Dashboard/PostComponent";
+import ProfileUpdate from "../Profile/ProfileUpdate";
 
 
 const Routes = (props) => {
@@ -28,6 +29,7 @@ const Routes = (props) => {
                 <Route exact path='/forget-password' component={PasswordReset}/>
                 <Route exact path='/new-password' component={PasswordResetComplete}/>
                 <Route exact path="/try" component={PostComponent}/>
+                <Route exact path='/edit-profile' component={ProfileUpdate} />
             </Switch>
         </React.Fragment>
     )

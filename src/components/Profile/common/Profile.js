@@ -1,6 +1,9 @@
 import React, {useEffect} from 'react';
 import './Profile.scss';
+import {Link} from 'react-router-dom';
 import cover from '../../../images/image-cover.jpg';
+import blankAvatarImage from "../../../images/blank-profile-picture-973460_1280.webp";
+
 
 
 function ProfileView(props) {
@@ -13,8 +16,9 @@ function ProfileView(props) {
                     <div className="card-body">
                         <div className="cover">
                             <img src="https://timelinecovers.pro/facebook-cover/download/photography-city-lights-facebook-cover.jpg" alt="image-cover" />
+
                             <div className="profile-img">
-                                hi
+                                <img src={blankAvatarImage} alt=""/>
                             </div>
                         </div>
                         <div className="user-info">
@@ -50,6 +54,8 @@ function ProfileView(props) {
                                         <p>Following</p>
                                     </div>
                                 </div>
+                                <hr/>
+                                <Link to='/edit-profile'>Edit Profile</Link>
                             </div>
                         </div>
                     </div>
