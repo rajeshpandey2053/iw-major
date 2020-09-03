@@ -6,8 +6,8 @@ import "./comment.scss";
 import blankProfileImg from "../../../../images/blank-profile-picture-973460_1280.webp";
 import UpdateComment from "./UpdateComment/UpdateComment";
 
-const Comment = ({ comment }) => {
-  console.log(comment);
+const Comment = (props) => {
+  const { comment } = props;
   const [likesCount, setLikesCount] = useState(comment.stars_count);
   const [isUpdateSelected, setIsUpdateSelected] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -33,9 +33,11 @@ const Comment = ({ comment }) => {
         });
     }
   };
+  const updatePostToggle = () => setIsUpdateSelected(!isUpdateSelected);
 
-  const handleDeleteButton = (event) => {
-    console.log("Deleted!");
+  const handleDeleteButton = () => {
+    // using callback to delete comment
+    props.handleDeleteCommentButton(comment.id);
   };
 
   return (
@@ -49,7 +51,13 @@ const Comment = ({ comment }) => {
             <Link to="/dashboard">{comment.user_name}</Link>
           </h6>
           <p className="comment-description">{comment.comment_description}</p>
-          {isUpdateSelected ? <UpdateComment /> : null}
+          {isUpdateSelected ? (
+            <UpdateComment
+              handleUpdateCommentButton={props.handleUpdateCommentButton}
+              updatePostToggle={updatePostToggle}
+              oldComment={comment}
+            />
+          ) : null}
           <div className="actions">
             <div>
               <button className="comment-like" onClick={handleLikeButton}>

@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 import Sidebar from "../Dashboard/Sidebar";
-import ProfileView from "./common/Profile";
+import ProfileUpdateView from "./common/ProfileUpdate";
 import { Person } from "@material-ui/icons";
 import { fetchProfiles } from "../../redux/actions/ProfileAction";
 
 const main_url = "http://127.0.0.1:8000/api/accounts/v1/user/profile";
 
-const Profile = props => {
+const ProfileUpdate = props => {
   const [userProfile, setUserProfile] = useState({});
+
   useEffect(() => {
     axios
       .get(main_url, {
@@ -25,6 +26,11 @@ const Profile = props => {
         console.log(error);
       });
   }, []);
+
+  const handleUpdate = (event, recievedState) => {
+    console.log(event, recievedState);
+  };
+
   return (
     <div className="container dashboard-wrapper">
       <div className="row dashboard-content-wrapper">
@@ -34,7 +40,10 @@ const Profile = props => {
         </div>
         {/* Feed */}
         <div id="feed" className="col-md-9 col-12">
-          <ProfileView userProfile={userProfile} />
+          <ProfileUpdateView
+            userProfile={userProfile}
+            handleUpdate={handleUpdate}
+          />
         </div>
       </div>
     </div>
@@ -53,4 +62,4 @@ const mapDispatchToProps = dispatch => {
     fetchProfiles: token => dispatch(fetchProfiles(token)),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileUpdate);

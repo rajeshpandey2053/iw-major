@@ -12,13 +12,17 @@ const UpdatePost = (props) => {
   );
   const [newPost, setNewPost] = useState({
     caption: post_data[0]?.caption || "",
-    file: post_data[0]?.file || null,
+    file: null,
     education: {
       university: post_data[0]?.education?.university || "",
       semester: post_data[0]?.education?.semester || "",
       faculty: post_data[0]?.education?.faculty || "",
     },
   });
+
+  const handleFileChange = (event) => {
+    setNewPost({ ...newPost, file: event.target.files[0] });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -54,9 +58,9 @@ const UpdatePost = (props) => {
         />
       </div>
 
-      <div className='file-field-wrapper'>
+      <div className="file-field-wrapper">
         <label htmlFor="file">Change file ? </label>
-        <input type="file" name='file' onChange={handleChange} />
+        <input type="file" name="file" onChange={handleFileChange} />
       </div>
 
       <div className="update-education-input-fields">
