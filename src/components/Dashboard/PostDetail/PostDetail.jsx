@@ -27,7 +27,7 @@ const PostDetail = props => {
   );
   // if the post is already liked by user then display liked
   const defaultLikedState = props.likedPostsArray?.find(
-    (element) => element === post_data[0]?.id
+    element => element === post_data[0]?.id
   );
   const [likesCount, setLikesCount] = useState(post_data[0]?.stars_count || 0);
   const [isLiked, setIsLiked] = useState(defaultLikedState ? true : false);
@@ -62,7 +62,6 @@ const PostDetail = props => {
     } else {
       setLikesCount(likesCount - 1);
       props.likedPosts(params.postSlug, post_data[0]?.id, "unlike");
-
     }
     setIsLiked(!isLiked);
   };
@@ -84,73 +83,69 @@ const PostDetail = props => {
     // window.location.reload();
   };
 
-  const handleDeletePostCLick = (event) => {
+  const handleDeletePostCLick = event => {
     props.deletePost(params.postSlug);
     //api pass post slug to delete
     //go back
     history.goBack();
   };
 
-  const handleDeleteCommentButton = (comment_id) => {
+  const handleDeleteCommentButton = comment_id => {
     Axios.delete(`/api/posts/v1/comment/${comment_id}`)
-      .then((response) => {
+      .then(response => {
         console.log(response.data);
-        setComments(comments.filter((comm) => comm.id !== comment_id));
+        setComments(comments.filter(comm => comm.id !== comment_id));
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
 
-  const handleUpdateCommentButton = (updatedComment) => {
+  const handleUpdateCommentButton = updatedComment => {
     const newcomment = {
       user: post_data[0]?.user,
       post: post_data[0]?.id,
       comment_description: updatedComment.newCommentDescription,
     };
     Axios.put(`/api/posts/v1/comment/${updatedComment.id}/update/`, newcomment)
-      .then((response) => {
+      .then(response => {
         console.log(response.data);
         setComments(
-          comments.map((comm) =>
+          comments.map(comm =>
             comm.id === updatedComment.id ? updatedComment : comm
           )
         );
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
 
   return (
-        <Dashboard>
-    <React.Fragment>
-      <div className="post-detail">
-        <div className="top-bar">
-          <div className="top-bar__title">
-            <button
-              className="top-bar__title__back-btn"
-              onClick={() => history.goBack()}
-            >
-              <ArrowBackIcon />
-            </button>
-            {props.profile?.profiles?.user?.username ===
-            post_data[0]?.user_name ? (
-              <iv className="post-action-btns">
-                <button id="update" onClick={() => updatePostToggle()}>
-                  Update
-                </button>
-                <button id="delete" onClick={handleDeletePostCLick}>
-                  Delete
-                </button>d
-              </div>
-            ) : null}
-          </div>
-        </div>
-        
-
+    <Dashboard>
+      <React.Fragment>
+        <div className="post-detail">
+          <div className="top-bar">
+            <div className="top-bar__title">
+              <button
+                className="top-bar__title__back-btn"
+                onClick={() => history.goBack()}>
+                <ArrowBackIcon />
+              </button>
+              {props.profile?.profiles?.user?.username ===
+              post_data[0]?.user_name ? (
+                <div className="post-action-btns">
+                  <button id="update" onClick={() => updatePostToggle()}>
+                    Update
+                  </button>
+                  <button id="delete" onClick={handleDeletePostCLick}>
+                    Delete
+                  </button>
+                </div>
+              ) : null}
             </div>
           </div>
+
           <div className="detail-wrapper">
             <div className="detail-title">
               <div className="detail-avatar">
@@ -219,7 +214,7 @@ const PostDetail = props => {
             ) : null}
           </div>
           <div className="comment">
-            {comments.map((comm) => (
+            {comments.map(comm => (
               <Comment
                 key={comm.id}
                 comment={comm}
@@ -227,7 +222,6 @@ const PostDetail = props => {
                 handleUpdateCommentButton={handleUpdateCommentButton}
               />
             ))}
-
           </div>
 
           <div className="create-comment-section">
@@ -263,7 +257,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    deletePost: (slug) => dispatch(deletePost(slug)),
+    deletePost: slug => dispatch(deletePost(slug)),
     likedPosts: (post_slug, post_id, action) =>
       dispatch(likedPosts(post_slug, post_id, action)),
   };
