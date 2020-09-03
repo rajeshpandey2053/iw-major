@@ -72,6 +72,7 @@ const CreatePost = ({ posts, createPosts }) => {
           <div className="input-section">
             <textarea
               name="caption"
+              required
               id="caption"
               cols={30}
               rows={2}
