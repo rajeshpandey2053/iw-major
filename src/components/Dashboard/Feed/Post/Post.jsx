@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import "./post.scss";
-
+import { likedPosts } from "../../../../redux/actions/ProfileAction";
 import { connect } from "react-redux";
 import { Link, useRouteMatch } from "react-router-dom";
-import Axios from "axios";
 import Tag from "../../Tag/Tag";
 
 import blankProfileImg from "../../../../images/blank-profile-picture-973460_1280.webp";
@@ -12,11 +11,12 @@ import FavoriteSharpIcon from "@material-ui/icons/FavoriteSharp";
 import InsertCommentRoundedIcon from "@material-ui/icons/InsertCommentRounded";
 
 const Post = (props) => {
-  const { post, profileData } = props;
+  const { post, likedPostsArray, likedPosts } = props;
   // if the post is already liked by user then display liked
-  const defaultLikedState = profileData?.profiles?.user?.profile?.post.find(
+  const defaultLikedState = likedPostsArray?.find(
     (element) => element === post.id
   );
+  console.log({ defaultLikedState });
   const { path } = useRouteMatch();
   const [isLiked, setIsLiked] = useState(defaultLikedState ? true : false);
   const [likesCount, setLikesCount] = useState(post?.stars_count || 0);
@@ -30,22 +30,10 @@ const Post = (props) => {
     setIsLiked(!isLiked);
     if (!isLiked) {
       setLikesCount(likesCount + 1);
-      Axios.post(`/api/posts/v1/post/${post.post_slug}/like/`, {})
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
+      likedPosts(post?.post_slug, post?.id, "like");
     } else {
       setLikesCount(likesCount - 1);
-      Axios.post(`/api/posts/v1/post/${post.post_slug}/unlike/`, {})
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
+      likedPosts(post?.post_slug, post?.id, "unlike");
     }
   };
 
@@ -135,8 +123,13 @@ const Post = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    profileData: state.profile,
+    likedPostsArray: state.profile?.likedposts,
   };
 };
-
-export default connect(mapStateToProps)(Post);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    likedPosts: (post_slug, post_id, action) =>
+      dispatch(likedPosts(post_slug, post_id, action)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Post);

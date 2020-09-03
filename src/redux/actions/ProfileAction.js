@@ -2,6 +2,8 @@ import {
   FETCH_PROFILE_REQUEST,
   FETCH_PROFILE_SUCCESS,
   FETCH_PROFILE_FAILURE,
+  POST_UNLIKED_SUCCESS,
+  POST_LIKED_SUCCESS,
 } from "./ActionTypes";
 import Axios from "../../utils/axios";
 
@@ -27,6 +29,20 @@ export const fetchProfileFailure = (error) => {
   };
 };
 
+export const postUnLikedSuccess = (post_id) => {
+  return {
+    type: POST_UNLIKED_SUCCESS,
+    post_id: post_id,
+  };
+};
+
+export const postLikedSuccess = (post_id) => {
+  return {
+    type: POST_LIKED_SUCCESS,
+    post_id: post_id,
+  };
+};
+
 export const fetchProfiles = () => {
   return (dispatch) => {
     dispatch(fetchProfileRequest());
@@ -40,5 +56,28 @@ export const fetchProfiles = () => {
         console.log(error);
         dispatch(fetchProfileFailure(errorMsg));
       });
+  };
+};
+
+export const likedPosts = (post_slug, post_id, action) => {
+  console.log(post_slug, post_id, action);
+  return (dispatch) => {
+    action === "like"
+      ? Axios.post(`/api/posts/v1/post/${post_slug}/${action}/`)
+          .then((response) => {
+            console.log(response);
+            dispatch(postLikedSuccess(post_id));
+          })
+          .catch((error) => {
+            console.log(error.message);
+          })
+      : Axios.post(`/api/posts/v1/post/${post_slug}/${action}/`)
+          .then((response) => {
+            console.log(response);
+            dispatch(postUnLikedSuccess(post_id));
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
   };
 };

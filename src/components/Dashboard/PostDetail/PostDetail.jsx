@@ -3,6 +3,7 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { useHistory, Link, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import Axios from "../../../utils/axios";
+import { likedPosts } from "../../../redux/actions/ProfileAction";
 
 import FavoriteBorderSharpIcon from "@material-ui/icons/FavoriteBorderSharp";
 import FavoriteSharpIcon from "@material-ui/icons/FavoriteSharp";
@@ -19,11 +20,16 @@ import Tag from "../Tag/Tag";
 
 const PostDetail = (props) => {
   let params = useParams();
+  //finding out which post's detail to display
   const post_data = props.postData.posts.filter(
     (post) => post.post_slug === params.postSlug
   );
+  // if the post is already liked by user then display liked
+  const defaultLikedState = props.likedPostsArray?.find(
+    (element) => element === post_data[0]?.id
+  );
   const [likesCount, setLikesCount] = useState(post_data[0]?.stars_count || 0);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(defaultLikedState ? true : false);
   const [commentText, setCommentText] = useState("");
   const [isUpdateSelected, setIsUpdateSelected] = useState(false);
 
@@ -51,22 +57,10 @@ const PostDetail = (props) => {
   const handlelikeButton = (event) => {
     if (!isLiked) {
       setLikesCount(likesCount + 1);
-      Axios.post(`/api/posts/v1/post/${params.postSlug}/like/`)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
+      props.likedPosts(params.postSlug, post_data[0]?.id, "like");
     } else {
       setLikesCount(likesCount - 1);
-      Axios.post(`/api/posts/v1/post/${params.postSlug}/unlike/`)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
+      props.likedPosts(params.postSlug, post_data[0]?.id, "unlike");
     }
     setIsLiked(!isLiked);
   };
@@ -262,11 +256,14 @@ const mapStateToProps = (state) => {
   return {
     postData: state.post,
     profile: state.profile,
+    likedPostsArray: state.profile?.likedposts,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     deletePost: (slug) => dispatch(deletePost(slug)),
+    likedPosts: (post_slug, post_id, action) =>
+      dispatch(likedPosts(post_slug, post_id, action)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetail);
