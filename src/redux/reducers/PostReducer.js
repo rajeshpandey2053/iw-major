@@ -69,7 +69,7 @@ const reducer = (state = initialState, action) => {
     case UPDATE_POST_SUCCESS:
       return {
         ...state,
-        posts: state.posts.filter((post) =>
+        posts: state.posts.map((post) =>
           post.post_slug === action.post_slug ? action.updatedPost : post
         ),
         loading: false,

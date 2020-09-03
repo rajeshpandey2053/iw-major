@@ -122,7 +122,9 @@ export const fetchPosts = (PageLink) => {
 export const createPosts = (post, post_slug = "") => {
   const formData = new FormData();
   formData.append("user", 5);
-  formData.append("file", post.file);
+  if (post.file !== null) {
+    formData.append("file", post.file);
+  }
   formData.append("post_slug", "post_slug");
   formData.append("caption", post.caption);
   formData.append("education.semester", post.education.semester);
@@ -148,7 +150,7 @@ export const createPosts = (post, post_slug = "") => {
     } else {
       dispatch(updatePostRequest());
       Axios.defaults.headers.put["Content-Type"] = "multipart/form-data";
-      Axios.put(`/api/posts/v1/post/${post_slug}/update/`, formData)
+      Axios.patch(`/api/posts/v1/post/${post_slug}/update/`, formData)
         .then((response) => {
           console.log(response.data);
           const updatedPost = response.data;

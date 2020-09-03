@@ -134,6 +134,7 @@ const CreatePost = ({ posts, createPosts }) => {
               </label>
               <input
                 type="file"
+                required
                 alt="hello"
                 id="image"
                 name="image"

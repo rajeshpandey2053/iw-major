@@ -1,21 +1,20 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
 
 import { connect } from "react-redux";
 import "./dashboard.scss";
 import "./Sidebar";
 import Sidebar from "./Sidebar";
 import Widgets from "./Widgets/Widgets";
-import PostDetail from "./PostDetail/PostDetail";
-import Feed from "./Feed/Feed";
 import { fetchPosts } from "../../redux/actions/PostAction";
 import { fetchProfiles } from "../../redux/actions/ProfileAction";
 
-const Dashboard = props => {
-  const { fetchPosts, fetchProfiles } = props;
-  const { postSlug } = useParams();
+const Dashboard = (props) => {
+  const { fetchPosts, fetchProfiles, postData } = props;
   useEffect(() => {
-    fetchPosts("/api/posts/v1/post/list/");
+    console.log(postData.length);
+    if (postData.posts.length === 0) {
+      fetchPosts("/api/posts/v1/post/list/");
+    }
     fetchProfiles();
   }, []);
   return (
@@ -24,7 +23,8 @@ const Dashboard = props => {
         {/* Sidebar */}
         <div
           id="sidebar"
-          className="col-xl-3 col-md-3 col-md-3 d-none d-md-block">
+          className="col-xl-3 col-md-3 col-md-3 d-none d-md-block"
+        >
           <Sidebar />
         </div>
         {/* Feed */}
@@ -41,11 +41,15 @@ const Dashboard = props => {
     </div>
   );
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    fetchPosts: pageLink => dispatch(fetchPosts(pageLink)),
+    fetchPosts: (pageLink) => dispatch(fetchPosts(pageLink)),
     fetchProfiles: () => dispatch(fetchProfiles()),
   };
 };
-
-export default connect(null, mapDispatchToProps)(Dashboard);
+const mapStateToProps = (state) => {
+  return {
+    postData: state.post,
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

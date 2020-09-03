@@ -33,6 +33,7 @@ const Comment = (props) => {
         });
     }
   };
+  const updatePostToggle = () => setIsUpdateSelected(!isUpdateSelected);
 
   const handleDeleteButton = () => {
     // using callback to delete comment
@@ -53,6 +54,7 @@ const Comment = (props) => {
           {isUpdateSelected ? (
             <UpdateComment
               handleUpdateCommentButton={props.handleUpdateCommentButton}
+              updatePostToggle={updatePostToggle}
               oldComment={comment}
             />
           ) : null}

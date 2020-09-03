@@ -13,6 +13,7 @@ const UpdateComment = (props) => {
     event.preventDefault();
     const id = props.oldComment.id;
     props.handleUpdateCommentButton({ newCommentDescription, id });
+    props.updatePostToggle();
     setNewComment("");
   };
   return (
