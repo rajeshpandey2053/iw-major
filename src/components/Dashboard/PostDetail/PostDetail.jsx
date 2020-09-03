@@ -3,6 +3,7 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { useHistory, Link, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import Axios from "../../../utils/axios";
+import { likedPosts } from "../../../redux/actions/ProfileAction";
 
 import FavoriteBorderSharpIcon from "@material-ui/icons/FavoriteBorderSharp";
 import FavoriteSharpIcon from "@material-ui/icons/FavoriteSharp";
@@ -20,11 +21,16 @@ import Dashboard from "../Dashboard";
 
 const PostDetail = props => {
   let params = useParams();
+  //finding out which post's detail to display
   const post_data = props.postData.posts.filter(
     post => post.post_slug === params.postSlug
   );
+  // if the post is already liked by user then display liked
+  const defaultLikedState = props.likedPostsArray?.find(
+    (element) => element === post_data[0]?.id
+  );
   const [likesCount, setLikesCount] = useState(post_data[0]?.stars_count || 0);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(defaultLikedState ? true : false);
   const [commentText, setCommentText] = useState("");
   const [isUpdateSelected, setIsUpdateSelected] = useState(false);
 
@@ -52,30 +58,17 @@ const PostDetail = props => {
   const handlelikeButton = event => {
     if (!isLiked) {
       setLikesCount(likesCount + 1);
-      Axios.post(`/api/posts/v1/post/${params.postSlug}/like/`)
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error.message);
-        });
+      props.likedPosts(params.postSlug, post_data[0]?.id, "like");
     } else {
       setLikesCount(likesCount - 1);
-      Axios.post(`/api/posts/v1/post/${params.postSlug}/unlike/`)
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error.message);
-        });
+      props.likedPosts(params.postSlug, post_data[0]?.id, "unlike");
+
     }
     setIsLiked(!isLiked);
   };
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log({ post_data });
-    console.log({ commentText });
     Axios.post("/api/posts/v1/comment/create/", {
       user: post_data[0]?.user,
       post: post_data[0]?.id,
@@ -91,35 +84,71 @@ const PostDetail = props => {
     // window.location.reload();
   };
 
-  const handleDeleteCLick = event => {
+  const handleDeletePostCLick = (event) => {
     props.deletePost(params.postSlug);
     //api pass post slug to delete
     //go back
     history.goBack();
   };
 
+  const handleDeleteCommentButton = (comment_id) => {
+    Axios.delete(`/api/posts/v1/comment/${comment_id}`)
+      .then((response) => {
+        console.log(response.data);
+        setComments(comments.filter((comm) => comm.id !== comment_id));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleUpdateCommentButton = (updatedComment) => {
+    const newcomment = {
+      user: post_data[0]?.user,
+      post: post_data[0]?.id,
+      comment_description: updatedComment.newCommentDescription,
+    };
+    Axios.put(`/api/posts/v1/comment/${updatedComment.id}/update/`, newcomment)
+      .then((response) => {
+        console.log(response.data);
+        setComments(
+          comments.map((comm) =>
+            comm.id === updatedComment.id ? updatedComment : comm
+          )
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
-    <Dashboard>
-      <React.Fragment>
-        <div className="post-detail">
-          <div className="top-bar">
-            <div className="top-bar__title">
-              <button
-                className="top-bar__title__back-btn"
-                onClick={() => history.goBack()}>
-                <ArrowBackIcon />
-              </button>
-              {props.profile?.profiles?.user?.username ===
-              post_data[0]?.user_name ? (
-                <div className="post-action-btns">
-                  <button id="update" onClick={() => updatePostToggle()}>
-                    Update
-                  </button>
-                  <button id="delete" onClick={handleDeleteCLick}>
-                    Delete
-                  </button>
-                </div>
-              ) : null}
+        <Dashboard>
+    <React.Fragment>
+      <div className="post-detail">
+        <div className="top-bar">
+          <div className="top-bar__title">
+            <button
+              className="top-bar__title__back-btn"
+              onClick={() => history.goBack()}
+            >
+              <ArrowBackIcon />
+            </button>
+            {props.profile?.profiles?.user?.username ===
+            post_data[0]?.user_name ? (
+              <iv className="post-action-btns">
+                <button id="update" onClick={() => updatePostToggle()}>
+                  Update
+                </button>
+                <button id="delete" onClick={handleDeletePostCLick}>
+                  Delete
+                </button>d
+              </div>
+            ) : null}
+          </div>
+        </div>
+        
+
             </div>
           </div>
           <div className="detail-wrapper">
@@ -189,16 +218,16 @@ const PostDetail = props => {
               <UpdatePost updatePostToggle={updatePostToggle} />
             ) : null}
           </div>
+          <div className="comment">
+            {comments.map((comm) => (
+              <Comment
+                key={comm.id}
+                comment={comm}
+                handleDeleteCommentButton={handleDeleteCommentButton}
+                handleUpdateCommentButton={handleUpdateCommentButton}
+              />
+            ))}
 
-          <div className="comment-section">
-            <div className="comment-count">
-              <p>{comments.length} comments</p>
-            </div>
-            <div className="comment">
-              {comments.map(comm => (
-                <Comment key={comm.id} comment={comm} />
-              ))}
-            </div>
           </div>
 
           <div className="create-comment-section">
@@ -229,11 +258,14 @@ const mapStateToProps = state => {
   return {
     postData: state.post,
     profile: state.profile,
+    likedPostsArray: state.profile?.likedposts,
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    deletePost: slug => dispatch(deletePost(slug)),
+    deletePost: (slug) => dispatch(deletePost(slug)),
+    likedPosts: (post_slug, post_id, action) =>
+      dispatch(likedPosts(post_slug, post_id, action)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetail);
