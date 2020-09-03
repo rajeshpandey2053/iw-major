@@ -11,7 +11,8 @@ import Feed from "./Feed/Feed";
 import { fetchPosts } from "../../redux/actions/PostAction";
 import { fetchProfiles } from "../../redux/actions/ProfileAction";
 
-const Dashboard = ({ fetchPosts, fetchProfiles }) => {
+const Dashboard = props => {
+  const { fetchPosts, fetchProfiles } = props;
   const { postSlug } = useParams();
   useEffect(() => {
     fetchPosts("/api/posts/v1/post/list/");
@@ -23,13 +24,12 @@ const Dashboard = ({ fetchPosts, fetchProfiles }) => {
         {/* Sidebar */}
         <div
           id="sidebar"
-          className="col-xl-3 col-md-3 col-md-3 d-none d-md-block"
-        >
+          className="col-xl-3 col-md-3 col-md-3 d-none d-md-block">
           <Sidebar />
         </div>
         {/* Feed */}
         <div id="feed" className="col-xl-6 col-lg-9 col-md-9">
-          {postSlug ? <PostDetail /> : <Feed />}
+          {props.children}
         </div>
 
         {/* Widgets */}
@@ -41,9 +41,9 @@ const Dashboard = ({ fetchPosts, fetchProfiles }) => {
     </div>
   );
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    fetchPosts: (pageLink) => dispatch(fetchPosts(pageLink)),
+    fetchPosts: pageLink => dispatch(fetchPosts(pageLink)),
     fetchProfiles: () => dispatch(fetchProfiles()),
   };
 };

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import "./feed.scss";
 import Post from "./Post/Post";
 import CreatePost from "./CreatePost/CreatePost";
 import { fetchPosts } from "../../../redux/actions/PostAction";
 import { CircularProgress } from "@material-ui/core";
+import Dashboard from "../Dashboard";
 
 const Feed = ({ postData, fetchPosts }) => {
   const [readMore, setReadMore] = useState(false);
@@ -12,6 +13,7 @@ const Feed = ({ postData, fetchPosts }) => {
   console.log({ loading });
   // const [nextPageLink, setnextPageLink] = useState();
   return (
+  <Dashboard>
     <div className="feed-wrapper">
       <CreatePost />
       {postData.posts &&
@@ -38,6 +40,7 @@ const Feed = ({ postData, fetchPosts }) => {
         )}
       </div>
     </div>
+ </Dashboard>
   );
 };
 
@@ -50,6 +53,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchPosts: (pageLink) => dispatch(fetchPosts(pageLink)),
+
   };
 };
 

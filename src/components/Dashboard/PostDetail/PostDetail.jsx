@@ -17,12 +17,13 @@ import UpdatePost from "./UpdatePost/UpdatePost";
 import { deletePost } from "../../../redux/actions/PostAction";
 
 import Tag from "../Tag/Tag";
+import Dashboard from "../Dashboard";
 
-const PostDetail = (props) => {
+const PostDetail = props => {
   let params = useParams();
   //finding out which post's detail to display
   const post_data = props.postData.posts.filter(
-    (post) => post.post_slug === params.postSlug
+    post => post.post_slug === params.postSlug
   );
   // if the post is already liked by user then display liked
   const defaultLikedState = props.likedPostsArray?.find(
@@ -40,43 +41,44 @@ const PostDetail = (props) => {
 
   useEffect(() => {
     Axios.get(`/api/posts/v1/comment/${p_slug}/list/`)
-      .then((response) => {
+      .then(response => {
         const fetched_comments = response.data.results;
         setComments(fetched_comments);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   }, [p_slug]);
-  const handleChange = (event) => {
+  const handleChange = event => {
     setCommentText(event.target.value);
   };
 
   const updatePostToggle = () => setIsUpdateSelected(!isUpdateSelected);
 
-  const handlelikeButton = (event) => {
+  const handlelikeButton = event => {
     if (!isLiked) {
       setLikesCount(likesCount + 1);
       props.likedPosts(params.postSlug, post_data[0]?.id, "like");
     } else {
       setLikesCount(likesCount - 1);
       props.likedPosts(params.postSlug, post_data[0]?.id, "unlike");
+
     }
     setIsLiked(!isLiked);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     event.preventDefault();
     Axios.post("/api/posts/v1/comment/create/", {
       user: post_data[0]?.user,
       post: post_data[0]?.id,
       comment_description: commentText,
     })
-      .then((response) => {
+      .then(response => {
         const newcomment = response.data;
         setComments([newcomment, ...comments]);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
     // window.location.reload();
@@ -121,6 +123,7 @@ const PostDetail = (props) => {
   };
 
   return (
+        <Dashboard>
     <React.Fragment>
       <div className="post-detail">
         <div className="top-bar">
@@ -133,89 +136,87 @@ const PostDetail = (props) => {
             </button>
             {props.profile?.profiles?.user?.username ===
             post_data[0]?.user_name ? (
-              <div className="post-action-btns">
+              <iv className="post-action-btns">
                 <button id="update" onClick={() => updatePostToggle()}>
                   Update
                 </button>
                 <button id="delete" onClick={handleDeletePostCLick}>
                   Delete
-                </button>
+                </button>d
               </div>
             ) : null}
           </div>
         </div>
-        <div className="detail-wrapper">
-          <div className="detail-title">
-            <div className="detail-avatar">
-              <img src={blankProfileImage} alt="Avatar" height={60} />
+        
+
             </div>
-            <div className="detail-title-info">
-              <p className="info-description">
-                <Link to="/dashboard">{post_data[0]?.user_name}</Link> shared a
-                post.
-              </p>
-              <p className="info-timestamp">Aug 23, 13: 46</p>
+          </div>
+          <div className="detail-wrapper">
+            <div className="detail-title">
+              <div className="detail-avatar">
+                <img src={blankProfileImage} alt="Avatar" height={60} />
+              </div>
+              <div className="detail-title-info">
+                <p className="info-description">
+                  <Link to="/dashboard">{post_data[0]?.user_name}</Link> shared
+                  a post.
+                </p>
+                <p className="info-timestamp">Aug 23, 13: 46</p>
+              </div>
+            </div>
+
+            <div className="tags-wrapper">
+              <Tag
+                text={
+                  post_data[0]?.education.university_name ||
+                  "Tribhuwan University"
+                }
+              />
+              <Tag
+                text={
+                  post_data[0]?.education.faculty_name ||
+                  "Bachelor in Computer Engineering"
+                }
+              />
+              <Tag text={post_data[0]?.education.semester || "III"} />
+            </div>
+
+            <div className="detail-info-wrapper">
+              <div className="info-text">
+                <p>{post_data[0]?.caption}</p>
+              </div>
+            </div>
+
+            <div className="details-action-bar">
+              <div
+                className="like-comment-btn"
+                style={isLiked ? { color: "#6600fc" } : null}
+                onClick={() => {
+                  handlelikeButton();
+                }}>
+                {!isLiked ? (
+                  <>
+                    <FavoriteBorderSharpIcon /> Like
+                  </>
+                ) : (
+                  <>
+                    <FavoriteSharpIcon /> Unlike
+                  </>
+                )}
+                ;
+              </div>
+              <div className="like-comment-btn">
+                <label htmlFor="new-comment">
+                  <InsertCommentRoundedIcon /> Comment
+                </label>
+              </div>
             </div>
           </div>
 
-          <div className="tags-wrapper">
-            <Tag
-              text={
-                post_data[0]?.education.university_name ||
-                "Tribhuwan University"
-              }
-            />
-            <Tag
-              text={
-                post_data[0]?.education.faculty_name ||
-                "Bachelor in Computer Engineering"
-              }
-            />
-            <Tag text={post_data[0]?.education.semester || "III"} />
-          </div>
-
-          <div className="detail-info-wrapper">
-            <div className="info-text">
-              <p>{post_data[0]?.caption}</p>
-            </div>
-          </div>
-
-          <div className="details-action-bar">
-            <div
-              className="like-comment-btn"
-              style={isLiked ? { color: "#6600fc" } : null}
-              onClick={() => {
-                handlelikeButton();
-              }}
-            >
-              {!isLiked ? (
-                <>
-                  <FavoriteBorderSharpIcon /> Like
-                </>
-              ) : (
-                <>
-                  <FavoriteSharpIcon /> Unlike
-                </>
-              )}
-              ;
-            </div>
-            <div className="like-comment-btn">
-              <label htmlFor="new-comment">
-                <InsertCommentRoundedIcon /> Comment
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div className="update-post-section">
-          {isUpdateSelected ? (
-            <UpdatePost updatePostToggle={updatePostToggle} />
-          ) : null}
-        </div>
-
-        <div className="comment-section">
-          <div className="comment-count">
-            <p>{comments.length} comments</p>
+          <div className="update-post-section">
+            {isUpdateSelected ? (
+              <UpdatePost updatePostToggle={updatePostToggle} />
+            ) : null}
           </div>
           <div className="comment">
             {comments.map((comm) => (
@@ -226,40 +227,41 @@ const PostDetail = (props) => {
                 handleUpdateCommentButton={handleUpdateCommentButton}
               />
             ))}
+
+          </div>
+
+          <div className="create-comment-section">
+            <form onSubmit={handleSubmit}>
+              <div className="create-comment">
+                <div className="comment-input-wrapper">
+                  <input
+                    type="text"
+                    onChange={handleChange}
+                    value={commentText}
+                    id="new-comment"
+                    placeholder="Like the post? Tell here..."
+                  />
+                </div>
+                <button type="submit">
+                  <SendSharpIcon />
+                </button>
+              </div>
+            </form>
           </div>
         </div>
-
-        <div className="create-comment-section">
-          <form onSubmit={handleSubmit}>
-            <div className="create-comment">
-              <div className="comment-input-wrapper">
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  value={commentText}
-                  id="new-comment"
-                  placeholder="Like the post? Tell here..."
-                />
-              </div>
-              <button type="submit">
-                <SendSharpIcon />
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </React.Fragment>
+      </React.Fragment>
+    </Dashboard>
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     postData: state.post,
     profile: state.profile,
     likedPostsArray: state.profile?.likedposts,
   };
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     deletePost: (slug) => dispatch(deletePost(slug)),
     likedPosts: (post_slug, post_id, action) =>

@@ -28,6 +28,21 @@ form.post-update-form-wrapper {
       }
     }
   }
+
+  div.file-field-wrapper {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    label {
+      padding-right: 10px;
+      margin: 0;
+      color: grey;
+    }
+    input[type='file'] {
+      color: grey;
+  }
+  }
+
   div.update-education-input-fields {
     display: flex;
     align-items: center;
