@@ -19,6 +19,12 @@ const Explore = props => {
     post_slug: "new-post",
   });
 
+  const [education, setEducation] = React.useState({
+    university: 1,
+    semester: "II",
+    faculty: 1,
+  });
+
   const handleChange = event => {
     setQuery(event.target.value);
   };
@@ -26,6 +32,19 @@ const Explore = props => {
   const handleSubmit = event => {
     event.preventDefault();
     console.log(query);
+  };
+
+  const handleEducationChange = event => {
+    const { name, value } = event.target;
+    setEducation({
+      ...education,
+      [name]: value,
+    });
+  };
+
+  const handleEducationSubmit = event => {
+    event.preventDefault();
+    console.log({ education });
   };
 
   return (
@@ -52,6 +71,58 @@ const Explore = props => {
             </div>
           </div>
         </form>
+
+        <div className="education-wrapper">
+          <div className="title">
+            <h2>Or use our smart post filter...</h2>
+          </div>
+          <form
+            className="education-form-wrapper"
+            onSubmit={handleEducationSubmit}>
+            <div className="education-field-wrapper">
+              <div>
+                <select
+                  title="University"
+                  name="university"
+                  value={education.university}
+                  onChange={handleEducationChange}>
+                  <option value={1}>Tribhuwan University</option>
+                  <option value={2}>Purbanchal University</option>
+                  <option value={3}>Pokhara University</option>
+                </select>
+              </div>
+              <div>
+                <select
+                  title="Faculty"
+                  name="faculty"
+                  value={education.faculty}
+                  onChange={handleEducationChange}>
+                  <option value={1}>Bachelor in engineering</option>
+                  <option value={2}>Chartered Accountancy</option>
+                  <option value={3}>Bachelor in Business Administration</option>
+                </select>
+              </div>
+              <div>
+                <select
+                  title="Semester"
+                  name="semester"
+                  value={education.semester}
+                  onChange={handleEducationChange}>
+                  <option value="I">I</option>
+                  <option value="II">II</option>
+                  <option value="III">III</option>
+                  <option value="IV">IV</option>
+                  <option value="V">V</option>
+                  <option value="VI">VI</option>
+                  <option value="VII">VII</option>
+                  <option value="VIII">VIII</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit">Filter</button>
+          </form>
+        </div>
+
         <div>
           <Post post={post} />
         </div>
