@@ -12,6 +12,7 @@
         font-size: 1.5rem;
       }
     }
+
     .search-bar-wrapper {
       display: flex;
       align-items: center;
@@ -39,6 +40,60 @@
         background-color: #6600fc;
         color: white;
         margin-left: 8px;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+
+  .education-wrapper {
+    padding: 10px;
+    margin: 10px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(182, 179, 179, 0.4);
+
+    .title {
+      // padding-bottom: 5px;
+      border-bottom: 1px solid #d7d7d7;
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+    .education-form-wrapper {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      display: flex;
+      align-items: flex-end;
+      flex-direction: column;
+      .education-field-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        select {
+          background-color: #f1f1f1;
+          margin: 3px;
+          padding: 3px;
+          border: 1px gray solid;
+          border-radius: 5px;
+          color: #6e6e6e;
+
+          option {
+            background: #f1f1f1;
+            color: #6e6e6e;
+          }
+        }
+      }
+      button[type="submit"] {
+        border: none;
+        padding: 5px 1rem;
+        background: #6600fc;
+        color: white;
+        border-radius: 10rem;
+        &:hover {
+          background: #4100a3;
+        }
         &:focus {
           outline: none;
         }
