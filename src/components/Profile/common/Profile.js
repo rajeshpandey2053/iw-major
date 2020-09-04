@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./Profile.scss";
 import { Link } from "react-router-dom";
-import cover from "../../../images/image-cover.jpg";
+import { connect } from "react-redux";
 import blankAvatarImage from "../../../images/blank-profile-picture-973460_1280.webp";
 
-function ProfileView(props) {
-  const { userProfile } = props;
-  console.log(userProfile);
+function ProfileView({ profileData }) {
+  // const { profile } = props;
+  console.log(profileData);
+  const userProfile = profileData.profiles;
   return (
     <div className="profile">
       <div className="profile-image-section">
@@ -24,13 +25,12 @@ function ProfileView(props) {
             </div>
             <div className="user-info">
               <h4>
-                {userProfile?.user?.first_name || "Anjal"}{" "}
-                {userProfile?.user?.last_name || "Bam"}
+                {userProfile?.user?.first_name || " "}
+                {userProfile?.user?.last_name || ""}
               </h4>
               <a href="#">
-                {userProfile?.user?.profile?.education?.college ||
-                  "Thapathali Campus"}{" "}
-                3rd Sem
+                {userProfile?.user?.profile?.education?.semester || " "}
+                Sem
               </a>
             </div>
           </div>
@@ -74,5 +74,10 @@ function ProfileView(props) {
     </div>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    profileData: state.profile,
+  };
+};
 
-export default ProfileView;
+export default connect(mapStateToProps)(ProfileView);

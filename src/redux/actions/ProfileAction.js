@@ -4,10 +4,14 @@ import {
   FETCH_PROFILE_FAILURE,
   POST_UNLIKED_SUCCESS,
   POST_LIKED_SUCCESS,
+  UPDATE_PROFILE_REQUEST,
+  UPDATE_PROFILE_SUCCESS,
+  UDPATE_PROFILE_FAILURE,
 } from "./ActionTypes";
 import Axios from "../../utils/axios";
 
 const fetchProfileURL = "/api/accounts/v1/user/profile";
+const updateProfileURL = "/api/accounts/v1/user/update";
 
 export const fetchProfileRequest = () => {
   return {
@@ -25,6 +29,26 @@ export const fetchProfileSuccess = (profiles) => {
 export const fetchProfileFailure = (error) => {
   return {
     type: FETCH_PROFILE_FAILURE,
+    error: error,
+  };
+};
+
+export const updateProfileRequest = () => {
+  return {
+    type: UPDATE_PROFILE_REQUEST,
+  };
+};
+
+export const updateProfileSuccess = (profiles) => {
+  return {
+    type: UPDATE_PROFILE_SUCCESS,
+    profiles: profiles,
+  };
+};
+
+export const udpateProfileFailure = (error) => {
+  return {
+    type: UDPATE_PROFILE_FAILURE,
     error: error,
   };
 };
@@ -55,6 +79,19 @@ export const fetchProfiles = () => {
         const errorMsg = error.message;
         console.log(error);
         dispatch(fetchProfileFailure(errorMsg));
+      });
+  };
+};
+
+export const updateProfiles = (profile) => {
+  return (dispatch) => {
+    Axios.patch(updateProfileURL, profile)
+      .then((response) => {
+        console.log(response);
+        fetchProfiles();
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 };
