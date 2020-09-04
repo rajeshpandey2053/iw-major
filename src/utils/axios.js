@@ -4,10 +4,12 @@ const baseURL = "http://127.0.0.1:8000";
 const headers = {};
 
 if (localStorage.getItem("token")) {
-  headers["Authorization"] = `Token ${localStorage.getItem("token")}`;
+  const token = localStorage.getItem("token");
+  console.log({ token });
+  headers["Authorization"] = `Token ${token}`;
 }
 
-// headers["Authorization"] = "Token 30fe0037864cbfaf7fff73ec3e3e9ccf5eb79116";
+// headers["Authorization"] = "Token 908380702491585c7b184b8c7be74999cf1abe0c";
 
 const axiosInstance = axios.create({
   baseURL,

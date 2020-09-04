@@ -20,9 +20,9 @@ const Explore = props => {
   });
 
   const [education, setEducation] = React.useState({
-    university: 1,
+    university: null,
     semester: "II",
-    faculty: 1,
+    faculty: null,
   });
 
   const handleChange = event => {
