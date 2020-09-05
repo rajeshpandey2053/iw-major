@@ -1,29 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { CircularProgress } from "@material-ui/core";
+import { connect } from "react-redux";
 import "./explore.scss";
 import Dashboard from "../Dashboard";
 import Post from "../Feed/Post/Post";
+import {
+  fetchPostsForExplore,
+  appendExplorePosts,
+} from "../../../redux/actions/exploreAction";
 
 const Explore = props => {
+  const {
+    fetchPostsForExplore,
+    posts,
+    nextLink,
+    appendExplorePosts,
+    loading,
+  } = props;
+  const initialParams = {
+    university: "",
+    faculty: "",
+    semester: "",
+  };
+  // const defaultUrl = "/api/posts/v1/post/explore/";
+
+  const [education, setEducation] = React.useState(initialParams);
+
+  useEffect(() => {
+    console.log("Iamrunning");
+    if (posts.length === 0) {
+      fetchPostsForExplore(education);
+    }
+  }, []);
+
   const [query, setQuery] = React.useState("");
-
-  // just a post mock
-  const [post, setPost] = React.useState({
-    user_name: "anjalbam12",
-    education: {
-      university_name: "Tribhuwan University",
-      faculty_name: "Electronics Engineering",
-      semester: "III",
-    },
-    caption: "This is an example post just for placeholder purposes.",
-    file: null,
-    post_slug: "new-post",
-  });
-
-  const [education, setEducation] = React.useState({
-    university: null,
-    semester: "II",
-    faculty: null,
-  });
 
   const handleChange = event => {
     setQuery(event.target.value);
@@ -32,6 +42,7 @@ const Explore = props => {
   const handleSubmit = event => {
     event.preventDefault();
     console.log(query);
+    fetchPostsForExplore({ search: query });
   };
 
   const handleEducationChange = event => {
@@ -45,6 +56,7 @@ const Explore = props => {
   const handleEducationSubmit = event => {
     event.preventDefault();
     console.log({ education });
+    fetchPostsForExplore(education);
   };
 
   return (
@@ -86,6 +98,7 @@ const Explore = props => {
                   name="university"
                   value={education.university}
                   onChange={handleEducationChange}>
+                  <option value={""}>-</option>
                   <option value={1}>Tribhuwan University</option>
                   <option value={2}>Purbanchal University</option>
                   <option value={3}>Pokhara University</option>
@@ -97,6 +110,7 @@ const Explore = props => {
                   name="faculty"
                   value={education.faculty}
                   onChange={handleEducationChange}>
+                  <option value={""}>-</option>
                   <option value={1}>Bachelor in engineering</option>
                   <option value={2}>Chartered Accountancy</option>
                   <option value={3}>Bachelor in Business Administration</option>
@@ -108,6 +122,7 @@ const Explore = props => {
                   name="semester"
                   value={education.semester}
                   onChange={handleEducationChange}>
+                  <option value={""}>-</option>
                   <option value="I">I</option>
                   <option value="II">II</option>
                   <option value="III">III</option>
@@ -124,11 +139,44 @@ const Explore = props => {
         </div>
 
         <div>
-          <Post post={post} />
+          {posts &&
+            posts.map(post => <Post post={post} key={post?.post_slug} />)}
+        </div>
+
+        <div className="see-more-wrapper">
+          {loading ? (
+            <CircularProgress />
+          ) : nextLink ? (
+            <button
+              onClick={() => {
+                // console.log({ nextLink });
+                appendExplorePosts(nextLink, education);
+              }}>
+              See More
+            </button>
+          ) : (
+            "Oops! You've viewed all the posts."
+          )}
         </div>
       </div>
     </Dashboard>
   );
 };
 
-export default Explore;
+const mapStateToProps = state => {
+  return {
+    posts: state.explore.posts,
+    nextLink: state.explore.nextLink,
+    loading: state.explore.loading,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchPostsForExplore: params => dispatch(fetchPostsForExplore(params)),
+    appendExplorePosts: (nextLink, params) =>
+      dispatch(appendExplorePosts(nextLink, params)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Explore);
