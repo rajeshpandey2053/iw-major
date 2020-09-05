@@ -8,6 +8,11 @@ import {
   POST_LIKED_SUCCESS,
 } from "./ActionTypes";
 import Axios from "../../utils/axios";
+import a from "axios";
+
+const token = localStorage.getItem("token");
+
+Axios.defaults.headers.common["Authorization"] = `Token ${token}`;
 
 const fetchProfileURL = "/api/accounts/v1/user/profile";
 const updateProfileURL = "/api/accounts/v1/user/update";
@@ -20,42 +25,42 @@ export const fetchProfileRequest = () => {
   };
 };
 
-export const fetchProfileSuccess = (profiles) => {
+export const fetchProfileSuccess = profiles => {
   return {
     type: FETCH_PROFILE_SUCCESS,
     profiles: profiles,
   };
 };
 
-export const fetchProfileFailure = (error) => {
+export const fetchProfileFailure = error => {
   return {
     type: FETCH_PROFILE_FAILURE,
     error: error,
   };
 };
 
-export const fetchFacultySuccess = (faculty) => {
+export const fetchFacultySuccess = faculty => {
   return {
     type: FETCH_FACULTY_SUCCESS,
     faculty: faculty,
   };
 };
 
-export const fetchUniversitySuccess = (univ) => {
+export const fetchUniversitySuccess = univ => {
   return {
     type: FETCH_UNIVERSITY_SUCCESS,
     univ: univ,
   };
 };
 
-export const postUnLikedSuccess = (post_id) => {
+export const postUnLikedSuccess = post_id => {
   return {
     type: POST_UNLIKED_SUCCESS,
     post_id: post_id,
   };
 };
 
-export const postLikedSuccess = (post_id) => {
+export const postLikedSuccess = post_id => {
   return {
     type: POST_LIKED_SUCCESS,
     post_id: post_id,
@@ -63,14 +68,14 @@ export const postLikedSuccess = (post_id) => {
 };
 
 export const fetchProfiles = () => {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(fetchProfileRequest());
     Axios.get(fetchProfileURL)
-      .then((response) => {
+      .then(response => {
         const profiles = response.data;
         dispatch(fetchProfileSuccess(profiles));
       })
-      .catch((error) => {
+      .catch(error => {
         const errorMsg = error.message;
         console.log(error);
         dispatch(fetchProfileFailure(errorMsg));
@@ -78,14 +83,14 @@ export const fetchProfiles = () => {
   };
 };
 
-export const updateProfiles = (profile) => {
-  return (dispatch) => {
+export const updateProfiles = profile => {
+  return dispatch => {
     Axios.patch(updateProfileURL, profile)
-      .then((response) => {
+      .then(response => {
         console.log(response);
         fetchProfiles();
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -93,43 +98,43 @@ export const updateProfiles = (profile) => {
 
 export const likedPosts = (post_slug, post_id, action) => {
   console.log(post_slug, post_id, action);
-  return (dispatch) => {
+  return dispatch => {
     action === "like"
       ? Axios.post(`/api/posts/v1/post/${post_slug}/${action}/`)
-          .then((response) => {
+          .then(response => {
             console.log(response);
             dispatch(postLikedSuccess(post_id));
           })
-          .catch((error) => {
+          .catch(error => {
             console.log(error.message);
           })
       : Axios.post(`/api/posts/v1/post/${post_slug}/${action}/`)
-          .then((response) => {
+          .then(response => {
             console.log(response);
             dispatch(postUnLikedSuccess(post_id));
           })
-          .catch((error) => {
+          .catch(error => {
             console.log(error.message);
           });
   };
 };
 
 export const fetchEducation = () => {
-  return (dispatch) => {
+  return dispatch => {
     Axios.get(getfacultyURL)
-      .then((response) => {
+      .then(response => {
         const faculty = response.data;
         dispatch(fetchFacultySuccess(faculty));
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
     Axios.get(getUniversityURL)
-      .then((response) => {
+      .then(response => {
         const university = response.data;
         dispatch(fetchUniversitySuccess(university));
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
