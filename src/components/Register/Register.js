@@ -33,18 +33,18 @@ class Register extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(uniUrl).then(res => {
+    axios.get(uniUrl).then((res) => {
       const universityList = res.data;
       this.setState({ universityList });
     });
 
-    axios.get(facultyUrl).then(res => {
+    axios.get(facultyUrl).then((res) => {
       const facultyUrl = res.data;
       this.setState({ facultyUrl });
     });
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     // e.preventDefault();
     // if (e.target.name === 'first_name'){
     //     this.setState({first_name: e.target.value});
@@ -77,7 +77,7 @@ class Register extends React.Component {
     this.setState({ [name]: value });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.setState({ isLoading: true });
     axios
@@ -100,12 +100,12 @@ class Register extends React.Component {
           },
         },
       })
-      .then(res => {
+      .then((res) => {
         this.setState({ isLoading: false });
         this.setState({ errorMessage: {} });
         this.setState({ successMessage: res.data.message });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   render() {
