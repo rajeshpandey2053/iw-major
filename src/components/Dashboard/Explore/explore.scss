@@ -100,4 +100,21 @@
       }
     }
   }
+  div.see-more-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 10px;
+
+    button {
+      border: none;
+      background-color: #6600fc;
+      color: white;
+      padding: 5px 1rem;
+      border-radius: 10rem;
+      &:hover {
+        background-color: #4100a3;
+      }
+    }
+  }
 }

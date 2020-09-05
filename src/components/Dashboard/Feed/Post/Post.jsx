@@ -10,13 +10,13 @@ import FavoriteBorderSharpIcon from "@material-ui/icons/FavoriteBorderSharp";
 import FavoriteSharpIcon from "@material-ui/icons/FavoriteSharp";
 import InsertCommentRoundedIcon from "@material-ui/icons/InsertCommentRounded";
 
-const Post = (props) => {
+const Post = props => {
   const { post, likedPostsArray, likedPosts } = props;
   // if the post is already liked by user then display liked
   const defaultLikedState = likedPostsArray?.find(
-    (element) => element === post.id
+    element => element === post.id
   );
-  console.log({ defaultLikedState });
+  // console.log({ defaultLikedState });
   const { path } = useRouteMatch();
   const [isLiked, setIsLiked] = useState(defaultLikedState ? true : false);
   const [likesCount, setLikesCount] = useState(post?.stars_count || 0);
@@ -26,7 +26,7 @@ const Post = (props) => {
     fileName = fileNameArr[fileNameArr.length - 1];
   }
 
-  const handlelikeButton = (event) => {
+  const handlelikeButton = event => {
     setIsLiked(!isLiked);
     if (!isLiked) {
       setLikesCount(likesCount + 1);
@@ -81,8 +81,7 @@ const Post = (props) => {
               href={post.file}
               download
               target="_blank"
-              rel="noopener noreferrer"
-            >
+              rel="noopener noreferrer">
               {fileName}
             </a>
           </p>
@@ -99,8 +98,7 @@ const Post = (props) => {
         <div
           className="like-comment-btn"
           style={isLiked ? { color: "#6600fc" } : null}
-          onClick={handlelikeButton}
-        >
+          onClick={handlelikeButton}>
           {!isLiked ? (
             <>
               <FavoriteBorderSharpIcon /> Like
@@ -122,12 +120,12 @@ const Post = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     likedPostsArray: state.profile?.likedposts,
   };
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     likedPosts: (post_slug, post_id, action) =>
       dispatch(likedPosts(post_slug, post_id, action)),
