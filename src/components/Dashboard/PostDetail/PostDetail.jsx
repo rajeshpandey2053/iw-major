@@ -224,6 +224,7 @@ const PostDetail = props => {
               <UpdatePost updatePostToggle={updatePostToggle} />
             ) : null}
           </div>
+
           <div className="comment">
             {comments.map(comm => (
               <Comment
