@@ -1,42 +1,44 @@
 import React from "react";
 import "./Sidebar.scss";
 
-
 import SidebarOption from "./SidebarOption";
 import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from "@material-ui/icons/Search";
 import PersonIcon from "@material-ui/icons/Person";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 
-import {Link} from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 function Sidebar() {
-    return (
-        <div className="sidebar">
-            <div className="sidebar-links">
-                <Link to="/dashboard">
-                    <SidebarOption active Icon={HomeIcon} text="Home"/>
-                </Link>
+  const activeStyle = {
+    color: "#6600fc",
+  };
+  return (
+    <div className="sidebar">
+      <div className="sidebar-links">
+        <NavLink to="/dashboard" activeStyle={activeStyle}>
+          <SidebarOption active Icon={HomeIcon} text="Home" />
+        </NavLink>
 
-                <Link to="/dashboard">
-                    <SidebarOption Icon={SearchIcon} text="Explore"/>
-                </Link>
+        <NavLink to="/explore" activeStyle={activeStyle}>
+          <SidebarOption Icon={SearchIcon} text="Explore" />
+        </NavLink>
 
-                <Link to="/dashboard">
-                    <SidebarOption Icon={NotificationsIcon} text="Notifications"/>
-                </Link>
+        <NavLink to="/dashboard" activeStyle={activeStyle}>
+          <SidebarOption Icon={NotificationsIcon} text="Notifications" />
+        </NavLink>
 
-                <Link to="/profile">
-                    <SidebarOption Icon={PersonIcon} text="Profile"/>
-                </Link>
-            </div>
-            <div className="sidebar-footer">
-                <p>
-                    <a href="/">HamroNote</a> &copy; 2020
-                </p>
-            </div>
-        </div>
-    );
+        <NavLink to="/profile" activeStyle={activeStyle}>
+          <SidebarOption Icon={PersonIcon} text="Profile" />
+        </NavLink>
+      </div>
+      <div className="sidebar-footer">
+        <p>
+          <Link to="/">HamroNote</Link> &copy; 2020
+        </p>
+      </div>
+    </div>
+  );
 }
 
 export default Sidebar;
