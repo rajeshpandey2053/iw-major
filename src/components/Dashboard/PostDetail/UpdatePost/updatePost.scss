@@ -38,14 +38,15 @@ form.post-update-form-wrapper {
       margin: 0;
       color: grey;
     }
-    input[type='file'] {
+    input[type="file"] {
       color: grey;
-  }
+    }
   }
 
   div.update-education-input-fields {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     justify-content: space-evenly;
     padding-bottom: 10px;
     padding-top: 10px;
@@ -69,7 +70,8 @@ form.post-update-form-wrapper {
     padding-top: 15px;
     align-items: center;
     justify-content: flex-end;
-    input[type='submit'], button {
+    input[type="submit"],
+    button {
       padding: 10px;
       border: none;
       color: white;
