@@ -22,18 +22,17 @@ import Dashboard from "../Dashboard";
 const PostDetail = (props) => {
   let params = useParams();
   //finding out which post's detail to display
-  const post_data = props.postData.posts.filter(
+  const postData = props.postData.posts.filter(
     (post) => post.post_slug === params.postSlug
   );
   // if the post is already liked by user then display liked
   const defaultLikedState = props.likedPostsArray?.find(
-    (element) => element === post_data[0]?.id
+    (element) => element === postData[0]?.id
   );
-  const [likesCount, setLikesCount] = useState(post_data[0]?.stars_count || 0);
+  const [likesCount, setLikesCount] = useState(postData[0]?.stars_count || 0);
   const [isLiked, setIsLiked] = useState(defaultLikedState ? true : false);
   const [commentText, setCommentText] = useState("");
   const [isUpdateSelected, setIsUpdateSelected] = useState(false);
-
   const [comments, setComments] = useState([]);
 
   const p_slug = params.postSlug;
@@ -58,10 +57,10 @@ const PostDetail = (props) => {
   const handlelikeButton = (event) => {
     if (!isLiked) {
       setLikesCount(likesCount + 1);
-      props.likedPosts(params.postSlug, post_data[0]?.id, "like");
+      props.likedPosts(params.postSlug, postData[0]?.id, "like");
     } else {
       setLikesCount(likesCount - 1);
-      props.likedPosts(params.postSlug, post_data[0]?.id, "unlike");
+      props.likedPosts(params.postSlug, postData[0]?.id, "unlike");
     }
     setIsLiked(!isLiked);
   };
@@ -69,8 +68,8 @@ const PostDetail = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     Axios.post("/api/posts/v1/comment/create/", {
-      user: post_data[0]?.user,
-      post: post_data[0]?.id,
+      user: postData[0]?.user,
+      post: postData[0]?.id,
       comment_description: commentText,
     })
       .then((response) => {
@@ -89,7 +88,6 @@ const PostDetail = (props) => {
     //go back
     history.goBack();
   };
-
   const handleDeleteCommentButton = (comment_id) => {
     Axios.delete(`/api/posts/v1/comment/${comment_id}`)
       .then((response) => {
@@ -103,16 +101,18 @@ const PostDetail = (props) => {
 
   const handleUpdateCommentButton = (updatedComment) => {
     const newcomment = {
-      user: post_data[0]?.user,
-      post: post_data[0]?.id,
+      user: postData[0]?.user,
+      post: postData[0]?.id,
       comment_description: updatedComment.newCommentDescription,
     };
     Axios.put(`/api/posts/v1/comment/${updatedComment.id}/update/`, newcomment)
       .then((response) => {
         console.log(response.data);
+        const newcomment = response.data;
+        console.log(comments);
         setComments(
           comments.map((comm) =>
-            comm.id === updatedComment.id ? updatedComment : comm
+            comm.id === newcomment.id ? newcomment : comm
           )
         );
       })
@@ -134,7 +134,7 @@ const PostDetail = (props) => {
                 <ArrowBackIcon />
               </button>
               {props.profile?.profiles?.user?.username ===
-              post_data[0]?.user_name ? (
+              postData[0]?.user_name ? (
                 <div className="post-action-btns">
                   <button id="update" onClick={() => updatePostToggle()}>
                     Update
@@ -154,8 +154,8 @@ const PostDetail = (props) => {
               </div>
               <div className="detail-title-info">
                 <p className="info-description">
-                  <Link to="/dashboard">{post_data[0]?.user_name}</Link> shared
-                  a post.
+                  <Link to="/dashboard">{postData[0]?.user_name}</Link> shared a
+                  post.
                 </p>
                 <p className="info-timestamp">Aug 23, 13: 46</p>
               </div>
@@ -164,22 +164,22 @@ const PostDetail = (props) => {
             <div className="tags-wrapper">
               <Tag
                 text={
-                  post_data[0]?.education.university_name ||
+                  postData[0]?.education.university_name ||
                   "Tribhuwan University"
                 }
               />
               <Tag
                 text={
-                  post_data[0]?.education.faculty_name ||
+                  postData[0]?.education.faculty_name ||
                   "Bachelor in Computer Engineering"
                 }
               />
-              <Tag text={post_data[0]?.education.semester || "III"} />
+              <Tag text={postData[0]?.education.semester || "III"} />
             </div>
 
             <div className="detail-info-wrapper">
               <div className="info-text">
-                <p>{post_data[0]?.caption}</p>
+                <p>{postData[0]?.caption}</p>
               </div>
             </div>
 

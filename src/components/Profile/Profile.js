@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
 import Sidebar from "../Dashboard/Sidebar";
 import ProfileView from "./common/Profile";
+import ViewProfile from "./common/ViewProfile";
 import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
 import { fetchProfiles } from "../../redux/actions/ProfileAction";
 
 const Profile = ({ fetchProfiles }) => {
+  let params = useParams();
   useEffect(() => {
     fetchProfiles();
   }, []);
@@ -17,7 +20,7 @@ const Profile = ({ fetchProfiles }) => {
         </div>
         {/* Feed */}
         <div id="feed" className="col-md-9 col-12">
-          <ProfileView />
+          {params.id ? <ViewProfile id={params.id} /> : <ProfileView />}
         </div>
       </div>
     </div>

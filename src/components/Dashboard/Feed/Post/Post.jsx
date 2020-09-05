@@ -51,7 +51,8 @@ const Post = (props) => {
 
           <div className="title-wrapper">
             <h6>
-              <a href="/">{post.user_name}</a> shared a post.
+              <Link to={`/profile/${post.user}`}>{post.user_name}</Link> shared
+              a post.
             </h6>
             <p>{getDate()}</p>
           </div>

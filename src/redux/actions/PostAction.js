@@ -122,10 +122,12 @@ export const fetchPosts = (PageLink) => {
 export const createPosts = (post, post_slug = "") => {
   const formData = new FormData();
   formData.append("user", 5);
-  if (post.file !== null) {
+  if (post.file) {
     formData.append("file", post.file);
   }
-  formData.append("post_slug", "post_slug");
+  if (post_slug === "") {
+    formData.append("post_slug", "post_slug");
+  }
   formData.append("caption", post.caption);
   formData.append("education.semester", post.education.semester);
   formData.append("education.faculty", post.education.faculty);
