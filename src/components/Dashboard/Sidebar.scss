@@ -8,6 +8,9 @@ $color_code: #000000;
     margin-top: 10px;
     a {
       color: black;
+      &:visited {
+        color: black;
+      }
     }
   }
 

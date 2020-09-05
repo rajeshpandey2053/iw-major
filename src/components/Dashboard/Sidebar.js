@@ -17,7 +17,7 @@ function Sidebar() {
     <div className="sidebar">
       <div className="sidebar-links">
         <NavLink to="/dashboard" activeStyle={activeStyle}>
-          <SidebarOption active Icon={HomeIcon} text="Home" />
+          <SidebarOption Icon={HomeIcon} text="Home" />
         </NavLink>
 
         <NavLink to="/explore" activeStyle={activeStyle}>

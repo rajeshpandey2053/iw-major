@@ -8,6 +8,7 @@ if (localStorage.getItem("token")) {
   console.log({ token });
   headers["Authorization"] = `Token ${token}`;
 }
+console.log("I am from axios instance");
 
 // headers["Authorization"] = "Token 908380702491585c7b184b8c7be74999cf1abe0c";
 
