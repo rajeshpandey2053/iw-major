@@ -71,9 +71,12 @@ const UpdatePost = (props) => {
             name="university"
             onChange={handleChange}
           >
-            <option value={1}>Tribhuwan University</option>
+            {props.profile.university.map((uni) => (
+              <option value={2}>{uni.university_name}</option>
+            ))}
+            {/* <option value={1}>Tribhuwan University</option>
             <option value={2}>Purbanchal University</option>
-            <option value={3}>Pokhara University</option>
+            <option value={3}>Pokhara University</option> */}
           </select>
         </div>
         <div>
@@ -83,9 +86,12 @@ const UpdatePost = (props) => {
             name="faculty"
             onChange={handleChange}
           >
-            <option value={1}>Bachelor in engineering</option>
+            {props.profile.faculty.map((fac) => (
+              <option value={2}>{fac.faculty_name}</option>
+            ))}
+            {/* <option value={1}>Bachelor in engineering</option>
             <option value={2}>Chartered Accountancy</option>
-            <option value={3}>Bachelor in Business Administration</option>
+            <option value={3}>Bachelor in Business Administration</option> */}
           </select>
         </div>
         <div>
@@ -122,6 +128,7 @@ const UpdatePost = (props) => {
 const mapStateToProps = (state) => {
   return {
     postData: state.post,
+    profile: state.profile,
   };
 };
 const mapDispatchToProps = (dispatch) => {

@@ -6,14 +6,26 @@ import "./Sidebar";
 import Sidebar from "./Sidebar";
 import Widgets from "./Widgets/Widgets";
 import { fetchPosts } from "../../redux/actions/PostAction";
-import { fetchProfiles } from "../../redux/actions/ProfileAction";
+import {
+  fetchProfiles,
+  fetchEducation,
+} from "../../redux/actions/ProfileAction";
 
 const Dashboard = (props) => {
-  const { fetchPosts, fetchProfiles, postData } = props;
+  const {
+    fetchPosts,
+    fetchProfiles,
+    fetchEducation,
+    postData,
+    profile,
+  } = props;
   useEffect(() => {
     console.log(postData.length);
     if (postData.posts.length === 0) {
       fetchPosts("/api/posts/v1/post/list/");
+    }
+    if (profile.faculty.length === 0 && profile.university.length === 0) {
+      fetchEducation();
     }
     fetchProfiles();
   }, []);
@@ -45,11 +57,13 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchPosts: (pageLink) => dispatch(fetchPosts(pageLink)),
     fetchProfiles: () => dispatch(fetchProfiles()),
+    fetchEducation: () => dispatch(fetchEducation()),
   };
 };
 const mapStateToProps = (state) => {
   return {
     postData: state.post,
+    profile: state.profile,
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

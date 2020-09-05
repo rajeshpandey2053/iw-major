@@ -1,13 +1,46 @@
-import React from "react";
-import "./Profile.scss";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import "./ViewProfile.scss";
 import { connect } from "react-redux";
+import Axios from "../../../utils/axios";
 import blankAvatarImage from "../../../images/blank-profile-picture-973460_1280.webp";
 
-function ProfileView({ profileData }) {
+function ViewProfile({ profileData, id }) {
+  const [userProfile, setUserProfile] = useState({});
+  const [isLiked, setIsLiked] = useState(false);
+  useEffect(() => {
+    Axios.get(`/api/accounts/v1/user/profile/${id}`)
+      .then((response) => {
+        const profileData = response.data;
+        setUserProfile(profileData);
+        console.log(profileData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const handleFollowButton = (event) => {
+    setIsLiked(!isLiked);
+    if (!isLiked) {
+      const formData = new FormData();
+      formData.append("follow_to", id);
+      formData.append("follow_by", null);
+      Axios.post("/api/accounts/v1/user/follow/detail", formData)
+        .then((response) => {
+          const profileData = response.data;
+          setUserProfile(profileData);
+          console.log(profileData);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      //   setLikesCount(likesCount + 1);
+      //   likedPosts(post?.post_slug, post?.id, "like");
+    }
+  };
   // const { profile } = props;
-  console.log(profileData);
-  const userProfile = profileData.profiles;
+  //   console.log(profileData);
+  //   const userProfile = profileData.profiles;
   return (
     <div className="profile">
       <div className="profile-image-section">
@@ -65,7 +98,16 @@ function ProfileView({ profileData }) {
                   </div>
                 </div>
                 <hr />
-                <Link to="/edit-profile">Edit Profile</Link>
+                <div>
+                  <button
+                    type="submit"
+                    onClick={handleFollowButton}
+                    className="post-button"
+                  >
+                    {!isLiked ? <>Follow</> : <>Followed</>}
+                  </button>
+                </div>
+                {/* <Link to="/edit-profile">Edit Profile</Link> */}
               </div>
             </div>
           </div>
@@ -80,4 +122,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ProfileView);
+export default connect(mapStateToProps)(ViewProfile);

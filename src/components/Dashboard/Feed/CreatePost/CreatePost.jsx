@@ -6,7 +6,7 @@ import { createPosts } from "../../../../redux/actions/PostAction";
 import { connect } from "react-redux";
 import { Snackbar } from "@material-ui/core";
 
-const CreatePost = ({ posts, createPosts }) => {
+const CreatePost = ({ posts, profile, createPosts }) => {
   const initialEducationState = {
     university: 2,
     faculty: 2,
@@ -90,9 +90,12 @@ const CreatePost = ({ posts, createPosts }) => {
               name="university"
               onChange={handleChange}
             >
-              <option value={1}>Tribhuwan University</option>
+              {profile.university.map((uni) => (
+                <option value={2}>{uni.university_name}</option>
+              ))}
+              {/* <option value={1}>Tribhuwan University</option>
               <option value={2}>Purbanchal University</option>
-              <option value={3}>Pokhara University</option>
+              <option value={3}>Pokhara University</option> */}
             </select>
           </div>
           <div>
@@ -102,9 +105,12 @@ const CreatePost = ({ posts, createPosts }) => {
               name="faculty"
               onChange={handleChange}
             >
-              <option value={1}>Bachelor in engineering</option>
+              {profile.faculty.map((fac) => (
+                <option value={2}>{fac.faculty_name}</option>
+              ))}
+              {/* <option value={1}>Bachelor in engineering</option>
               <option value={2}>Chartered Accountancy</option>
-              <option value={3}>Bachelor in Business Administration</option>
+              <option value={3}>Bachelor in Business Administration</option> */}
             </select>
           </div>
           <div>
@@ -156,6 +162,7 @@ const CreatePost = ({ posts, createPosts }) => {
 const mapStateToProps = (state) => {
   return {
     postData: state.post,
+    profile: state.profile,
   };
 };
 const mapDispatchToProps = (dispatch) => {

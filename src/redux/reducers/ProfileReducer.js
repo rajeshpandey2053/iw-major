@@ -2,6 +2,8 @@ import {
   FETCH_PROFILE_REQUEST,
   FETCH_PROFILE_SUCCESS,
   FETCH_PROFILE_FAILURE,
+  FETCH_FACULTY_SUCCESS,
+  FETCH_UNIVERSITY_SUCCESS,
   POST_UNLIKED_SUCCESS,
   POST_LIKED_SUCCESS,
 } from "../actions/ActionTypes";
@@ -20,6 +22,8 @@ const initialState = {
     },
   },
   likedposts: [],
+  faculty: [],
+  university: [],
   error: "",
 };
 
@@ -33,6 +37,7 @@ const reducer = (state = initialState, action) => {
       };
     case FETCH_PROFILE_SUCCESS:
       return {
+        ...state,
         loading: false,
         profiles: action.profiles,
         likedposts: action.profiles.user.profile.post,
@@ -40,6 +45,7 @@ const reducer = (state = initialState, action) => {
       };
     case FETCH_PROFILE_FAILURE:
       return {
+        ...state,
         loading: false,
         profiles: [],
         error: action.error,
@@ -55,6 +61,18 @@ const reducer = (state = initialState, action) => {
         ...state,
         likedposts: state.likedposts.concat(action.post_id),
         error: "",
+      };
+    case FETCH_FACULTY_SUCCESS:
+      return {
+        ...state,
+        faculty: action.faculty,
+        errors: "",
+      };
+    case FETCH_UNIVERSITY_SUCCESS:
+      return {
+        ...state,
+        university: action.univ,
+        errors: "",
       };
     default:
       return state;

@@ -23,6 +23,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
+  console.log(action.updatedPost);
   switch (action.type) {
     case FETCH_POST_REQUEST:
       return {
@@ -70,7 +71,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         posts: state.posts.map((post) =>
-          post.post_slug === action.post_slug ? action.updatedPost : post
+          post.id === action.updatedPost.id ? action.updatedPost : post
         ),
         loading: false,
         errors: "",

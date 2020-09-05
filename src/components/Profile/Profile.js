@@ -1,29 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import axios from "axios";
+import React, { useEffect } from "react";
 import Sidebar from "../Dashboard/Sidebar";
 import ProfileView from "./common/Profile";
-import { Person } from "@material-ui/icons";
+import ViewProfile from "./common/ViewProfile";
+import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
 import { fetchProfiles } from "../../redux/actions/ProfileAction";
 
-const main_url = "http://127.0.0.1:8000/api/accounts/v1/user/profile";
-
-const Profile = props => {
-  const [userProfile, setUserProfile] = useState({});
+const Profile = ({ fetchProfiles }) => {
+  let params = useParams();
   useEffect(() => {
-    axios
-      .get(main_url, {
-        headers: {
-          Authorization: `Token ${props.token}`,
-        },
-      })
-      .then(response => {
-        setUserProfile(response.data);
-      })
-      .catch(error => {
-        const errorMsg = error.message;
-        console.log(error);
-      });
+    fetchProfiles();
   }, []);
   return (
     <div className="container dashboard-wrapper">
@@ -34,23 +20,16 @@ const Profile = props => {
         </div>
         {/* Feed */}
         <div id="feed" className="col-md-9 col-12">
-          <ProfileView userProfile={userProfile} />
+          {params.id ? <ViewProfile id={params.id} /> : <ProfileView />}
         </div>
       </div>
     </div>
   );
 };
 
-const mapStateToProps = state => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    token: state.login.token,
-    profiles: state.profile.profiles,
+    fetchProfiles: () => dispatch(fetchProfiles()),
   };
 };
-
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchProfiles: token => dispatch(fetchProfiles(token)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(null, mapDispatchToProps)(Profile);

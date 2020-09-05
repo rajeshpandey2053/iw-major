@@ -1,30 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Profile.scss";
-import { Link } from "react-router-dom";
-import cover from "../../../images/image-cover.jpg";
 import blankAvatarImage from "../../../images/blank-profile-picture-973460_1280.webp";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { updateProfiles } from "../../../redux/actions/ProfileAction";
 
-function ProfileUpdateView(props) {
-  const { handleUpdate } = props;
-  const userProfile = props.userProfile;
-  //   console.log(userProfile.user?.username);
-  const username = userProfile?.user?.username;
-  //   console.log(username);
-
-  // This initialStep (initialState) is currently hard coded for current use
-  // and soon to be replaced with the actual profile data from the props
-  const initialStep = {
-    first_name: "Anjal",
-    last_name: "Bam",
-    username: "anjalbam12",
-    email: "anjalbam9@gmail.com",
-    contact_number: "1234567890",
-    college: "Thapathali Campus",
-  };
-  const [userUpdate, setUserUpdate] = useState(initialStep);
-  //   console.log(userUpdate);
-
-  const handleChange = event => {
+const ProfileUpdateView = ({ profileData, updateProfiles }) => {
+  const userProfile = profileData.profiles;
+  const history = useHistory();
+  const [userUpdate, setUserUpdate] = useState({
+    username: userProfile?.user?.username || "",
+    email: userProfile?.user?.email || "",
+    first_name: userProfile?.user?.first_name || "",
+    last_name: userProfile?.user?.last_name || "",
+    profile: {
+      contact_number: userProfile?.user?.profile?.contact_number || "",
+      address: userProfile?.user?.profile?.address || "",
+      education: {
+        semester: userProfile?.user?.profile?.education?.semester || "",
+        year: userProfile?.user?.profile?.education?.year || "",
+        college: userProfile?.user?.profile?.education?.college || 1,
+        faculty: userProfile?.user?.profile?.education?.faculty || 1,
+        university: userProfile?.user?.profile?.education?.university || 1,
+      },
+    },
+  });
+  const handleChange = (event) => {
     const { name, value } = event.target;
     setUserUpdate({
       ...userUpdate,
@@ -32,10 +33,11 @@ function ProfileUpdateView(props) {
     });
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("submitted");
-    handleUpdate(event, userUpdate);
+    updateProfiles(userUpdate);
+    history.goBack();
+    console.log({ userUpdate });
   };
 
   return (
@@ -161,7 +163,7 @@ function ProfileUpdateView(props) {
                     <label htmlFor="">Contact Number</label>
                     <input
                       type="number"
-                      value={userUpdate.contact_number}
+                      value={userUpdate.profile.contact_number}
                       placeholder="Contact Number"
                       name="contact_number"
                       className="form-control"
@@ -172,7 +174,7 @@ function ProfileUpdateView(props) {
                     <label htmlFor="">College Name</label>
                     <input
                       type="text"
-                      value={userUpdate.college}
+                      value={userUpdate.profile.education.college}
                       name="college"
                       placeholder="College Name"
                       className="form-control"
@@ -182,7 +184,8 @@ function ProfileUpdateView(props) {
                 </div>
                 <button
                   type="submit"
-                  className="btn btn-sm btn-primary float-right">
+                  className="btn btn-sm btn-primary float-right"
+                >
                   Update
                 </button>
               </form>
@@ -192,6 +195,15 @@ function ProfileUpdateView(props) {
       </div>
     </div>
   );
-}
-
-export default ProfileUpdateView;
+};
+const mapStateToProps = (state) => {
+  return {
+    profileData: state.profile,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateProfiles: (profile) => dispatch(updateProfiles(profile)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileUpdateView);
