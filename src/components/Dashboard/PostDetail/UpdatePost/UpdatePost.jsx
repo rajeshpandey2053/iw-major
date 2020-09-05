@@ -5,35 +5,40 @@ import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { createPosts } from "../../../../redux/actions/PostAction";
 
-const UpdatePost = props => {
+const UpdatePost = (props) => {
   let params = useParams();
   const post_data = props.postData.posts.filter(
-    post => post.post_slug === params.postSlug
+    (post) => post.post_slug === params.postSlug
   );
-  const [newPost, setNewPost] = useState({
-    caption: post_data[0]?.caption || "",
-    file: null,
-    education: {
-      university: post_data[0]?.education?.university || "",
-      semester: post_data[0]?.education?.semester || "",
-      faculty: post_data[0]?.education?.faculty || "",
-    },
-  });
+  const [caption, setCaption] = useState(post_data[0]?.caption || "");
+  const [file, setFile] = useState(post_data[0]?.file);
 
-  const handleFileChange = event => {
-    setNewPost({ ...newPost, file: event.target.files[0] });
+  const handleFileChange = (event) => {
+    event.preventDefault();
+    setFile(event.target.files[0]);
   };
 
-  const handleSubmit = event => {
+  const initialEducationState = {
+    university: post_data[0]?.education?.university || "",
+    faculty: post_data[0]?.education?.faculty || "",
+    semester: post_data[0]?.education?.semester || "",
+  };
+  const [education, setEducation] = useState(initialEducationState);
+
+  const handleSubmit = (event) => {
     event.preventDefault();
-    props.createPosts(newPost, params.postSlug);
+    const post = { caption, education, file };
+    props.createPosts(post, params.postSlug);
     props.updatePostToggle();
   };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
+    setCaption(event.target.value);
+  };
+  const handleEducationChange = (event) => {
     const { name, value } = event.target;
-    setNewPost({
-      ...newPost,
+    setEducation({
+      ...education,
       [name]: value,
     });
   };
@@ -54,7 +59,7 @@ const UpdatePost = props => {
           cols={30}
           rows={2}
           onChange={handleChange}
-          value={newPost.caption}
+          value={caption}
         />
       </div>
 
@@ -67,37 +72,34 @@ const UpdatePost = props => {
         <div>
           <select
             title="University"
-            value={newPost.university}
+            value={education.university}
             name="university"
-            onChange={handleChange}>
-            {props.profile.university.map(uni => (
+            onChange={handleEducationChange}
+          >
+            {props.profile.university.map((uni) => (
               <option value={uni.id}>{uni.university_name}</option>
             ))}
-            {/* <option value={1}>Tribhuwan University</option>
-            <option value={2}>Purbanchal University</option>
-            <option value={3}>Pokhara University</option> */}
           </select>
         </div>
         <div>
           <select
             title="Faculty"
-            value={newPost.faculty}
+            value={education.faculty}
             name="faculty"
-            onChange={handleChange}>
-            {props.profile.faculty.map(fac => (
+            onChange={handleEducationChange}
+          >
+            {props.profile.faculty.map((fac) => (
               <option value={fac.id}>{fac.faculty_name}</option>
             ))}
-            {/* <option value={1}>Bachelor in engineering</option>
-            <option value={2}>Chartered Accountancy</option>
-            <option value={3}>Bachelor in Business Administration</option> */}
           </select>
         </div>
         <div>
           <select
             title="Semester"
-            value={newPost.semester}
+            value={education.semester}
             name="semester"
-            onChange={handleChange}>
+            onChange={handleEducationChange}
+          >
             <option value="I">I</option>
             <option value="II">II</option>
             <option value="III">III</option>
@@ -114,20 +116,21 @@ const UpdatePost = props => {
         <button
           type={`button`}
           id="cancel"
-          onClick={() => props.updatePostToggle()}>
+          onClick={() => props.updatePostToggle()}
+        >
           Cancel
         </button>
       </div>
     </form>
   );
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     postData: state.post,
     profile: state.profile,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     createPosts: (post, slug) => dispatch(createPosts(post, slug)),
   };

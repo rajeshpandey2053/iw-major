@@ -8,27 +8,45 @@ import { updateProfiles } from "../../../redux/actions/ProfileAction";
 const ProfileUpdateView = ({ profileData, updateProfiles }) => {
   const userProfile = profileData.profiles;
   const history = useHistory();
+  const initialEducationState = {
+    university: userProfile?.user?.profile?.education?.university || "",
+    faculty: userProfile?.user?.profile?.education?.faculty || "",
+    semester: userProfile?.user?.profile?.education?.semester || "",
+    year: userProfile?.user?.profile?.education?.year || "",
+    college: userProfile?.user?.profile?.education?.college || 1,
+  };
+  const initialProfile = {
+    contact_number: userProfile?.user?.profile?.contact_number || "",
+    address: userProfile?.user?.profile?.address || "",
+  };
+  const [profile, setProfile] = useState(initialProfile);
+  const [education, setEducation] = useState(initialEducationState);
   const [userUpdate, setUserUpdate] = useState({
     username: userProfile?.user?.username || "",
     email: userProfile?.user?.email || "",
     first_name: userProfile?.user?.first_name || "",
     last_name: userProfile?.user?.last_name || "",
-    profile: {
-      contact_number: userProfile?.user?.profile?.contact_number || "",
-      address: userProfile?.user?.profile?.address || "",
-      education: {
-        semester: userProfile?.user?.profile?.education?.semester || "",
-        year: userProfile?.user?.profile?.education?.year || "",
-        college: userProfile?.user?.profile?.education?.college || 1,
-        faculty: userProfile?.user?.profile?.education?.faculty || 1,
-        university: userProfile?.user?.profile?.education?.university || 1,
-      },
-    },
   });
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUserUpdate({
       ...userUpdate,
+      [name]: value,
+    });
+  };
+
+  const handleEducationChange = (event) => {
+    const { name, value } = event.target;
+    setEducation({
+      ...education,
+      [name]: value,
+    });
+  };
+  const handleProfileChange = (event) => {
+    const { name, value } = event.target;
+    setProfile({
+      ...profile,
       [name]: value,
     });
   };
@@ -163,22 +181,22 @@ const ProfileUpdateView = ({ profileData, updateProfiles }) => {
                     <label htmlFor="">Contact Number</label>
                     <input
                       type="number"
-                      value={userUpdate.profile.contact_number}
+                      value={profile.contact_number}
                       placeholder="Contact Number"
                       name="contact_number"
                       className="form-control"
-                      onChange={handleChange}
+                      onChange={handleProfileChange}
                     />
                   </div>
                   <div className="form-group">
                     <label htmlFor="">College Name</label>
                     <input
                       type="text"
-                      value={userUpdate.profile.education.college}
+                      value={education.college}
                       name="college"
                       placeholder="College Name"
                       className="form-control"
-                      onChange={handleChange}
+                      onChange={handleEducationChange}
                     />
                   </div>
                 </div>
