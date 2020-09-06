@@ -16,8 +16,9 @@ import Explore from "../Dashboard/Explore/Explore";
 import PostDetail from "../Dashboard/PostDetail/PostDetail";
 import ActivateAccount from "../ActivateAccount/ActivateAccount";
 import ChangePasswordView from "../Profile/ChangePassword";
+import PageNotFound404 from "../PageNotFound404/PageNotFound404";
 
-const Routes = (props) => {
+const Routes = props => {
   return (
     <React.Fragment>
       <Switch>
@@ -41,6 +42,7 @@ const Routes = (props) => {
         <Route exact path="/try" component={PostComponent} />
         <Route exact path="/activate/:uId/:token" component={ActivateAccount} />
         <Route exact path="/edit-profile" component={ProfileUpdate} />
+        <Route component={PageNotFound404} />
       </Switch>
     </React.Fragment>
   );
