@@ -9,20 +9,20 @@ import {
   appendExplorePosts,
 } from "../../../redux/actions/exploreAction";
 
-const Explore = props => {
+const Explore = (props) => {
   const {
     fetchPostsForExplore,
     posts,
     nextLink,
     appendExplorePosts,
     loading,
+    profile,
   } = props;
   const initialParams = {
     university: "",
     faculty: "",
     semester: "",
   };
-  // const defaultUrl = "/api/posts/v1/post/explore/";
 
   const [education, setEducation] = React.useState(initialParams);
 
@@ -35,17 +35,17 @@ const Explore = props => {
 
   const [query, setQuery] = React.useState("");
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     setQuery(event.target.value);
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     console.log(query);
     fetchPostsForExplore({ search: query });
   };
 
-  const handleEducationChange = event => {
+  const handleEducationChange = (event) => {
     const { name, value } = event.target;
     setEducation({
       ...education,
@@ -53,7 +53,7 @@ const Explore = props => {
     });
   };
 
-  const handleEducationSubmit = event => {
+  const handleEducationSubmit = (event) => {
     event.preventDefault();
     console.log({ education });
     fetchPostsForExplore(education);
@@ -90,18 +90,20 @@ const Explore = props => {
           </div>
           <form
             className="education-form-wrapper"
-            onSubmit={handleEducationSubmit}>
+            onSubmit={handleEducationSubmit}
+          >
             <div className="education-field-wrapper">
               <div>
                 <select
                   title="University"
                   name="university"
                   value={education.university}
-                  onChange={handleEducationChange}>
+                  onChange={handleEducationChange}
+                >
                   <option value={""}>-</option>
-                  <option value={1}>Tribhuwan University</option>
-                  <option value={2}>Purbanchal University</option>
-                  <option value={3}>Pokhara University</option>
+                  {profile.university.map((uni) => (
+                    <option value={uni.id}>{uni.university_name}</option>
+                  ))}
                 </select>
               </div>
               <div>
@@ -109,11 +111,12 @@ const Explore = props => {
                   title="Faculty"
                   name="faculty"
                   value={education.faculty}
-                  onChange={handleEducationChange}>
+                  onChange={handleEducationChange}
+                >
                   <option value={""}>-</option>
-                  <option value={1}>Bachelor in engineering</option>
-                  <option value={2}>Chartered Accountancy</option>
-                  <option value={3}>Bachelor in Business Administration</option>
+                  {profile.faculty.map((fac) => (
+                    <option value={fac.id}>{fac.faculty_name}</option>
+                  ))}
                 </select>
               </div>
               <div>
@@ -121,7 +124,8 @@ const Explore = props => {
                   title="Semester"
                   name="semester"
                   value={education.semester}
-                  onChange={handleEducationChange}>
+                  onChange={handleEducationChange}
+                >
                   <option value={""}>-</option>
                   <option value="I">I</option>
                   <option value="II">II</option>
@@ -140,7 +144,7 @@ const Explore = props => {
 
         <div>
           {posts &&
-            posts.map(post => <Post post={post} key={post?.post_slug} />)}
+            posts.map((post) => <Post post={post} key={post?.post_slug} />)}
         </div>
 
         <div className="see-more-wrapper">
@@ -151,7 +155,8 @@ const Explore = props => {
               onClick={() => {
                 // console.log({ nextLink });
                 appendExplorePosts(nextLink, education);
-              }}>
+              }}
+            >
               See More
             </button>
           ) : (
@@ -163,17 +168,18 @@ const Explore = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     posts: state.explore.posts,
     nextLink: state.explore.nextLink,
     loading: state.explore.loading,
+    profile: state.profile,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    fetchPostsForExplore: params => dispatch(fetchPostsForExplore(params)),
+    fetchPostsForExplore: (params) => dispatch(fetchPostsForExplore(params)),
     appendExplorePosts: (nextLink, params) =>
       dispatch(appendExplorePosts(nextLink, params)),
   };
