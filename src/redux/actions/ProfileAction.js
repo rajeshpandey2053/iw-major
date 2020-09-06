@@ -8,6 +8,9 @@ import {
   POST_LIKED_SUCCESS,
 } from "./ActionTypes";
 import Axios from "../../utils/axios";
+const token = localStorage.getItem("token");
+Axios.defaults.headers.common["Authorization"] = `Token ${token}`;
+console.log(`token = ${token}`);
 
 const fetchProfileURL = "/api/accounts/v1/user/profile";
 const updateProfileURL = "/api/accounts/v1/user/update";
@@ -64,6 +67,9 @@ export const postLikedSuccess = (post_id) => {
 
 export const fetchProfiles = () => {
   return (dispatch) => {
+    const token = localStorage.getItem("token");
+    Axios.defaults.headers.common["Authorization"] = `Token ${token}`;
+    console.log(`token = ${token}`);
     dispatch(fetchProfileRequest());
     Axios.get(fetchProfileURL)
       .then((response) => {

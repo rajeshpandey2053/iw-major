@@ -30,7 +30,7 @@ export const fetchPostSuccess = (posts, pageLink) => {
   };
 };
 
-export const fetchPostFailure = error => {
+export const fetchPostFailure = (error) => {
   return {
     type: FETCH_POST_FAILURE,
     error: error,
@@ -44,7 +44,7 @@ export const createPostRequest = () => {
   };
 };
 
-export const createPostSuccess = newPost => {
+export const createPostSuccess = (newPost) => {
   console.log("Hello from success");
   return {
     type: CREATE_POST_SUCCESS,
@@ -52,7 +52,7 @@ export const createPostSuccess = newPost => {
   };
 };
 
-export const createPostFailure = error => {
+export const createPostFailure = (error) => {
   console.log("Hello from Failuare");
   // console.log(error);
   return {
@@ -68,7 +68,7 @@ export const updatePostRequest = () => {
   };
 };
 
-export const updatePostSuccess = updatedPost => {
+export const updatePostSuccess = (updatedPost) => {
   console.log("Hello from success");
   return {
     type: UPDATE_POST_SUCCESS,
@@ -76,7 +76,7 @@ export const updatePostSuccess = updatedPost => {
   };
 };
 
-export const updatePostFailure = error => {
+export const updatePostFailure = (error) => {
   return {
     type: UPDATE_POST_FAILURE,
     error: error,
@@ -88,30 +88,32 @@ export const deletePostRequest = () => {
     type: DELETE_POST_REQUEST,
   };
 };
-export const deletePostSuccess = post_slug => {
+export const deletePostSuccess = (post_slug) => {
   return {
     type: DELETE_POST_SUCCESS,
     post_slug: post_slug,
   };
 };
 
-export const deletePostFailure = error => {
+export const deletePostFailure = (error) => {
   return {
     type: DELETE_POST_FAILURE,
     error: error,
   };
 };
 
-export const fetchPosts = PageLink => {
-  return dispatch => {
+export const fetchPosts = (PageLink, token = localStorage.getItem("token")) => {
+  return (dispatch) => {
     dispatch(fetchPostRequest());
-    Axios.get(PageLink)
-      .then(response => {
+    Axios.get(PageLink, {
+      headers: { Authorization: `Token ${token}` },
+    })
+      .then((response) => {
         const posts = response.data.results;
         const nextPageLink = response.data.next;
         dispatch(fetchPostSuccess(posts, nextPageLink));
       })
-      .catch(error => {
+      .catch((error) => {
         const errorMsg = error.message;
         console.log(error);
         dispatch(fetchPostFailure(errorMsg));
@@ -119,7 +121,11 @@ export const fetchPosts = PageLink => {
   };
 };
 
-export const createPosts = (post, post_slug = "post_slug") => {
+export const createPosts = (
+  post,
+  post_slug = "post_slug",
+  token = localStorage.getItem("token")
+) => {
   const formData = new FormData();
   formData.append("user", 5);
   if (post.file) {
@@ -132,18 +138,24 @@ export const createPosts = (post, post_slug = "post_slug") => {
   formData.append("education.college", 1);
   formData.append("education.university", post.education.university);
 
-  return dispatch => {
+  return (dispatch) => {
     // console.log({posts});
     if (post_slug === "post_slug") {
       dispatch(createPostRequest());
       Axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
-      Axios.post(createPostURL, formData)
-        .then(response => {
+      Axios.post(
+        createPostURL,
+        {
+          headers: { Authorization: `Token ${token}` },
+        },
+        formData
+      )
+        .then((response) => {
           console.log(response.data);
           const newPost = response.data;
           dispatch(createPostSuccess(newPost));
         })
-        .catch(error => {
+        .catch((error) => {
           const errorMsg = error.message;
           dispatch(createPostFailure(errorMsg));
         });
@@ -151,12 +163,12 @@ export const createPosts = (post, post_slug = "post_slug") => {
       dispatch(updatePostRequest());
       Axios.defaults.headers.put["Content-Type"] = "multipart/form-data";
       Axios.patch(`/api/posts/v1/post/${post_slug}/update/`, formData)
-        .then(response => {
+        .then((response) => {
           console.log(response.data);
           const updatedPost = response.data;
           dispatch(updatePostSuccess(updatedPost));
         })
-        .catch(error => {
+        .catch((error) => {
           const errorMsg = error.message;
           dispatch(updatePostFailure(errorMsg));
         });
@@ -164,14 +176,14 @@ export const createPosts = (post, post_slug = "post_slug") => {
   };
 };
 
-export const deletePost = post_slug => {
-  return dispatch => {
+export const deletePost = (post_slug) => {
+  return (dispatch) => {
     dispatch(deletePostRequest());
     Axios.delete(`api/posts/v1/post/${post_slug}/`)
-      .then(response => {
+      .then((response) => {
         dispatch(deletePostSuccess(post_slug));
       })
-      .catch(error => {
+      .catch((error) => {
         const errorMsg = error.message;
         dispatch(deletePostFailure(errorMsg));
       });
