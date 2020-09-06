@@ -3,6 +3,8 @@ import "./Profile.scss";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import blankAvatarImage from "../../../images/blank-profile-picture-973460_1280.webp";
+import logo from '../../../images/Logo143x32.svg';
+
 
 function ProfileView({ profileData }) {
   // const { profile } = props;
@@ -15,7 +17,7 @@ function ProfileView({ profileData }) {
           <div className="card-body">
             <div className="cover">
               <img
-                src="https://timelinecovers.pro/facebook-cover/download/photography-city-lights-facebook-cover.jpg"
+                src={logo}
                 alt="image-cover"
               />
 
