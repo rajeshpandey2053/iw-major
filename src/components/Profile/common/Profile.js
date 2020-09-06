@@ -66,6 +66,9 @@ function ProfileView({ profileData }) {
                 </div>
                 <hr />
                 <Link to="/edit-profile">Edit Profile</Link>
+                <div>
+                  <Link to="/change/password">Change Password</Link>
+                </div>
               </div>
             </div>
           </div>

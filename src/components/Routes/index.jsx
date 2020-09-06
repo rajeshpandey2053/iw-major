@@ -15,8 +15,9 @@ import ProfileUpdate from "../Profile/ProfileUpdate";
 import Explore from "../Dashboard/Explore/Explore";
 import PostDetail from "../Dashboard/PostDetail/PostDetail";
 import ActivateAccount from "../ActivateAccount/ActivateAccount";
+import ChangePasswordView from "../Profile/ChangePassword";
 
-const Routes = props => {
+const Routes = (props) => {
   return (
     <React.Fragment>
       <Switch>
@@ -30,6 +31,7 @@ const Routes = props => {
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/profile/:id" component={Profile} />
         <Route exact path="/logout" component={Logout} />
+        <Route exact path="/change/password" component={ChangePasswordView} />
         <Route exact path="/forget-password" component={PasswordReset} />
         <Route exact path="/new-password" component={PasswordResetComplete} />
         <Route exact path="/try" component={PostComponent} />
