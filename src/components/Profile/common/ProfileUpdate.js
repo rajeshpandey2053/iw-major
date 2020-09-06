@@ -13,7 +13,7 @@ const ProfileUpdateView = ({ profileData, updateProfiles }) => {
     faculty: userProfile?.user?.profile?.education?.faculty || "",
     semester: userProfile?.user?.profile?.education?.semester || "",
     year: userProfile?.user?.profile?.education?.year || "",
-    college: userProfile?.user?.profile?.education?.college || 1,
+    college: userProfile?.user?.profile?.education?.college || "",
   };
   const initialProfile = {
     contact_number: userProfile?.user?.profile?.contact_number || "",
@@ -53,7 +53,11 @@ const ProfileUpdateView = ({ profileData, updateProfiles }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    updateProfiles(userUpdate);
+    const profileData = {
+      ...userUpdate,
+      profile: { ...profile, education: { ...education } },
+    };
+    updateProfiles(profileData);
     history.goBack();
     console.log({ userUpdate });
   };

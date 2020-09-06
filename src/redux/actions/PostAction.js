@@ -143,13 +143,7 @@ export const createPosts = (
     if (post_slug === "post_slug") {
       dispatch(createPostRequest());
       Axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
-      Axios.post(
-        createPostURL,
-        {
-          headers: { Authorization: `Token ${token}` },
-        },
-        formData
-      )
+      Axios.post(createPostURL, formData)
         .then((response) => {
           console.log(response.data);
           const newPost = response.data;
