@@ -28,7 +28,7 @@ const ProfileUpdateView = ({ profileData, updateProfiles }) => {
     last_name: userProfile?.user?.last_name || "",
   });
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     const { name, value } = event.target;
     setUserUpdate({
       ...userUpdate,
@@ -36,14 +36,14 @@ const ProfileUpdateView = ({ profileData, updateProfiles }) => {
     });
   };
 
-  const handleEducationChange = (event) => {
+  const handleEducationChange = event => {
     const { name, value } = event.target;
     setEducation({
       ...education,
       [name]: value,
     });
   };
-  const handleProfileChange = (event) => {
+  const handleProfileChange = event => {
     const { name, value } = event.target;
     setProfile({
       ...profile,
@@ -51,7 +51,7 @@ const ProfileUpdateView = ({ profileData, updateProfiles }) => {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     event.preventDefault();
     updateProfiles(userUpdate);
     history.goBack();
@@ -202,8 +202,7 @@ const ProfileUpdateView = ({ profileData, updateProfiles }) => {
                 </div>
                 <button
                   type="submit"
-                  className="btn btn-sm btn-primary float-right"
-                >
+                  className="btn btn-sm btn-primary float-right">
                   Update
                 </button>
               </form>
@@ -214,14 +213,14 @@ const ProfileUpdateView = ({ profileData, updateProfiles }) => {
     </div>
   );
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     profileData: state.profile,
   };
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    updateProfiles: (profile) => dispatch(updateProfiles(profile)),
+    updateProfiles: profile => dispatch(updateProfiles(profile)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileUpdateView);
