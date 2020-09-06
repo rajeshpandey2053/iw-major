@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://127.0.0.1:8000";
+const baseURL = "https://iw-major.vercel.app";
 const headers = {};
 
 console.log("I am from axios instance");

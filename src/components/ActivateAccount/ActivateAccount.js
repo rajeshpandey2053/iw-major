@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import ax from "axios";
 
-const ActivateAccount = props => {
+const ActivateAccount = (props) => {
   const [isActivated, setIsActivated] = React.useState(false);
   const [isDisabled, setIsDisabled] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
@@ -10,16 +10,16 @@ const ActivateAccount = props => {
   const activateAccount = () => {
     console.log({ uId, token });
     ax.get(
-      `http://127.0.0.1:8000/api/accounts/v1/user/activate/${uId}/${token}`
+      `https://iw-major.vercel.app/api/accounts/v1/user/activate/${uId}/${token}`
       // { headers: { Authorization: `Token ${token}` } }
     )
-      .then(res => {
+      .then((res) => {
         console.log(res.message);
         if (res.status === 200) {
           setIsActivated(true);
         }
       })
-      .then(err => {
+      .then((err) => {
         console.log({ err });
       });
   };
@@ -42,7 +42,8 @@ const ActivateAccount = props => {
           setIsDisabled(true);
         }}
         disabled={isDisabled}
-        className={`btn btn-primary btn-lg ${isActivated ? "disabled" : null}`}>
+        className={`btn btn-primary btn-lg ${isActivated ? "disabled" : null}`}
+      >
         Activate
       </button>
       {isActivated ? (
