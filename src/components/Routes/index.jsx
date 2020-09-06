@@ -31,7 +31,11 @@ const Routes = props => {
         <Route exact path="/profile/:id" component={Profile} />
         <Route exact path="/logout" component={Logout} />
         <Route exact path="/forget-password" component={PasswordReset} />
-        <Route exact path="/new-password" component={PasswordResetComplete} />
+        <Route
+          exact
+          path="/new-password/:uId/:token"
+          component={PasswordResetComplete}
+        />
         <Route exact path="/try" component={PostComponent} />
         <Route exact path="/activate/:uId/:token" component={ActivateAccount} />
         <Route exact path="/edit-profile" component={ProfileUpdate} />
