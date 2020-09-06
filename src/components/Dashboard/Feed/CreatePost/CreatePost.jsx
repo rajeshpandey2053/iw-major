@@ -17,16 +17,16 @@ const CreatePost = ({ posts, profile, createPosts }) => {
   const [file, setFile] = useState(null);
   const [open, setOpen] = useState(false);
 
-  const handleFileChange = event => {
+  const handleFileChange = (event) => {
     event.preventDefault();
     setFile(event.target.files[0]);
   };
 
-  const handleInputChange = event => {
+  const handleInputChange = (event) => {
     setCaption(event.target.value);
   };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
     setEducation({
       ...education,
@@ -34,7 +34,7 @@ const CreatePost = ({ posts, profile, createPosts }) => {
     });
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     console.log({ education });
     event.preventDefault();
     const post = { caption, education, file };
@@ -88,8 +88,9 @@ const CreatePost = ({ posts, profile, createPosts }) => {
               title="University"
               value={education.university}
               name="university"
-              onChange={handleChange}>
-              {profile.university.map(uni => (
+              onChange={handleChange}
+            >
+              {profile.university.map((uni) => (
                 <option value={uni.id}>{uni.university_name}</option>
               ))}
               {/* <option value={1}>Tribhuwan University</option>
@@ -102,8 +103,9 @@ const CreatePost = ({ posts, profile, createPosts }) => {
               title="Faculty"
               value={education.faculty}
               name="faculty"
-              onChange={handleChange}>
-              {profile.faculty.map(fac => (
+              onChange={handleChange}
+            >
+              {profile.faculty.map((fac) => (
                 <option value={fac.id}>{fac.faculty_name}</option>
               ))}
               {/* <option value={1}>Bachelor in engineering</option>
@@ -116,7 +118,8 @@ const CreatePost = ({ posts, profile, createPosts }) => {
               title="Semester"
               value={education.semester}
               name="semester"
-              onChange={handleChange}>
+              onChange={handleChange}
+            >
               <option value="I">I</option>
               <option value="II">II</option>
               <option value="III">III</option>
@@ -137,7 +140,6 @@ const CreatePost = ({ posts, profile, createPosts }) => {
               </label>
               <input
                 type="file"
-                required
                 alt="hello"
                 id="image"
                 name="image"
@@ -156,15 +158,15 @@ const CreatePost = ({ posts, profile, createPosts }) => {
     </form>
   );
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     postData: state.post,
     profile: state.profile,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    createPosts: post => dispatch(createPosts(post)),
+    createPosts: (post) => dispatch(createPosts(post)),
   };
 };
 
