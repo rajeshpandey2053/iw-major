@@ -14,8 +14,9 @@ import PostComponent from "../Dashboard/PostComponent";
 import ProfileUpdate from "../Profile/ProfileUpdate";
 import Explore from "../Dashboard/Explore/Explore";
 import PostDetail from "../Dashboard/PostDetail/PostDetail";
+import ActivateAccount from "../ActivateAccount/ActivateAccount";
 
-const Routes = (props) => {
+const Routes = props => {
   return (
     <React.Fragment>
       <Switch>
@@ -32,6 +33,7 @@ const Routes = (props) => {
         <Route exact path="/forget-password" component={PasswordReset} />
         <Route exact path="/new-password" component={PasswordResetComplete} />
         <Route exact path="/try" component={PostComponent} />
+        <Route exact path="/activate/:uId/:token" component={ActivateAccount} />
         <Route exact path="/edit-profile" component={ProfileUpdate} />
       </Switch>
     </React.Fragment>
