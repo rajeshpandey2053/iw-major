@@ -79,10 +79,12 @@ function ViewProfile({ profileData, id }) {
                   Semester: {userProfile?.user?.profile?.education?.semester}{" "}
                   Sem
                 </p>
-                <p>Faculty: {userProfile?.user?.profile?.education?.faculty}</p>
+                <p>
+                  Faculty: {userProfile?.user?.profile?.education?.faculty_name}
+                </p>
                 <p>
                   University:{" "}
-                  {userProfile?.user?.profile?.education?.university}
+                  {userProfile?.user?.profile?.education?.university_name}
                 </p>
                 <p>Books Posts: 12</p>
                 <p>Notes Posts: 12</p>
