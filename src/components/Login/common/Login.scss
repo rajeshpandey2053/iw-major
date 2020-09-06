@@ -173,33 +173,52 @@ $color_code_hover: #4e2092;
 }
 
 @media (max-width: 570px) {
-    .div-container {
-      padding: 1.5rem;
+    .div-container:before {
+        background: transparent;
+    }
 
-      .login {
-        left: 0;
-        transform: translate(10%, -5%);
-        form {
-            padding: 0 0.5rem;
-            input::-webkit-input-placeholder{
-                padding-left:10px;
+    .form-container {
+        position: absolute;
+        width: 100%;
+        top: 30%;
+        right: 45%;
+    }
+
+    .login-form {
+        margin: auto;
+        position: absolute;
+    }
+
+    .panel-container {
+        .content {
+            position: absolute;
+            top: 12%;
+            left: 10%;
+
+            p {
+                color: #000;
+            }
+
+            h3 {
+                color: #000;
             }
         }
-      }
-      .panel {
-        .content{
-            padding: 0.5rem 1rem;
-            margin-bottom: 220%;
-        }
-        .image {
+        img {
             display: none;
-          }
-      }
+        };
     }
-  
-    .div-container:before {
-        top: -70%;
-        right: -50%;
 
+    .div-container .login form .login-form__input-field input {
+        margin: 20px;
     }
+
+    .panel-container .panel .content #register-button {
+        padding: 4px;
+    }
+
+    .div-container .login form .login-form__title {
+        margin-top: 20px;
+        font-size: 28px;
+    }
+
 }

@@ -32,7 +32,7 @@ const PasswordResetView = (props) => {
                     <div className="content">
                         <h3>HamroNotes</h3>
                         <p>Difficult in Finding related Notes, Books...</p>
-                        <Link to="/login"><button className="btn transparent" id="register-button">Submit</button></Link>
+                        <Link to="/login"><button className="btn transparent" id="register-button">Login</button></Link>
                     </div>
                     <img src={login} className="image" alt=""/>
                 </div>

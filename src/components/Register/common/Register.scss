@@ -103,7 +103,7 @@ $color_code_hover: #4e2092;
   transform: translateY(-50%);
 }
 
-@media (max-width: 870px) {
+@media (max-width: 1120px) {
     .content-wrapper {
         .register-form-container {
             .register {
@@ -117,7 +117,7 @@ $color_code_hover: #4e2092;
 
                     .register-form__input-field {
                         select {
-                            width: 80px;
+                            width: 300px;
                             font-size: 12px;
                         }
                     }
@@ -125,88 +125,83 @@ $color_code_hover: #4e2092;
             }
         }
     }
-}
 
-@media (max-width: 1024px) {
-    .content-wrapper {
-        .register-form-container {
-            .register {
-                top: 50%;
-                left: 75%;
-
-                .register-form {
-                    input::-webkit-input-placeholder{
-                        font-size:12px;
-                    }
-
-                    .register-form__input-field {
-                        select {
-                            width: 80px;
-                            font-size: 12px;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@media (max-width: 570px) {
-    .content-wrapper {
-      padding: 1.5rem;
-        .register-form-container{
-            .register {
-                left: 0;
-                transform: translate(10%, -5%);
-                form {
-                    padding: 0 0.5rem;
-                    -webkit-overflow-scrolling: touch;
-
-                    input::-webkit-input-placeholder{
-                        padding-left:10px;
-                    }
-                }
-
-                .register-form {
-                    margin-top: -68%;
-                    .register-form__input-field {
-                        height: 34px;
-
-                        .MuiSvgIcon-root {
-                            margin:6px;
-                        }
-                    }
-                }
-            }
-        }
     .panel-container{
-
       .panel {
-        .content{
-            padding: 0.5rem 1rem;
-            margin-bottom: 350%;
-            font-size: 10px;
-            h3 {
-                font-size: 18px;
-            }
-            #register-button {
-                height: 30px;
-                width: 85px;
-            }
-            a {
-                margin-bottom: 10px;
-            }
+        .content {
+          position: absolute;
+          left: 0;
+          top: 10%;
         }
-        .image {
-            display: none;
-          }
+
+        img {
+          margin-top: 300px;
+          margin-left: -220px;
+        }
       }
     }
-}
-  
-    .content-wrapper:before {
-        top: -65%;
-        right: -77%;
 
+    .content-wrapper:before {
+      width: 630px;
+      height: 1500px;
+      right: 68%;
     }
+
+    .content-wrapper .register-form-container .register .register-form {
+      max-width: 225px;
+    }
+
+    
+}
+
+
+@media (max-width: 570px) {
+.content-wrapper:before {
+    background: transparent;
+}
+    .register-form-container {
+        position: absolute;
+        top: 800px;
+    }
+
+    .content-wrapper {
+        position: absolute;
+        overflow: visible;
+    }
+
+    .panel-container {
+        position: absolute;
+        .content {
+          top: 10%;
+          left: 25%;
+        }
+        img {
+            display: none;
+        }
+    }
+
+    .content-wrapper .register-form-container .register .register-form {
+      margin-left: 40%;
+      overflow: visible;
+    }
+
+    .content-wrapper .register-form-container .register .register-form .register-form__input-field #university-select, 
+    .content-wrapper .register-form-container .register .register-form .register-form__input-field .small-input,
+    .content-wrapper .register-form-container .register .register-form .register-form__input-field select {
+      width: 220px;
+    }
+
+    .content-wrapper .register-form-container .register .register-form .register-form__title {
+      font-size: 25px;
+    }
+
+    .col-md-6 .col-md-12 {
+        width: 95%;
+    }
+
+    .btn-primary {
+        width: 100px;
+    }
+
+
 }
